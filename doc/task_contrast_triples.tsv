@@ -1,0 +1,1157 @@
+id	parent	name
+1	None	BASE
+trm_4a3fd79d096be	trm_4a3fd79d0aec1	abductive reasoning
+trm_4a3fd79d096e3	trm_4a3fd79d09827	abstract analogy
+trm_4a3fd79d096f0	trm_4a3fd79d0a746	abstract knowledge
+trm_4a3fd79d096fc	1	acoustic coding
+trm_4a3fd79d09707	trm_4a3fd79d0b8e5	acoustic encoding
+trm_4a3fd79d09707	trm_4a3fd79d0b8e5	acoustic encoding
+trm_4a3fd79d09713	trm_4a3fd79d09ab2	acoustic phonetic processing
+trm_4a3fd79d0971e	1	acoustic processing
+trm_4a3fd79d09735	1	action
+trm_4a3fd79d0b5c0	1	action initiation
+trm_5159c00c3dac3	1	action perception
+trm_4a3fd79d09741	1	activation
+trm_4a3fd79d0974d	1	activation level
+trm_4a3fd79d0ba0d	trm_55b6b9d7c9435	active maintenance
+trm_4a3fd79d0b8b5	1	active recall
+trm_4a3fd79d0b8c1	1	active retrieval
+trm_4a3fd79d0b98a	1	acuity
+trm_4a3fd79d09758	1	adaptation
+trm_4a3fd79d09764	1	adaptive control
+trm_4fafd1626bf2b	1	addiction
+trm_4a3fd79d09770	1	affect perception
+trm_4a3fd79d0977b	1	affect recognition
+trm_5154b2f947fe9	1	agency
+trm_523f5ee64102c	1	agreeableness
+trm_4a3fd79d097b4	1	altruism
+trm_4a3fd79d097bf	1	altruistic motivation
+trm_4a3fd79d097cb	1	alveolar
+trm_4a3fd79d097d6	trm_4a3fd79d0a908	amodal representation
+trm_4a3fd79d097d6	trm_4a3fd79d0a908	amodal representation
+trm_4a3fd79d097e2	1	analog representation
+trm_4a3fd79d097ed	trm_4a3fd79d0b8e5	analogical encoding
+trm_4a3fd79d097ed	trm_4a3fd79d09810	analogical encoding
+trm_4a3fd79d097f9	trm_4a3fd79d0a5ed	analogical inference
+trm_4a3fd79d09804	1	analogical problem solving
+trm_4a3fd79d09810	trm_4a3fd79d0aec1	analogical reasoning
+trm_4a3fd79d0981b	1	analogical transfer
+trm_4a3fd79d09827	trm_4a3fd79d0a5ed	analogy
+trm_4a3fd79d09833	trm_4a3fd79d09d58	anchoring
+trm_52583dceb345e	1	anhedonia
+trm_557b471bc6cd8	trm_4a3fd79d0a038	animacy decision
+trm_5159beaf80413	trm_4a3fd79d0b392	animacy perception
+trm_5159beaf80413	trm_4a3fd79d0ab7c	animacy perception
+trm_4a3fd79d09849	1	anticipation
+trm_523e024c14df9	1	antisocial personality
+trm_5022ef7599294	trm_4a3fd79d0a17f	anxiety
+trm_4a3fd79d09855	trm_4a3fd79d0b4b5	apparent motion
+trm_4a3fd79d09855	trm_4fb2c38960950	apparent motion
+trm_4a3fd79d0986c	1	apperception
+trm_52583e083c9ab	1	appetite
+trm_4a3fd79d09877	1	appetitive motivation
+trm_558c7ae1eaf86	1	arithmetic processing
+trm_4a3fd79d09883	1	arousal
+trm_4a3fd79d0988f	1	articulation
+trm_4a3fd79d0ba19	trm_4a3fd79d0ba60	articulatory loop
+trm_4a3fd79d0989a	1	articulatory planning
+trm_4a3fd79d098a6	trm_4a3fd79d0ba54	articulatory rehearsal
+trm_4a3fd79d098b2	trm_4a3fd79d0a275	assimilation
+trm_4a3fd79d098bd	1	association
+trm_4a3fd79d098c9	trm_565bce2791089	association learning
+trm_5521a5f310604	trm_4e89aebaa311d	associative priming
+trm_4a3fd79d098e0	1	attachment
+trm_4a3fd79d098eb	1	attended channel
+trm_4a3fd79d098f7	1	attended stimulus
+trm_4a3fd79d09902	1	attention
+trm_4a3fd79d0990e	1	attention capacity
+trm_4a3fd79d0b5d7	1	attention shift
+trm_4a3fd79d0b5fb	1	attention shifting
+trm_4a3fd79d0b5e3	1	attention span
+trm_510059e54b2cf	1	attentional bias
+trm_4fea1aeaa7b17	1	attentional blink
+trm_4a3fd79d09919	trm_4a3fd79d0a151	attentional effort
+trm_4a3fd79d0b5ef	1	attentional focusing
+trm_4a3fd79d09925	trm_4f3a72a028d90	attentional resources
+trm_4a3fd79d09930	1	attentional state
+trm_4a3fd79d09947	1	attitude
+trm_4a3fd79d09953	trm_4a3fd79d0ab7c	audiovisual perception
+trm_4a3fd79d0995e	1	audition
+trm_55b6b8e291dba	trm_558c7ae1eaf86	auditory arithmetic processing
+trm_4a3fd79d09a10	trm_4a3fd79d09902	auditory attention
+trm_4a3fd79d09a3d	trm_4a3fd79d0b8e5	auditory coding
+trm_4a3fd79d09a49	trm_4a3fd79d0b8e5	auditory encoding
+trm_4a3fd79d09a55	trm_4a3fd79d0a33b	auditory feedback
+trm_4a3fd79d09a61	1	auditory grouping
+trm_4a3fd79d09a6c	1	auditory imagery
+trm_4a3fd79d09a78	1	auditory learning
+trm_4a3fd79d09a84	1	auditory lexical access
+trm_4a3fd79d09a8f	trm_5521a0512df9a	auditory localization
+trm_4a3fd79d09a9b	1	auditory masking
+trm_4a3fd79d09aa7	trm_4a3fd79d0a891	auditory memory
+trm_4a3fd79d09ab2	trm_4a3fd79d0ab7c	auditory perception
+trm_55ef687f48a9d	trm_4a3fd79d0b967	auditory recognition
+trm_4a3fd79d09abe	1	auditory scene
+trm_4a3fd79d09aca	1	auditory scene analysis
+trm_4a3fd79d09ad5	trm_4a3fd79d0b892	auditory sentence comprehension
+trm_558c7b14c076e	trm_568427366401c	auditory sentence recognition
+trm_558c7b14c076e	trm_55ef687f48a9d	auditory sentence recognition
+trm_4a3fd79d09ae1	1	auditory stream segregation
+trm_557b474e2b578	trm_5519b80525e89	auditory tone detection
+trm_557b474e2b578	trm_4a3fd79d09ab2	auditory tone detection
+trm_557b476527a27	trm_4a3fd79d09ab2	auditory tone discrimination
+trm_557b476527a27	trm_5519b7525d7a2	auditory tone discrimination
+trm_55ef273a77a86	trm_4a3fd79d09ab2	auditory tone perception
+trm_4a3fd79d09aed	trm_4a3fd79d0b548	auditory word comprehension
+trm_4a3fd79d09af8	trm_55ef687f48a9d	auditory word recognition
+trm_4a3fd79d09b04	trm_4a3fd79d0b5a7	auditory working memory
+trm_4a3fd79d09b10	trm_4a3fd79d0a1f4	autobiographical memory
+trm_4a3fd79d09b1c	trm_4a3fd79d0b95b	autobiographical recall
+trm_4a3fd79d09b28	1	automaticity
+trm_4ff1fc04e22e8	trm_4a3fd79d09e35	autonoesis
+trm_4a3fd79d09b33	trm_4a3fd79d09d58	availability heuristic
+trm_4a3fd79d09b3f	1	aversive learning
+trm_4a3fd79d09b62	1	backward chaining
+trm_50eb56a7867db	trm_4a3fd79d0a972	balance
+trm_4a3fd79d09b79	trm_4ee8facd77dfc	behavioral inhibition
+trm_4b7c270940f9d	1	behavioral inhibition (cognitive)
+trm_4b7c27094a093	1	behavioral inhibition (temperament)
+trm_4a3fd79d09b85	1	belief
+trm_4a3fd79d09b9c	trm_4fea04a02ce37	binocular convergence
+trm_4fea04a02ce37	1	binocular depth cue
+trm_4a3fd79d09bb3	1	binocular disparity
+trm_500d8626d0770	1	binocular rivalry
+trm_4a3fd79d09bbf	1	binocular vision
+trm_4a3fd79d09bcb	1	bitterness
+trm_5029515e29f7f	1	blindsight
+trm_557b477b4a15f	trm_55b6b9d7c9435	body maintenance
+trm_4a3fd79d09be2	trm_4a3fd79d0ae3d	body orientation
+trm_4e5505361f160	1	body representation
+trm_502ab8dd991bf	trm_4a3fd79d0b9ad	border ownership
+trm_4a3fd79d09bee	1	capacity limitation
+trm_4a3fd79d09bf9	1	case based reasoning
+trm_4a3fd79d09c05	1	categorical clustering
+trm_4a3fd79d09c11	trm_4a3fd79d0a746	categorical knowledge
+trm_4a3fd79d09c1c	1	categorical perception
+trm_4a3fd79d09c28	trm_4a3fd79d0a038	categorization
+trm_4a3fd79d09c34	1	category based induction
+trm_4a3fd79d09c3f	1	category learning
+trm_4a3fd79d09c5b	trm_4a3fd79d0a5ed	causal inference
+trm_4a3fd79d09c69	1	central attention
+trm_4b82c75498408	1	central coherence
+trm_4a3fd79d0ba25	1	central executive
+trm_4a3fd79d09c74	1	centration
+trm_4fea238758d33	trm_4fe3861edc919	change blindness
+trm_4a3fd79d09c80	1	chemonociception
+trm_4a3fd79d09c97	1	chromatic contrast
+trm_4a3fd79d09ca3	1	chunk
+trm_4a3fd79d09cae	1	chunking
+trm_5159c382bd8d4	1	circadian rhythm
+trm_4aae62e4ad209	1	cognitive control
+trm_4a3fd79d09d35	1	cognitive development
+trm_4a3fd79d09d41	1	cognitive dissonance
+trm_4a3fd79d09d4d	trm_4a3fd79d0a151	cognitive effort
+trm_4a3fd79d09d58	1	cognitive heuristic
+trm_4a3fd79d09d64	1	cognitive load
+trm_4a3fd79d09d70	1	cognitive map
+trm_51a6905a3f021	1	cognitive training
+trm_4fea09fac5316	1	color constancy
+trm_4a3fd79d09d93	1	color perception
+trm_557b478ce1c24	trm_557b4b7176394	color recognition
+trm_557b478ce1c24	trm_4a3fd79d09d93	color recognition
+trm_4a3fd79d09d9e	1	communication
+trm_4a3fd79d09daa	1	competition
+trm_4a3fd79d09db6	1	concept
+trm_4a3fd79d09dc1	1	concept learning
+trm_4a3fd79d09dcd	1	conceptual category
+trm_4a3fd79d09dd9	1	conceptual coherence
+trm_4d920c905d465	1	conceptual metaphor
+trm_4a3fd79d09de4	1	conceptual planning
+trm_5521a2aa5b127	trm_4e89aebaa311d	conceptual priming
+trm_4a3fd79d09df0	1	conceptual skill
+trm_4a3fd79d09dfc	1	conceptualization
+trm_4a3fd79d09e07	trm_4a3fd79d0aec1	conditional reasoning
+trm_523e00f356226	1	conduct disorder
+trm_500d8839c2877	1	cone of confusion
+trm_55ef153d47bc0	trm_558c736199abd	confidence judgment
+trm_5358ede949107	1	conflict adaptation effect
+trm_4a3fd79d09e13	trm_55ce70b20186b	conflict detection
+trm_4a3fd79d09e1e	trm_4a3fd79d0b4cd	conjunction search
+trm_4a3fd79d09e2a	1	connotation
+trm_4a3fd79d09e35	1	consciousness
+trm_4a3fd79d0b8cd	1	consolidation
+trm_4a3fd79d09e58	1	constancy
+trm_4a3fd79d09e64	1	constituent structure
+trm_4a3fd79d09e6f	1	context
+trm_4a3fd79d09e7b	1	context dependent
+trm_4a3fd79d09e87	trm_4a3fd79d0a891	context memory
+trm_56798c5f25b0c	trm_4a3fd79d0a908	context representation
+trm_4a3fd79d09e93	1	contextual knowledge
+trm_4a3fd79d09e9e	1	contingency learning
+trm_4a3fd79d09eaa	1	contrastive stress
+trm_4a3fd79d09eb6	1	conventionality
+trm_4a3fd79d09ece	1	convergent thinking
+trm_4a3fd79d09eda	1	conversation
+trm_4a3fd79d09ee6	1	conversational skill
+trm_4a3fd79d09ef0	1	conversational speech
+trm_4a3fd79d09efb	1	conversational structure
+trm_4a3fd79d09f07	1	coordination
+trm_4a3fd79d09f12	1	coproduction
+trm_4a3fd79d09f1e	1	coreference
+trm_4feb3ffa1ab51	trm_4a3fd79d09902	covert attention
+trm_4a3fd79d09f2a	1	creative cognition
+trm_4a3fd79d09f36	1	creative problem solving
+trm_4a3fd79d09f42	1	creative thinking
+trm_4a3fd79d09f4d	1	critical period
+trm_4e31d2241319f	1	crossmodal
+trm_4a3fd79d09f59	1	crosstalk
+trm_502c139d5ed78	trm_4a3fd79d0b492	crowding
+trm_4a3fd79d09f64	1	crystallized intelligence
+trm_4a3fd79d09f70	trm_4a3fd79d0b908	cue dependent forgetting
+trm_4a3fd79d09f7c	1	cue validity
+trm_4a3fd79d09f87	1	cueing
+trm_4f3bdeedcc99d	1	curiosity
+trm_4a3fd79d0a006	1	dative shift
+trm_4a3fd79d0a021	1	decay of activation
+trm_4a3fd79d0a02c	1	deception
+trm_4a3fd79d0b61f	1	decision
+trm_557b47abe9a34	1	decision certainty
+trm_4a3fd79d0a038	1	decision making
+trm_56798223b43b8	1	decision uncertainty
+trm_567982752ff4a	trm_4a3fd79d0b61f	decision under uncertainty
+trm_4a3fd79d0a044	trm_4a3fd79d0a746	declarative knowledge
+trm_4a3fd79d0a04f	trm_4a3fd79d0a833	declarative memory
+trm_4a3fd79d0a04f	trm_4a3fd79d0a891	declarative memory
+trm_4a3fd79d0a05b	trm_4a3fd79d0a044	declarative rule
+trm_4a3fd79d0a066	trm_4a3fd79d0a5ed	deductive inference
+trm_4a3fd79d0a072	trm_4a3fd79d0aec1	deductive reasoning
+trm_4a3fd79d0a07e	1	deep processing
+trm_4a3fd79d0a08a	1	deep structure
+trm_5159c18bc2e34	1	default mode network
+trm_5159c885a7314	1	defensive aggression
+trm_523e034f9e69a	1	defiance
+trm_4fa28299dbddd	1	deliberation
+trm_4fa3afaeef512	1	delusion
+trm_4a3fd79d0a095	1	depth cue
+trm_4a3fd79d0a0a1	trm_4a3fd79d0ab7c	depth perception
+trm_4a3fd79d0a0ad	1	desire
+trm_55ce70b20186b	trm_4a3fd79d0ab7c	detection
+trm_4fe9fae4321e7	1	difference threshold
+trm_4a3fd79d0a0dc	1	diphthong
+trm_4a3fd79d0b6c5	1	discourse
+trm_4a3fd79d0b6d1	trm_4a3fd79d0a775	discourse comprehension
+trm_4a3fd79d0b6dd	trm_4a3fd79d0a746	discourse knowledge
+trm_4a3fd79d0b6e9	trm_4a3fd79d0acc1	discourse planning
+trm_4a3fd79d0b6f5	1	discourse processing
+trm_4a3fd79d0b701	1	discourse production
+trm_5519b7525d7a2	trm_4a3fd79d0ab7c	discrimination
+trm_4a3fd79d0a0e7	1	dispositions
+trm_4a3fd79d0a0f3	1	distraction
+trm_4a3fd79d0a0ff	1	distributed coding
+trm_4a3fd79d0a10a	1	divergent thinking
+trm_4a3fd79d0a116	trm_4a3fd79d09902	divided attention
+trm_5021684cba96c	1	domain specificity
+trm_4a3fd79d0a12d	1	dream
+trm_55e1b08e5b06c	1	Dyslexia
+trm_525d8b8908809	1	eating
+trm_4b185801de7a1	trm_4a3fd79d09aa7	echoic memory
+trm_4a3fd79d0b996	1	echolocation
+trm_557b4817db34d	trm_558c736199abd	economic value processing
+trm_4a3fd79d0b9a1	trm_4a3fd79d0b9ad	edge detection
+trm_4a3fd79d0a145	1	efficiency
+trm_4a3fd79d0a151	1	effort
+trm_5159c971bf444	1	effort valuation
+trm_4a3fd79d0a15c	1	effortful processing
+trm_4a3fd79d0a168	1	egocentric
+trm_4a3fd79d0a173	1	elaborative processing
+trm_4a3fd79d0b8d9	1	elaborative rehearsal
+trm_4f33e65d0daac	1	embodied cognition
+trm_4a3fd79d0a17f	1	emotion
+trm_4a3fd79d0b65a	1	emotion perception
+trm_4a3fd79d0b665	trm_4a3fd79d0b967	emotion recognition
+trm_51a690a7492eb	trm_4ee8facd77dfc	emotion regulation
+trm_4a3fd79d0b671	1	emotional bonding
+trm_4a3fd79d0a18b	trm_4a3fd79d0a038	emotional decision making
+trm_5679b0e9d8c20	trm_557b4844ca14d	emotional enhancement
+trm_5679b0e9d8c20	trm_51a690a7492eb	emotional enhancement
+trm_4a3fd79d0a196	1	emotional expression
+trm_557b482a7c62b	trm_557b4b154e0d9	emotional face recognition
+trm_557b482a7c62b	trm_4a3fd79d0b665	emotional face recognition
+trm_4a3fd79d0a1a2	1	emotional intelligence
+trm_4a3fd79d0a1ae	trm_4a3fd79d0a891	emotional memory
+trm_4a3fd79d0a1b9	1	emotional mimicry
+trm_557b4844ca14d	trm_51a690a7492eb	emotional reappraisal
+trm_557b4855a12b4	1	emotional self-evaluation
+trm_4a3fd79d0a1d1	trm_51a690a7492eb	emotional suppression
+trm_4a3fd79d0b67d	1	empathy
+trm_4a3fd79d0b8e5	1	encoding
+trm_4a3fd79d0b8f0	1	episodic buffer
+trm_4a3fd79d0a1e8	1	episodic learning
+trm_4a3fd79d0a1f4	trm_4a3fd79d0a04f	episodic memory
+trm_4a3fd79d0a20c	1	error detection
+trm_4a3fd79d0a218	1	error signal
+trm_4a3fd79d0a223	1	error trapping
+trm_4a3fd79d0a22f	1	excitation
+trm_56006cb5a61ac	trm_4a3fd79d09902	exogenous attention
+trm_4ebfe9a465449	1	expectancy
+trm_4a3fd79d0a25e	1	expertise
+trm_4a3fd79d0a269	trm_4a3fd79d0a746	explicit knowledge
+trm_4a3fd79d0a275	trm_4a3fd79d0a7bb	explicit learning
+trm_4a3fd79d0a281	trm_4a3fd79d0a04f	explicit memory
+trm_523ca883711cc	1	externalizing
+trm_4fe8edc62f613	trm_4a3fd79d09e87	extinction
+trm_4a3fd79d0a28c	1	extrinsic motivation
+trm_55c6f87595b39	trm_55b6b9d7c9435	face maintenance
+trm_4a3fd79d0a300	1	face perception
+trm_4a3fd79d0a30c	trm_4a3fd79d0b967	face recognition
+trm_4a3fd79d0a30c	trm_4a3fd79d0b4a9	face recognition
+trm_5595bd6c61d78	trm_5595bde6b2e95	facial age recognition
+trm_5595bd89d77c6	trm_5595bde6b2e95	facial attractiveness recognition
+trm_4a3fd79d0a318	1	facial expression
+trm_5595bd2b92003	trm_5595bde6b2e95	facial happiness recognition
+trm_5595bd2b92003	trm_4a3fd79d0b665	facial happiness recognition
+trm_5595bde6b2e95	trm_4a3fd79d0b967	facial recognition
+trm_5595bde6b2e95	trm_4a3fd79d0a300	facial recognition
+trm_5595bda0c5dc3	trm_5595bde6b2e95	facial trustworthiness recognition
+trm_5595bda0c5dc3	trm_5595be14a57c5	facial trustworthiness recognition
+trm_4a3fd79d0a323	1	false memory
+trm_4a3fd79d0b8fc	1	familiarity
+trm_52583e52d5e7a	1	fatigue
+trm_4a3fd79d0b689	trm_557b48d40d3cf	fear
+trm_557b4891e9265	trm_4a3fd79d0a038	feature comparison
+trm_4a3fd79d0b9ad	trm_55ce70b20186b	feature detection
+trm_4a3fd79d0a32f	1	feature extraction
+trm_502954662d63e	1	feature integration
+trm_4fea18ec76bc9	trm_4a3fd79d0b4cd	feature search
+trm_5524572b66764	1	feature-based attention
+trm_4a3fd79d0a33b	1	feedback processing
+trm_4a3fd79d0b9d1	1	figure ground reversal
+trm_4a3fd79d0b9dd	1	figure ground segregation
+trm_4a3fd79d0a352	1	filtering
+trm_4a3fd79d0a35e	1	fixation
+trm_4a3fd79d0a36a	1	fixed action patterns
+trm_4a3fd79d0a375	1	fluid intelligence
+trm_4a3fd79d0a381	1	focus
+trm_4a3fd79d0a38d	1	focused attention
+trm_4a3fd79d0b908	1	forgetting
+trm_4a3fd79d0a398	1	form perception
+trm_4a3fd79d0b636	1	framing
+trm_4a3fd79d0b695	1	frustration
+trm_4a3fd79d0a3a4	1	functional fixedness
+trm_4a3fd79d0a3d2	trm_4a3fd79d0a35e	gaze
+trm_4a3fd79d0a3ea	trm_4a3fd79d0a5ed	generalization
+trm_4a3fd79d0a3f6	1	generic knowledge
+trm_4a3fd79d0a402	1	gestalt
+trm_4fb3f4d58aeb0	1	Gestalt grouping
+trm_5021873f37abc	1	global precedence
+trm_4a3fd79d0a419	1	goal
+trm_4a3fd79d0a425	1	goal formation
+trm_4a3fd79d0a431	trm_4a3fd79d0ba30	goal maintenance
+trm_4a3fd79d0a43c	1	goal management
+trm_5519b5f181edd	trm_4aae62e4ad209	goal selection
+trm_4a3fd79d0a448	1	goal state
+trm_4a3fd79d0b756	trm_4a3fd79d0b8e5	grammatical encoding
+trm_4a3fd79d0b76e	1	grapheme
+trm_4a3fd79d0b779	1	graphemic buffer
+trm_4a3fd79d0b6a1	1	grief
+trm_52583d9f2ad98	1	guilt
+trm_4a3fd79d0b9e9	trm_4a3fd79d0ab7c	gustation processing
+trm_4a3fd79d0a460	trm_4a3fd79d0a7bb	gustatory learning
+trm_4a3fd79d0a460	trm_4a3fd79d0b9e9	gustatory learning
+trm_4a3fd79d0a46b	1	gustatory memory
+trm_4a3fd79d0a477	1	gustatory perception
+trm_4a3fd79d0a483	1	habit
+trm_4a3fd79d0a48e	1	habit learning
+trm_4a3fd79d0a49a	1	habit memory
+trm_4a3fd79d0a4a6	1	hallucination
+trm_4a3fd79d0b6ad	1	happiness
+trm_4a3fd79d0a4b2	1	hedonism
+trm_4a3fd79d0a4be	1	heuristic search
+trm_55c298bbe56d5	trm_4a3fd79d0aab0	high energy density food recognition
+trm_4a3fd79d0a4c9	1	hill climbing
+trm_4a3fd79d0a4e1	1	humiliation
+trm_4a3fd79d0a4ed	1	humor
+trm_523c7c13bc55f	1	hyperactivity
+trm_4a3fd79d0a4f9	trm_4a3fd79d0b49e	iconic memory
+trm_4a3fd79d0b7b5	1	illocutionary force
+trm_4a3fd79d0a504	1	imageability
+trm_4a3fd79d0a510	1	imagery
+trm_4f4511e519b53	trm_4a3fd79d0a908	imagination
+trm_4a3fd79d0a51c	trm_4a3fd79d0a746	implicit knowledge
+trm_565bce2791089	trm_4a3fd79d0a7bb	implicit learning
+trm_4a3fd79d0a533	trm_4a3fd79d0a891	implicit memory
+trm_4a3fd79d0a53f	1	imprinting
+trm_50070dce14554	1	impulsivity
+trm_523c7c886b614	1	Inappropriate speech
+trm_4a3fd79d0a54b	1	inattention
+trm_4fe3861edc919	trm_4a3fd79d0a54b	inattentional blindness
+trm_4a3fd79d0a556	trm_565bce2791089	incidental learning
+trm_4a3fd79d0a562	1	incubation
+trm_4a3fd79d0a56e	1	indignation
+trm_4a3fd79d0a579	1	induction
+trm_4a3fd79d0a590	trm_4a3fd79d0aec1	inductive reasoning
+trm_4a3fd79d0a590	trm_4a3fd79d0a5ed	inductive reasoning
+trm_4a3fd79d0a5ed	trm_4a3fd79d0a038	inference
+trm_4a3fd79d0a613	trm_4aae62e4ad209	inhibition
+trm_4a3fd79d0a61f	1	inhibition of return
+trm_4a3fd79d0a62b	1	insight
+trm_4a3fd79d0a637	1	instinct
+trm_4a3fd79d0a642	1	instrumental conditioning
+trm_4a3fd79d0a64e	1	instrumental learning
+trm_4a3fd79d0a65a	1	integration
+trm_4a3fd79d0a666	1	intelligence
+trm_4a3fd79d0a67d	1	intention
+trm_4a3fd79d0a689	trm_4a3fd79d0b908	intentional forgetting
+trm_4a3fd79d0a695	trm_4a3fd79d0a275	intentional learning
+trm_4a3fd79d0a6a1	1	intentionality
+trm_4a3fd79d0a6ad	1	interference
+trm_551f11bb8f6a8	1	Interference Control
+trm_4c3e04d656f06	trm_4aae62e4ad209	interference resolution
+trm_4a3fd79d0a6b9	trm_4a3fd79d0a891	intermediate term memory
+trm_4a3fd79d0a6c5	1	internal speech
+trm_523ca7e778c50	1	internalizing
+trm_4fe39e4388409	trm_4a3fd79d0b160	interoception
+trm_4e5506161998c	trm_4e5505361f160	interoceptive representation
+trm_4a3fd79d0a6d0	1	interrogative
+trm_558c73324a6ca	trm_558c736199abd	intertemporal choice
+trm_558c73324a6ca	trm_4a3fd79d0a038	intertemporal choice
+trm_4a3fd79d0a6dc	1	intonation
+trm_4a3fd79d0a6e8	1	intrinsic motivation
+trm_4a3fd79d0a6f4	1	introspection
+trm_4a3fd79d0a700	1	involuntary attention
+trm_4a3fd79d0a70b	1	irony
+trm_523c7afe39f78	1	irritability
+trm_4b75ed06c917d	1	joint attention
+trm_4a3fd79d0a723	1	judgment
+trm_4a3fd79d0a72e	trm_4e5505361f160	kinaesthetic representation
+trm_5521a6bc4db33	trm_4e89aebaa311d	kindness priming
+trm_5521a6bc4db33	trm_5521a3da10349	kindness priming
+trm_4a3fd79d0a73a	trm_4a3fd79d0b160	kinesthesia
+trm_4a3fd79d0a746	1	knowledge
+trm_4a3fd79d0a769	1	language
+trm_4a3fd79d0b7f4	1	language acquisition
+trm_4a3fd79d0a775	trm_4a3fd79d0b802	language comprehension
+trm_4a3fd79d0a781	trm_4a3fd79d0a275	language learning
+trm_4a3fd79d0b802	1	language processing
+trm_4a3fd79d0a78d	1	language production
+trm_502bdc6bdaa2b	trm_4a3fd79d0b492	lateral masking
+trm_4a3fd79d0a7bb	1	learning
+trm_55b6b92c1fd76	trm_557b4a7315f1b	left finger response execution
+trm_558c7b707f606	trm_557b4a7315f1b	left hand response execution
+trm_55b6b96e77df6	trm_557b4a7315f1b	left toe response execution
+trm_4a3fd79d0a7c7	1	lemma
+trm_523c7ba79c2f1	1	lethargy
+trm_502c343d20523	1	lexeme
+trm_4a3fd79d0b80f	1	lexical access
+trm_4a3fd79d0b81b	1	lexical ambiguity
+trm_4a3fd79d0a7d4	trm_4a3fd79d0b8e5	lexical encoding
+trm_4a3fd79d0b826	1	lexical processing
+trm_4a3fd79d0a7e0	trm_4a3fd79d0b826	lexical retrieval
+trm_4a3fd79d0a7e0	trm_4a3fd79d0af94	lexical retrieval
+trm_4a3fd79d0a7ec	1	lexicon
+trm_50f3c0af04e37	1	life satisfaction
+trm_551f0f822d95e	1	Limited Capacity
+trm_4a3fd79d0a7f8	1	linguistic competence
+trm_4a3fd79d0a803	trm_4a3fd79d09a10	listening
+trm_5521a0512df9a	1	localization
+trm_50eb692db57eb	trm_4a3fd79d0a972	Locomotion
+trm_4a3fd79d0a80f	1	logic
+trm_4a3fd79d0a81b	trm_4a3fd79d0aec1	logical reasoning
+trm_529d0d62290de	1	loneliness
+trm_4a3fd79d0a833	trm_4a3fd79d0a891	long term memory
+trm_5159c80c1dd24	1	loss
+trm_557b48a224b95	trm_4a3fd79d09849	loss anticipation
+trm_4a3fd79d0a83f	1	loss aversion
+trm_4a3fd79d0a84a	1	lying
+trm_4a3fd79d0ba30	1	maintenance
+trm_4a3fd79d0ba3c	1	manipulation
+trm_4a3fd79d0a862	trm_4a3fd79d0aec1	mathematical reasoning
+trm_4a3fd79d0a86e	1	meaning
+trm_4a3fd79d0a87a	trm_4a3fd79d0aec1	mechanical reasoning
+trm_4a3fd79d0a886	1	melody
+trm_4a3fd79d0a891	1	memory
+trm_4a3fd79d0b914	1	memory acquisition
+trm_4a3fd79d0b920	trm_4a3fd79d0b8cd	memory consolidation
+trm_4a3fd79d0b92c	1	memory decay
+trm_4a3fd79d0ba01	trm_4a3fd79d0af94	memory retrieval
+trm_4a3fd79d0b938	1	memory storage
+trm_4a3fd79d0b943	1	memory trace
+trm_4a3fd79d0a8ed	1	mental arithmetic
+trm_4a3fd79d0a8fc	trm_4f4511e519b53	mental imagery
+trm_4a3fd79d0a908	1	mental representation
+trm_4a3fd79d0a914	1	mental rotation
+trm_4a3fd79d0a920	1	metacognition
+trm_4a3fd79d0a92b	1	metacognitive skill
+trm_4d7fc763cf777	1	metacomprehension
+trm_4a3fd79d0b94f	trm_4a3fd79d0a920	metamemory
+trm_4a3fd79d0a937	1	metaphor
+trm_4a3fd79d0a943	1	misattribution
+trm_559f0a5b4cd36	1	monetary reward prediction error
+trm_4a3fd79d0a94f	1	monitoring
+trm_4a3fd79d0a95a	1	mood
+trm_4a3fd79d0b832	1	morphological processing
+trm_4a3fd79d0b83e	1	morphology
+trm_4fea25630ffb5	trm_4fb2c38960950	motion aftereffect
+trm_557b48aeb7d58	trm_55ce70b20186b	motion detection
+trm_4a3fd79d0a972	1	motor control
+trm_4a3fd79d0a995	1	motor learning
+trm_4a3fd79d0a9a1	1	motor planning
+trm_4a3fd79d0a9ad	1	motor program
+trm_4a3fd79d0a9b9	trm_4a3fd79d0b0a6	motor sequence learning
+trm_4a3fd79d0a9c4	1	movement
+trm_4e31d3ba7d25b	1	multisensory
+trm_4e31ced566649	1	multisensory integration
+trm_502abeab4e1d8	trm_4a3fd79d0b4b5	multistable perception
+trm_502abeab4e1d8	trm_4a3fd79d0aac8	multistable perception
+trm_502abeab4e1d8	trm_4a3fd79d09ab2	multistable perception
+trm_4a3fd79d0a9dc	1	naming
+trm_4a3fd79d0a9e8	1	narrative
+trm_4a3fd79d0aa00	1	navigation
+trm_557b48d40d3cf	trm_4a3fd79d0a17f	negative emotion
+trm_557b48e337218	trm_4a3fd79d0a33b	negative feedback processing
+trm_5521a7a1376ed	trm_4e89aebaa311d	negative priming
+trm_4d7fa2df05f23	1	neologism
+trm_51a690eeadcb7	1	neuroplasticity
+trm_4a3fd79d0aa0c	trm_4a3fd79d0b160	nociception
+trm_4a3fd79d0aa0c	trm_4fe39e4388409	nociception
+trm_4ffdc96dc85b7	trm_4a3fd79d09e35	noesis
+trm_525d8f3ed78a2	1	noise sensitivity
+trm_4a3fd79d0aa23	1	nondeclarative knowledge
+trm_4a3fd79d0aa2f	trm_4a3fd79d0a833	nondeclarative memory
+trm_4a3fd79d0aa47	trm_557b491318742	novelty detection
+trm_5678a999f1c19	trm_555cfb890d721	numerical comparison
+trm_557b48f22ba99	1	numerical scale judgment
+trm_4a3fd79d0aa5e	1	object categorization
+trm_4a3fd79d0aa6a	trm_4a3fd79d0a908	object centered representation
+trm_4a3fd79d0aa76	trm_5519b80525e89	object detection
+trm_557b4904ee26d	trm_4a3fd79d0ba30	object maintenance
+trm_4a3fd79d0aa8d	1	object manipulation
+trm_4a3fd79d0aaa4	trm_4a3fd79d0ab7c	object perception
+trm_4a3fd79d0aab0	trm_4a3fd79d0b967	object recognition
+trm_552185f5cda66	1	Object-based attention
+trm_523e0419ec219	1	obsession
+trm_557b491318742	trm_55ce70b20186b	oddball detection
+trm_5159c8a5d3d13	1	offensive (proactive) aggression
+trm_4a3fd79d0aabc	1	olfaction
+trm_4a3fd79d0aac8	trm_4a3fd79d0ab7c	olfactory perception
+trm_523f5f918cb2c	1	openness
+trm_4fb2c38960950	trm_4a3fd79d0b4b5	optical illusion
+trm_4fb2c38960950	trm_502abeab4e1d8	optical illusion
+trm_4a3fd79d0aad4	trm_4a3fd79d0a7ec	orthographic lexicon
+trm_4a3fd79d0b84a	1	orthography
+trm_4feb3f8c551cb	trm_4a3fd79d09902	overt attention
+trm_558c74b165bb1	1	overt naming
+trm_4b65259eeee34	trm_4a3fd79d0b160	pain
+trm_4b65259eeee34	trm_4a3fd79d0aa0c	pain
+trm_4e6127bd91be9	1	pain habituation
+trm_4e61264db33d4	1	pain sensitization 
+trm_52405e33adafa	1	paranoia
+trm_4d7fa1a3e2a10	1	paraphasia
+trm_4a3fd79d0ab42	1	parsing
+trm_4a3fd79d0ab4d	trm_4a3fd79d09902	passive attention
+trm_4a3fd79d0ab59	1	past tense
+trm_557b49206928b	trm_55b6b9d7c9435	pattern maintenance
+trm_4a3fd79d0ab65	trm_4a3fd79d0b967	pattern recognition
+trm_4a3fd79d0ab70	trm_4a3fd79d098c9	pavlovian conditioning
+trm_4a3fd79d0ab7c	1	perception
+trm_4a3fd79d0ab88	1	perceptual binding
+trm_4a3fd79d0ab93	1	perceptual categorization
+trm_4a3fd79d0ab9f	1	perceptual fluency
+trm_4a3fd79d0abaa	1	perceptual identification
+trm_4a3fd79d0abb6	trm_565bce2791089	perceptual learning
+trm_5519ba1746e95	trm_4e89aebaa311d	perceptual priming
+trm_4a3fd79d0abc1	1	perceptual similarity
+trm_4a3fd79d0abcd	1	perceptual skill
+trm_525c58f9aabae	1	perfectionism
+trm_4a3fd79d0ac30	trm_4aae62e4ad209	performance monitoring
+trm_4a3fd79d0ac4a	1	phonation
+trm_4d7fa1ee2f870	1	phonemic paraphasia
+trm_4a3fd79d0b862	1	phonetics
+trm_558c74156b7ee	trm_52b5f1ef4f9cc	phonological assembly
+trm_5240fddc2e43e	1	phonological awareness
+trm_4a3fd79d0ac61	1	phonological buffer
+trm_4a3fd79d0ac7a	1	phonological code
+trm_558c73b3663a6	trm_52b5f1ef4f9cc	phonological comparison
+trm_558c73b3663a6	trm_555cfb890d721	phonological comparison
+trm_4a3fd79d0ac87	trm_4a3fd79d0b8e5	phonological encoding
+trm_4a3fd79d0ac87	trm_4a3fd79d0b8e5	phonological encoding
+trm_4a3fd79d0ba48	trm_4a3fd79d0ba60	phonological loop
+trm_52b5f1ef4f9cc	1	phonological processing
+trm_4a3fd79d0ac93	trm_4a3fd79d0af94	phonological retrieval
+trm_4a3fd79d0ac9e	trm_52b5f1ef4f9cc	phonological working memory
+trm_4a3fd79d0ac9e	trm_4a3fd79d0b5a7	phonological working memory
+trm_5029751d118c4	1	phototransduction
+trm_557b493133416	trm_55b6b9d7c9435	place maintenance
+trm_4a3fd79d0acc1	1	planning
+trm_557b493e4203a	trm_4a3fd79d0a33b	positive feedback processing
+trm_5521a3da10349	trm_4e89aebaa311d	positive priming
+trm_557b494ca540d	trm_557b48a224b95	potential monetary loss
+trm_557b495cdde57	trm_557b4a81a4a17	potential monetary reward
+trm_4a3fd79d0ad12	trm_4a3fd79d0a5ed	pragmatic inference
+trm_4a3fd79d0ad1d	trm_4a3fd79d0a746	pragmatic knowledge
+trm_4a3fd79d0ad29	trm_4a3fd79d0aec1	pragmatic reasoning
+trm_4a3fd79d0ad41	1	preattentive processing
+trm_4a3fd79d0ad4c	1	preconscious perception
+trm_4a3fd79d0ad64	1	prejudice
+trm_4a3fd79d0ad94	trm_4a3fd79d0a891	primary memory
+trm_4e89aebaa311d	trm_565bce2791089	priming
+trm_4e89aebaa311d	trm_4a3fd79d0a533	priming
+trm_557b49851e991	trm_4aae62e4ad209	proactive control
+trm_4a3fd79d0adab	1	proactive interference
+trm_4a3fd79d0adb7	trm_4a3fd79d0aec1	problem solving
+trm_4a3fd79d0adc3	trm_4a3fd79d0a746	procedural knowledge
+trm_4a3fd79d0adcf	trm_565bce2791089	procedural learning
+trm_4a3fd79d0addc	trm_4a3fd79d0aa2f	procedural memory
+trm_4a3fd79d0ade8	1	procedural rule
+trm_4a3fd79d0adf4	1	processing capacity
+trm_4a3fd79d0ae00	1	processing stage
+trm_5154b23a3156a	1	Production of non-facial communication
+trm_5154aa9735134	1	Productive facial communication
+trm_4a3fd79d0ae17	1	pronunciation
+trm_4a3fd79d0ae2b	1	proper noun
+trm_4a3fd79d0ae3d	trm_4a3fd79d0b160	proprioception
+trm_4a3fd79d0ae58	1	prosodic stress
+trm_4a3fd79d0ae64	1	prosody
+trm_4a3fd79d0ae70	trm_4a3fd79d0a891	prospective memory
+trm_4a3fd79d0ae7b	trm_4a3fd79d0acc1	prospective planning
+trm_4a3fd79d0ae87	trm_4a3fd79d0a908	prototype
+trm_4ffca95528c88	1	psychological refractory period
+trm_52405de6b7a63	1	psychosis
+trm_5534111a8bc96	trm_557b48e337218	punishment processing
+trm_4a3fd79d0aeaa	trm_4a3fd79d0b11a	quantitative skill
+trm_4a3fd79d0aeb6	trm_4a3fd79d0b4a9	reading
+trm_4a3fd79d0aec1	trm_4a3fd79d0a038	reasoning
+trm_4a3fd79d0b95b	trm_4a3fd79d0a891	recall
+trm_5154a9f45903f	1	reception of facial communication
+trm_5154b049c279f	1	Reception of non-facial communication
+trm_4a3fd79d0b967	trm_4a3fd79d0a891	recognition
+trm_4a3fd79d0b972	trm_4a3fd79d0b920	reconsolidation
+trm_4a3fd79d0aecd	1	regret
+trm_4a3fd79d0ba54	1	rehearsal
+trm_4a3fd79d0ba60	1	rehearsal loop
+trm_557b4993a0fdd	trm_4a3fd79d0a7bb	reinforcement learning
+trm_502403240a2a2	1	reinstatement
+trm_555cfb890d721	trm_557b4891e9265	relational comparison
+trm_4a3fd79d0aed8	trm_4a3fd79d0a275	relational learning
+trm_4a3fd79d0aee4	trm_4a3fd79d0a04f	remote memory
+trm_5521a45a397a6	trm_5521a3da10349	Repetition priming
+trm_4a3fd79d0aeef	trm_4a3fd79d0a891	repressed memory
+trm_557b499fac085	trm_4c3e04d656f06	resistance to distractor inference
+trm_4f3a72a028d90	1	resource
+trm_4a3fd79d0af4c	1	resource limit
+trm_4a3fd79d0af5a	1	resource sharing
+trm_559f0a129c136	1	response bias
+trm_557b49ad14adf	trm_557b4add1837e	response conflict
+trm_557b4a7315f1b	1	response execution
+trm_4a3fd79d0af66	trm_4a3fd79d0a613	response inhibition
+trm_5521a663cd89c	trm_4e89aebaa311d	Response priming
+trm_4a3fd79d0af71	1	response selection
+trm_52068e5bd9aa1	1	restricted behavior
+trm_4a3fd79d0af7d	trm_4a3fd79d0b8e5	retention
+trm_4a3fd79d0af94	1	retrieval
+trm_4a3fd79d0afa0	1	retrieval cue
+trm_4a3fd79d0afab	trm_4a3fd79d0a6ad	retroactive interference
+trm_557b4a81a4a17	trm_4a3fd79d09849	reward anticipation
+trm_5159cb12a0f92	trm_557b4993a0fdd	reward learning
+trm_4b6525253c63f	trm_4a3fd79d0a33b	reward processing
+trm_4b6525253c63f	trm_557b493e4203a	reward processing
+trm_5159c94667677	1	reward valuation
+trm_4a3fd79d0afc3	1	rhythm
+trm_55b6b910b4b23	trm_557b4a7315f1b	right finger response execution
+trm_558c7b337080f	trm_557b4a7315f1b	right hand response execution
+trm_55b6b952c1b4c	trm_557b4a7315f1b	right toe response execution
+trm_523e0a4b443dc	trm_523e0419ec219	rigidity
+trm_4a3fd79d0afcf	1	risk
+trm_55ce71c47f37b	1	risk aversion
+trm_557b4a913f8cc	1	risk processing
+trm_4a3fd79d0b64e	1	risk seeking
+trm_4a3fd79d0afda	trm_4a3fd79d0a746	route knowledge
+trm_4a3fd79d0afe6	1	routine
+trm_4a3fd79d0aff2	1	rule
+trm_4a3fd79d0affd	trm_4a3fd79d0a7bb	rule learning
+trm_4a3fd79d0b014	trm_4a3fd79d0a17f	sadness
+trm_4a3fd79d0b014	trm_557b48d40d3cf	sadness
+trm_4a3fd79d0b020	1	salience
+trm_4a3fd79d0b02c	1	schema
+trm_4a3fd79d0b037	1	search
+trm_4a3fd79d0b043	trm_4a3fd79d09902	selective attention
+trm_557b4aa070c10	trm_4aae62e4ad209	selective control
+trm_4ee8facd77dfc	trm_4aae62e4ad209	self control
+trm_5154b39a3193d	1	self knowledge
+trm_4a3fd79d0b05e	trm_4a3fd79d0a94f	self monitoring
+trm_4f4672db34a46	1	self talk
+trm_557b4ab076338	trm_4a3fd79d09c28	semantic categorization
+trm_4a3fd79d0b06b	1	semantic category
+trm_4d2201d530697	1	semantic information
+trm_4a3fd79d0b077	trm_4a3fd79d0a833	semantic knowledge
+trm_4a3fd79d0b083	trm_4a3fd79d0a04f	semantic memory
+trm_51838baad343e	1	semantic network
+trm_5521a51034353	trm_4e89aebaa311d	Semantic priming
+trm_4a3fd79d0b87a	1	semantic processing
+trm_4a3fd79d0b08f	trm_4a3fd79d0b5a7	semantic working memory
+trm_4e5faabfe8ce3	trm_4e5badf095692	sense of body ownership
+trm_4e5badf095692	trm_4e5505361f160	sense of ownership
+trm_525d8e198e0da	1	sensitivity to change
+trm_525d8cd1c9cc3	1	sensory defensiveness
+trm_4a3fd79d0b09a	trm_4a3fd79d0a891	sensory memory
+trm_4a3fd79d0b892	trm_4a3fd79d0a775	sentence comprehension
+trm_4a3fd79d0b89e	trm_4a3fd79d0b802	sentence processing
+trm_4a3fd79d0b8aa	1	sentence production
+trm_568427366401c	trm_4a3fd79d0b89e	sentence recognition 
+trm_4a3fd79d0b0a6	trm_4a3fd79d0a7bb	sequence learning
+trm_4a3fd79d0b0b1	trm_4a3fd79d0a275	serial learning
+trm_4a3fd79d0b0bd	1	serial processing
+trm_4a3fd79d0b0c8	trm_4a3fd79d0b037	serial search
+trm_4a3fd79d0b607	trm_4a3fd79d0b613	set shifting
+trm_4a3fd79d0b0df	1	shallow processing
+trm_4a3fd79d0b0eb	trm_4a3fd79d0a17f	shame
+trm_553967f006b70	trm_4a3fd79d0aab0	shape recognition
+trm_4a3fd79d0b0f7	trm_4a3fd79d0a891	short term memory
+trm_4a3fd79d0b10e	1	skepticism
+trm_4a3fd79d0b11a	1	skill
+trm_4a3fd79d0b125	trm_565bce2791089	skill acquisition
+trm_5159c70d0e98e	1	sleep
+trm_4a3fd79d0b13d	1	social cognition
+trm_4a3fd79d0b148	1	social context
+trm_5595be14a57c5	trm_4a3fd79d0a5ed	social inference
+trm_4a3fd79d0b154	1	social intelligence
+trm_52090251db8c8	1	social motivation
+trm_523e053844495	trm_4a3fd79d0b689	social phobia
+trm_4a3fd79d0b160	trm_4a3fd79d0ab7c	somatosensation
+trm_4a3fd79d0b18f	trm_4a3fd79d0a1f4	source memory
+trm_4a3fd79d0b19b	1	source monitoring
+trm_4a3fd79d0b1a6	1	spatial ability
+trm_4a3fd79d0b1b2	trm_4a3fd79d0b46f	spatial attention
+trm_4a3fd79d0b1bd	1	spatial cognition
+trm_5519bb7767d98	trm_5521a0512df9a	spatial localization
+trm_4a3fd79d0b1d5	trm_4a3fd79d0a891	spatial memory
+trm_557b4abe521af	trm_4a3fd79d0b043	spatial selective attention
+trm_557b4abe521af	trm_4a3fd79d0b1b2	spatial selective attention
+trm_4a3fd79d0b1e0	trm_4a3fd79d0b5a7	spatial working memory
+trm_4a3fd79d0b1f7	trm_4a3fd79d0b238	speech perception
+trm_4a3fd79d0b238	1	speech processing
+trm_4a3fd79d0b247	1	speech production
+trm_5024002a85b1f	1	spontaneous recovery
+trm_4a3fd79d0b26d	1	spreading activation
+trm_4a3fd79d0b279	trm_4fea04a02ce37	stereopsis
+trm_4a3fd79d0b285	1	stereotypes
+trm_5519b80525e89	trm_55ce70b20186b	stimulus detection
+trm_55c6f58e77fbe	trm_4a3fd79d0a775	story comprehension
+trm_4a3fd79d0b29c	1	strategy
+trm_50eb5469ba37a	trm_4a3fd79d0a972	Strength
+trm_4a3fd79d0b2a8	1	stress
+trm_557b4acdee820	trm_55b6b9d7c9435	string maintenance
+trm_4d21e9a7dd8ca	1	subconscious
+trm_559f09a5cdca9	trm_558c736199abd	subjective food value
+trm_558c736199abd	trm_4a3fd79d0a723	subjective value judgment
+trm_4a3fd79d0b2b4	1	sublexical route
+trm_4a3fd79d0b2bf	1	subliminal perception
+trm_52583e8a46ded	1	suicidal ideation
+trm_4a3fd79d0b2fa	1	supervisory attentional system
+trm_55e1b27f5655e	1	Surface dyslexia
+trm_4a3fd79d0b306	trm_4a3fd79d0a17f	surprise
+trm_4a3fd79d0b311	trm_4a3fd79d09902	sustained attention
+trm_4e31e6dca01ca	trm_4a3fd79d0ab7c	synchrony perception
+trm_4a3fd79d0b340	1	syntactic parsing
+trm_4a3fd79d0b34b	1	syntactic processing
+trm_4a3fd79d0b357	1	syntax
+trm_4e416f1373936	trm_4a3fd79d0b5a7	tactile working memory
+trm_557b4add1837e	1	task difficulty
+trm_4c3e0646a2408	1	task set
+trm_4a3fd79d0b613	trm_4aae62e4ad209	task switching
+trm_4a3fd79d0b363	1	taste aversion
+trm_4a3fd79d0b37a	trm_4a3fd79d0a775	text comprehension
+trm_4a3fd79d0b386	1	text processing
+trm_4a3fd79d0b392	trm_4a3fd79d0b13d	theory of mind
+trm_4a3fd79d0b39d	trm_4a3fd79d0b160	thermosensation
+trm_4fa295124a375	1	thought
+trm_55b6b8b8e7870	trm_4a3fd79d0b967	tone recognition
+trm_55b6b8b8e7870	trm_4a3fd79d09ab2	tone recognition
+trm_55b6b98b88f45	trm_557b4a7315f1b	tongue response execution
+trm_557b4aeaeb744	trm_55b6b9d7c9435	tool maintenance
+trm_4a3fd79d0b3cb	1	top down processing
+trm_50aff037c389f	1	trait anxiety
+trm_50297454e516b	1	transduction
+trm_4a3fd79d0b3ef	trm_4a3fd79d0a891	traumatic memory
+trm_4a3fd79d0b3fa	1	uncertainty
+trm_4feb44e5ae25b	trm_4a3fd79d0ab7c	unconscious perception
+trm_4feb44e5ae25b	trm_4a3fd79d0b406	unconscious perception
+trm_4a3fd79d0b406	1	unconscious process
+trm_5159c0a633cda	1	understanding mental states
+trm_4e31d365bc7e2	1	unisensory
+trm_4c3e05903e4bb	trm_4aae62e4ad209	updating
+trm_4a3fd79d0b412	1	utility
+trm_4a3fd79d0b429	1	valence
+trm_500d8aef38f2c	trm_4fb2c38960950	vection
+trm_4a3fd79d0b44c	1	verbal fluency
+trm_4a3fd79d0b457	trm_4a3fd79d0a891	verbal memory
+trm_50f382d7abdff	1	vestibular control
+trm_500d8bcf5f29a	1	visual acuity
+trm_500d8c8fcc520	1	visual angle
+trm_4a3fd79d0b46f	trm_4a3fd79d09902	visual attention
+trm_4ff36d79c26c6	trm_4a3fd79d0ab7c	visual awareness
+trm_557b4af7cc1cb	trm_4a3fd79d0b4a9	visual body recognition
+trm_4a3fd79d0b47b	1	visual buffer
+trm_557b4b05ae470	trm_5519b7525d7a2	visual color discrimination
+trm_557b4b05ae470	trm_4a3fd79d09d93	visual color discrimination
+trm_557b4b154e0d9	trm_557b4b7176394	visual face recognition
+trm_557b4b154e0d9	trm_4a3fd79d0a30c	visual face recognition
+trm_557b4b27dfd5e	trm_4a3fd79d0b4b5	visual form discrimination
+trm_557b4b27dfd5e	trm_4a3fd79d0a398	visual form discrimination
+trm_557b4b27dfd5e	trm_5519b7525d7a2	visual form discrimination
+trm_557b4b3a6a34d	trm_4a3fd79d0a398	visual form recognition
+trm_557b4b3a6a34d	trm_557b4b7176394	visual form recognition
+trm_557b4b3a6a34d	trm_4a3fd79d0b4b5	visual form recognition
+trm_4a3fd79d0b487	trm_4a3fd79d0b4d8	visual imagery
+trm_558c7439832d9	trm_557b4b3a6a34d	visual letter recognition
+trm_5519b92bde7dc	trm_5521a0512df9a	visual localization
+trm_4a3fd79d0b492	1	visual masking
+trm_4a3fd79d0b49e	trm_4a3fd79d0a891	visual memory
+trm_557b4b47d994a	trm_557b4b3a6a34d	visual number recognition
+trm_557b4b56de455	trm_4a3fd79d0aa76	visual object detection
+trm_557b4b56de455	trm_4a3fd79d0b4b5	visual object detection
+trm_559f0986182cc	trm_557b4904ee26d	visual object maintenance
+trm_4a3fd79d0b4a9	trm_4a3fd79d0aab0	visual object recognition
+trm_4a3fd79d0b4a9	trm_557b4b7176394	visual object recognition
+trm_502ad54c11389	trm_4a3fd79d0b4b5	visual orientation
+trm_557b4b652cbec	trm_557b4b7176394	visual pattern recognition
+trm_557b4b652cbec	trm_4a3fd79d0ab65	visual pattern recognition
+trm_4a3fd79d0b4b5	trm_4a3fd79d0ab7c	visual perception
+trm_557b4b7e68727	trm_557b4b7176394	visual place recognition
+trm_558c73f3c8c6f	trm_557b4b9ccdc4a	visual pseudoword recognition
+trm_557b4b7176394	trm_4a3fd79d0b4b5	visual recognition
+trm_557b4b7176394	trm_4a3fd79d0b967	visual recognition
+trm_4a3fd79d0b4c1	trm_4a3fd79d0a908	visual representation
+trm_4a3fd79d0b4cd	trm_4a3fd79d0b037	visual search
+trm_558c7b5228ed4	trm_568427366401c	visual sentence recognition
+trm_558c7b5228ed4	trm_557b4b7176394	visual sentence recognition
+trm_55ef1fd2bc418	trm_557b4b3a6a34d	visual string recognition
+trm_557b4b8cd05ca	trm_4a3fd79d0b4a9	visual tool recognition
+trm_557b4b9ccdc4a	trm_4a3fd79d0b58f	visual word recognition
+trm_557b4b9ccdc4a	trm_557b4b3a6a34d	visual word recognition
+trm_4a3fd79d0b4d8	trm_4a3fd79d0b49e	visual working memory
+trm_4a3fd79d0b4d8	trm_4a3fd79d0b5a7	visual working memory
+trm_4a3fd79d0b507	1	visuospatial sketch pad
+trm_55ef3ba010121	trm_557b4a7315f1b	vocal response execution
+trm_4a3fd79d0b530	1	wisdom
+trm_4a3fd79d0b548	trm_4a3fd79d0a775	word comprehension
+trm_4a3fd79d0b55f	1	word generation
+trm_557b4bb7cf05b	trm_55b6b9d7c9435	word maintenance
+trm_4a3fd79d0b56b	1	word order
+trm_4a3fd79d0b583	1	word pronunciation
+trm_4a3fd79d0b58f	trm_4a3fd79d0b967	word recognition
+trm_4a3fd79d0b59b	1	word repetition
+trm_4a3fd79d0b5a7	trm_4a3fd79d0a891	working memory
+trm_55b6b9d7c9435	trm_4a3fd79d0ba30	working memory maintenance
+trm_4a3fd79d0ba6c	1	working memory retrieval
+trm_4a3fd79d0ba77	1	working memory storage
+trm_55b6b9a666604	trm_4c3e05903e4bb	working memory updating
+trm_4f46753b8be4f	1	worldview
+node_801	trm_558c7b14c076e	420
+node_802	trm_4a3fd79d0af71	420
+node_803	trm_558c7b707f606	420
+node_804	trm_557b476527a27	159
+node_805	trm_55b6b9d7c9435	159
+node_806	trm_55b6b9a666604	159
+node_807	trm_557b482a7c62b	3129
+node_808	trm_4a3fd79d0af71	3129
+node_809	trm_557b4a7315f1b	3129
+node_810	trm_557b4891e9265	3129
+node_811	trm_4a3fd79d0afcf	122
+node_812	trm_557b4a81a4a17	122
+node_813	trm_557b48a224b95	122
+node_814	trm_557b4b56de455	118
+node_815	trm_4a3fd79d0af71	118
+node_816	trm_557b4a7315f1b	118
+node_817	trm_4a3fd79d0a33b	118
+node_818	trm_557b476527a27	2723
+node_819	trm_4c3e05903e4bb	3194
+node_820	trm_557b4b8cd05ca	3194
+node_821	trm_557b4aeaeb744	3194
+node_822	trm_557b4a7315f1b	3194
+node_823	trm_4a3fd79d0af71	3194
+node_824	trm_559f09a5cdca9	111
+node_825	trm_557b4add1837e	116
+node_826	trm_55c298bbe56d5	10924
+node_827	trm_4a3fd79d0b4a9	2714
+node_828	trm_4a3fd79d0af71	2714
+node_829	trm_557b4a7315f1b	2714
+node_830	trm_4c3e05903e4bb	2714
+node_831	trm_559f0986182cc	2714
+node_832	trm_557b4aa070c10	3041
+node_833	trm_557b474e2b578	3041
+node_834	trm_557b491318742	3041
+node_835	trm_4a3fd79d0af66	3041
+node_836	trm_557b47abe9a34	8718
+node_837	trm_55b6b92c1fd76	3158
+node_838	trm_557b4b652cbec	395
+node_839	trm_4a3fd79d0af71	142
+node_840	trm_557b4b3a6a34d	142
+node_841	trm_557b4a7315f1b	142
+node_842	trm_557b49851e991	142
+node_843	trm_557b4aa070c10	142
+node_844	trm_557b491318742	142
+node_845	trm_4a3fd79d0af66	142
+node_846	trm_557b474e2b578	142
+node_847	trm_4a3fd79d0a20c	142
+node_848	trm_558c7b14c076e	412
+node_849	trm_55b6b910b4b23	3162
+node_850	trm_5678a999f1c19	157
+node_851	trm_557b4b47d994a	157
+node_852	trm_4a3fd79d0af71	157
+node_853	trm_4c3e05903e4bb	157
+node_854	trm_557b4b56de455	120
+node_855	trm_4a3fd79d0af71	120
+node_856	trm_557b4a7315f1b	120
+node_857	trm_4a3fd79d0b64e	120
+node_858	trm_567982752ff4a	120
+node_859	trm_4a3fd79d0b392	2883
+node_860	trm_557b4b9ccdc4a	136
+node_861	trm_4a3fd79d0a20c	136
+node_862	trm_557b4993a0fdd	136
+node_863	trm_4a3fd79d0af71	183
+node_864	trm_557b4a7315f1b	183
+node_865	trm_557b4abe521af	183
+node_866	trm_557b4b3a6a34d	183
+node_867	trm_4a3fd79d0b392	1586
+node_868	trm_557b482a7c62b	1586
+node_869	trm_4a3fd79d0af71	166
+node_870	trm_4a3fd79d0b5a7	166
+node_871	trm_4c3e05903e4bb	166
+node_872	trm_557b4b3a6a34d	166
+node_873	trm_557b4b9ccdc4a	166
+node_874	trm_557b4a7315f1b	166
+node_875	trm_4a3fd79d09c28	166
+node_876	trm_557b493e4203a	166
+node_877	trm_557b4993a0fdd	166
+node_878	trm_557b48e337218	166
+node_879	trm_557b476527a27	166
+node_880	trm_55b6b96e77df6	3156
+node_881	trm_555cfb890d721	8820
+node_882	trm_557b4a7315f1b	3191
+node_883	trm_4c3e05903e4bb	3191
+node_884	trm_557b477b4a15f	3191
+node_885	trm_557b4af7cc1cb	3191
+node_886	trm_4a3fd79d0af71	3191
+node_887	trm_557b4b3a6a34d	3131
+node_888	trm_557b4891e9265	3131
+node_889	trm_557b4a7315f1b	3131
+node_890	trm_4a3fd79d0af71	3131
+node_891	trm_557b4b3a6a34d	141
+node_892	trm_4a3fd79d09c28	141
+node_893	trm_4a3fd79d0af71	141
+node_894	trm_557b4a7315f1b	141
+node_895	trm_4a3fd79d09af8	415
+node_896	trm_558c7ae1eaf86	415
+node_897	trm_558c73f3c8c6f	2826
+node_898	trm_4a3fd79d0af71	2826
+node_899	trm_55ef3ba010121	2826
+node_900	trm_557b49851e991	2826
+node_901	trm_557b4acdee820	190
+node_902	trm_55ef1fd2bc418	190
+node_903	trm_4c3e05903e4bb	190
+node_904	trm_4a3fd79d09c28	140
+node_905	trm_4a3fd79d0af71	140
+node_906	trm_557b4a7315f1b	140
+node_907	trm_557b4b3a6a34d	140
+node_908	trm_557b478ce1c24	140
+node_909	trm_557b494ca540d	8719
+node_910	trm_557b4b652cbec	187
+node_911	trm_557b49206928b	187
+node_912	trm_4c3e05903e4bb	187
+node_913	trm_555cfb890d721	3175
+node_914	trm_557b4a7315f1b	3175
+node_915	trm_4a3fd79d0af71	3175
+node_916	trm_557b4891e9265	3175
+node_917	trm_557b4b3a6a34d	3175
+node_918	trm_557b4b652cbec	3175
+node_919	trm_557b4b7e68727	2863
+node_920	trm_558c7b5228ed4	419
+node_921	trm_4a3fd79d0a20c	177
+node_922	trm_557b495cdde57	4
+node_923	trm_4c3e05903e4bb	3192
+node_924	trm_55c6f87595b39	3192
+node_925	trm_557b4b154e0d9	3192
+node_926	trm_557b4a7315f1b	3192
+node_927	trm_4a3fd79d0af71	3192
+node_928	trm_4a3fd79d0af71	3154
+node_929	trm_4a3fd79d0b5a7	3154
+node_930	trm_557b4b9ccdc4a	3154
+node_931	trm_5159beaf80413	3180
+node_932	trm_557b4b3a6a34d	143
+node_933	trm_4a3fd79d0af71	143
+node_934	trm_557b4a7315f1b	143
+node_935	trm_557b49851e991	143
+node_936	trm_4a3fd79d09c5b	1583
+node_937	trm_557b482a7c62b	1583
+node_938	trm_4a3fd79d0b392	1583
+node_939	trm_4a3fd79d09c5b	1585
+node_940	trm_4a3fd79d0b4a9	188
+node_941	trm_557b4904ee26d	188
+node_942	trm_4c3e05903e4bb	188
+node_943	trm_557b4b3a6a34d	172
+node_944	trm_557b4b9ccdc4a	172
+node_945	trm_557b48e337218	172
+node_946	trm_4a3fd79d0af71	172
+node_947	trm_557b4a7315f1b	172
+node_948	trm_4a3fd79d09c28	172
+node_949	trm_4a3fd79d0a20c	172
+node_950	trm_557b4993a0fdd	172
+node_951	trm_557b4b3a6a34d	165
+node_952	trm_557b4b9ccdc4a	165
+node_953	trm_4a3fd79d0af71	165
+node_954	trm_557b4a7315f1b	165
+node_955	trm_4a3fd79d09c28	165
+node_956	trm_557b493e4203a	165
+node_957	trm_557b4993a0fdd	165
+node_958	trm_557b48e337218	165
+node_959	trm_55ef273a77a86	165
+node_960	trm_4a3fd79d0a1d1	2866
+node_961	trm_4a3fd79d0af71	164
+node_962	trm_557b4b47d994a	164
+node_963	trm_55b6b9a666604	164
+node_964	trm_557b4b56de455	119
+node_965	trm_5534111a8bc96	119
+node_966	trm_558c7439832d9	2824
+node_967	trm_4a3fd79d0af71	2824
+node_968	trm_55ef3ba010121	2824
+node_969	trm_557b49851e991	2824
+node_970	trm_559f0a5b4cd36	2963
+node_971	trm_56798c5f25b0c	2963
+node_972	trm_4a3fd79d0a20c	146
+node_973	trm_557b4b3a6a34d	146
+node_974	trm_4a3fd79d0af71	146
+node_975	trm_557b4a7315f1b	146
+node_976	trm_557b49851e991	146
+node_977	trm_557b491318742	146
+node_978	trm_4a3fd79d0af66	146
+node_979	trm_557b474e2b578	146
+node_980	trm_4a3fd79d0af71	149
+node_981	trm_557b4b3a6a34d	149
+node_982	trm_557b49851e991	149
+node_983	trm_557b4aa070c10	149
+node_984	trm_557b491318742	149
+node_985	trm_4a3fd79d0af66	149
+node_986	trm_557b474e2b578	149
+node_987	trm_55b6b98b88f45	3164
+node_988	trm_557b4b3a6a34d	135
+node_989	trm_4a3fd79d0af71	135
+node_990	trm_557b4a7315f1b	135
+node_991	trm_4a3fd79d09c28	135
+node_992	trm_557b491318742	2729
+node_993	trm_55b6b910b4b23	2729
+node_994	trm_557b4b9ccdc4a	1750
+node_995	trm_557b4b9ccdc4a	8730
+node_996	trm_557b4a7315f1b	1750
+node_997	trm_557b4a7315f1b	8730
+node_998	trm_4a3fd79d0af71	1750
+node_999	trm_4a3fd79d0af71	8730
+node_1000	trm_557b4855a12b4	1750
+node_1001	trm_557b4855a12b4	8730
+node_1002	trm_557b48f22ba99	1750
+node_1003	trm_557b48f22ba99	8730
+node_1004	trm_557b4b154e0d9	3186
+node_1005	trm_4a3fd79d0af71	3186
+node_1006	trm_557b4a7315f1b	3186
+node_1007	trm_55c6f87595b39	3186
+node_1008	trm_557b4b9ccdc4a	186
+node_1009	trm_557b4bb7cf05b	186
+node_1010	trm_4c3e05903e4bb	186
+node_1011	trm_557b4b652cbec	3173
+node_1012	trm_557b4b3a6a34d	3173
+node_1013	trm_557b4891e9265	3173
+node_1014	trm_4a3fd79d0af71	3173
+node_1015	trm_557b4a7315f1b	3173
+node_1016	trm_557b49851e991	3039
+node_1017	trm_557b4aa070c10	3039
+node_1018	trm_4a3fd79d0a20c	3040
+node_1019	trm_557b4a7315f1b	3040
+node_1020	trm_55c6f58e77fbe	3142
+node_1021	trm_558c7b14c076e	3142
+node_1022	trm_557b4b9ccdc4a	138
+node_1023	trm_4a3fd79d0a20c	138
+node_1024	trm_557b4993a0fdd	138
+node_1025	trm_557b4af7cc1cb	3185
+node_1026	trm_557b477b4a15f	3185
+node_1027	trm_557b4a7315f1b	3185
+node_1028	trm_4a3fd79d0af71	3185
+node_1029	trm_557b4b3a6a34d	173
+node_1030	trm_557b4b9ccdc4a	173
+node_1031	trm_557b493e4203a	173
+node_1032	trm_4a3fd79d0af71	173
+node_1033	trm_557b4a7315f1b	173
+node_1034	trm_4a3fd79d09c28	173
+node_1035	trm_557b4993a0fdd	173
+node_1036	trm_557b491318742	147
+node_1037	trm_557b474e2b578	147
+node_1038	trm_557b4b3a6a34d	147
+node_1039	trm_4a3fd79d0af71	147
+node_1040	trm_557b49851e991	147
+node_1041	trm_4a3fd79d0af66	147
+node_1042	trm_558c7b5228ed4	407
+node_1043	trm_4a3fd79d0af71	407
+node_1044	trm_558c7b337080f	407
+node_1045	trm_558c7b14c076e	394
+node_1046	trm_4a3fd79d0af71	394
+node_1047	trm_558c7b337080f	394
+node_1048	trm_557b4b27dfd5e	2718
+node_1049	trm_557b4b05ae470	2718
+node_1050	trm_4a3fd79d0b392	1587
+node_1051	trm_557b4b3a6a34d	3179
+node_1052	trm_4a3fd79d0b1b2	3179
+node_1053	trm_557b48aeb7d58	3179
+node_1054	trm_4a3fd79d0af71	3179
+node_1055	trm_557b4a7315f1b	3179
+node_1056	trm_557b471bc6cd8	3179
+node_1057	trm_4c3e05903e4bb	3193
+node_1058	trm_557b493133416	3193
+node_1059	trm_557b4b7e68727	3193
+node_1060	trm_557b4a7315f1b	3193
+node_1061	trm_4a3fd79d0af71	3193
+node_1062	trm_557b49ad14adf	178
+node_1063	trm_557b499fac085	178
+node_1064	trm_558c7b5228ed4	401
+node_1065	trm_558c7b707f606	401
+node_1066	trm_4a3fd79d0af71	401
+node_1067	trm_559f0986182cc	8625
+node_1068	trm_4c3e05903e4bb	8625
+node_1069	trm_557b478ce1c24	139
+node_1070	trm_557b4b3a6a34d	139
+node_1071	trm_557b4a7315f1b	139
+node_1072	trm_4a3fd79d0af71	139
+node_1073	trm_4a3fd79d09c28	139
+node_1074	trm_4a3fd79d0af71	154
+node_1075	trm_557b4b3a6a34d	154
+node_1076	trm_557b4a7315f1b	154
+node_1077	trm_557b49851e991	154
+node_1078	trm_557b4aa070c10	154
+node_1079	trm_557b491318742	154
+node_1080	trm_557b474e2b578	154
+node_1081	trm_557b491318742	2731
+node_1082	trm_55b6b910b4b23	2731
+node_1083	trm_557b4b8cd05ca	3188
+node_1084	trm_557b4aeaeb744	3188
+node_1085	trm_4a3fd79d0af71	3188
+node_1086	trm_557b4a7315f1b	3188
+node_1087	trm_557b4b47d994a	3
+node_1088	trm_4a3fd79d0af71	3
+node_1089	trm_557b4a7315f1b	3
+node_1090	trm_557b4817db34d	3
+node_1091	trm_557b4a913f8cc	3
+node_1092	trm_55ef153d47bc0	3
+node_1093	trm_557b48f22ba99	3
+node_1094	trm_557b4b9ccdc4a	418
+node_1095	trm_558c7ae1eaf86	418
+node_1096	trm_557b4b7e68727	3187
+node_1097	trm_557b493133416	3187
+node_1098	trm_4a3fd79d0af71	3187
+node_1099	trm_557b4a7315f1b	3187
+node_1100	trm_55b6b952c1b4c	3160
+node_1101	trm_4a3fd79d09c5b	1584
+node_1102	trm_4a3fd79d0b392	1584
+node_1103	trm_4a3fd79d0af71	144
+node_1104	trm_557b4b3a6a34d	144
+node_1105	trm_557b4a7315f1b	144
+node_1106	trm_557b49851e991	144
+node_1107	trm_557b4aa070c10	144
+node_1108	trm_557b48d40d3cf	8727
