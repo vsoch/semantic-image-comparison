@@ -21,10 +21,11 @@ for (file in input_files) {
 };
 
 # Find missing similarities - the Cognitive Atlas API is not terrible reliable,
-# and we will calculate these locally before analysis
+# and we will calculate these again (see end of 7.run_wang_graph_comparison_sherlock.R) before analysis
 missing = which(is.na(similarities),arr.ind=TRUE)
 save(missing,file="/home/vsochat/SCRIPT/R/brainmeta/missing.Rda")
 
 
-output_file = cat(output_folder,"/contrast_defined_images_wang.tsv",sep="")
-write.csv(similarities,filename=output_file,sep="\t")
+# We will copy this into the "analysis/wang" folder on our local system
+output_file = paste(output_folder,"/contrast_defined_images_wang.tsv",sep="")
+write.csv(similarities,file=output_file)

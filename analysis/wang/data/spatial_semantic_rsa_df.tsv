@@ -1,0 +1,44 @@
+	RSA	name
+all	0.514209195335	all
+trm_4cacf22a22d80	0.36655220803	Probabilistic classification task
+trm_550b50095d4a3	0.421877518925	working memory fMRI task paradigm
+trm_553e85265f51e	0.721191471137	functional localizer fMRI tasks
+trm_550b53d7dd674	0.745078796978	motor fMRI task paradigm
+trm_4d559bcd67c18	0.109892135343	balloon analogue risk task (BART)
+trm_4da890594742a	-0.396691708212	emotional regulation task
+trm_4cacee4a1d875	-0.102734128222	mixed gambles task
+trm_4cacf3fbc503b	0.809151084571	conditional stop signal task
+trm_550b5a47aa23e	0.996933995071	relational processing fMRI task paradigm
+tsk_4a57abb949e1a	0.863456498102	stop signal task
+tsk_4a57abb949bf6	0.352840574503	oddball task
+trm_53c4465b0466f	0.904435854022	why/how task
+trm_4ebd482eba5b1	-0.231543501835	word one-back task
+tsk_4a57abb949a4f	0.4651169469	Eriksen flanker task
+trm_4a3fd79d09c28	0.406838706306	categorization
+trm_4a3fd79d09c5b	0.497839538571	causal inference
+trm_4a3fd79d0a20c	0.514007825778	error detection
+trm_4a3fd79d0af66	0.847911253654	response inhibition
+trm_4a3fd79d0af71	0.469761399592	response selection
+trm_4a3fd79d0b392	0.325584069362	theory of mind
+trm_4c3e05903e4bb	0.720067021737	updating
+trm_557b474e2b578	0.8245226487	auditory tone detection
+trm_557b476527a27	0.668922869438	auditory tone discrimination
+trm_557b482a7c62b	0.62078161334	emotional face recognition
+trm_557b4891e9265	0.338784230633	feature comparison
+trm_557b48e337218	-0.0635175391757	negative feedback processing
+trm_557b48f22ba99	-0.666130988493	numerical scale judgment
+trm_557b491318742	0.87731102972	oddball detection
+trm_557b493e4203a	-0.207277342439	positive feedback processing
+trm_557b49851e991	0.764579195143	proactive control
+trm_557b4993a0fdd	0.814843698361	reinforcement learning
+trm_557b4a7315f1b	0.601236750012	response execution
+trm_557b4aa070c10	0.778633802549	selective control
+trm_557b4b3a6a34d	0.577142186215	visual form recognition
+trm_557b4b47d994a	0.971568074822	visual number recognition
+trm_557b4b56de455	0.798519270159	visual object detection
+trm_557b4b652cbec	0.844460990687	visual pattern recognition
+trm_557b4b7e68727	0.972506604235	visual place recognition
+trm_557b4b9ccdc4a	0.120520088654	visual word recognition
+trm_558c7b14c076e	0.307416564804	auditory sentence recognition
+trm_558c7b5228ed4	0.999995549675	visual sentence recognition
+trm_55b6b910b4b23	-0.473643768121	right finger response execution

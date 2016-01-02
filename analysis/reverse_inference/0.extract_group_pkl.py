@@ -6,6 +6,7 @@ from glob import glob
 import pandas
 import pickle
 
+# This data is on the cluster, and we will transfer all_groups.tsv to locally analysis/reverse_inference/data/groups
 groups = glob("groups/*.pkl")
 output_tsv = "groups/all_groups.tsv"
 

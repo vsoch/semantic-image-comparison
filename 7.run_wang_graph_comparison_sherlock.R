@@ -40,6 +40,7 @@ for (m in 1:nrow(missing)){
   outfile = paste(output_folder,"/",i,"_",j,"_wangsim.Rda",sep="")
   if (!file.exists(outfile)) {
       jobby = paste(i,"_",j,".job",sep="")
+      cat(jobby,"\n")
       sink(paste(".jobs/",jobby,sep=""))
       cat("#!/bin/bash\n")
       cat("#SBATCH --job-name=",jobby,"\n",sep="")  

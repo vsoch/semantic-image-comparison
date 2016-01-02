@@ -6,7 +6,7 @@ import pandas
 import re
 import os
 
-base = "/scratch/users/vsochat/DATA/BRAINMETA/ontological_comparison/"
+base = "/scratch/users/vsochat/DATA/BRAINMETA/ontological_comparison"
 data = "%s/data" %base        # mostly images
 scores_folder = "%s/group_size_vary_scores" %(data)     # output folder for group size scores
 likelihood_pickles = glob("%s/likelihood/*.pkl" %(data))
@@ -28,7 +28,7 @@ image_ids = [os.path.split(x)[1].replace(".nii.gz","") for x in all_images]
 for n in range(len(nodes)):
     node = nodes[n]
     print "Parsing %s of %s" %(n,len(nodes))
-    nodere = re.compile("/%s_size" %(node))
+    nodere = re.compile("%s_size" %(node))
     node_scores = [s for s in scores if nodere.search(s)]
     # Let's make a flat data frame this time
     ri_scores = pandas.DataFrame(columns=["image_id","node","ri_score","bayes_factor","in_count","out_count"])
