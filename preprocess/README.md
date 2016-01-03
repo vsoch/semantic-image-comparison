@@ -107,6 +107,7 @@ We were worried about reverse inference scores changing depending on the number 
 
 This will power the analysis to produce [this analysis](../analysis/reverse_inference/img/explore_concept_set_sizes.pdf). The [5.run_explore_group_size.py](5.run_explore_reverse_inference.py) also has assumptions about cluster size and paths, and you should edit it to work on your cluster.
 
+
       python 5.run_explore_group_size.py $base
 
 
@@ -149,13 +150,16 @@ This step has four parts, and is the only R code that must be run in a cluster e
 - [7.compile_wang_comparison.R](7.compile_wang_comparison.R): compiles all individual result files for analysis.
 - [7.wang_graph_comparison_local.R](7.wang_graph_comparison_local.R): was not used in the analysis, but is provided as an example to run the algorithm locally.
 
+
       mkdir $base/data/wang_scores
       RSCRIPT 7.run_wang_graph_comparison_sherlock.R $base
+
 
 As before, the [7.run_wang_graph_comparison_sherlock.R](7.run_wang_graph_comparison_sherlock.R) should be modified for your cluster environment. This script has two sections - the top is intended to run initial comparisons, and the bottom is intended to run for a subset of missing comparisons (see below).
 
 
       RSCRIPT 7.compile_wang_comparison.R $base
+
 
 Use the [7.compile_wang_comparison.R](7.compile_wang_comparison.R) to do exactly that. This script has two sections - the top is intended to compile results into a "similarities" data frame, and then the bottom checks for missing results. This script makes over 60K calls to the Cognitive Atlas API, and it's likely that a small number of those calls fail. The bottom section of [7.run_wang_graph_comparison_sherlock.R](7.run_wang_graph_comparison_sherlock.R) has code for loading the `missing.Rda` file, and then [7.compile_wang_comparison.R](7.compile_wang_comparison.R) can be run again to assess for missing. For this analysis, I used this routine twice, and was able to run for all initial missing.
 
