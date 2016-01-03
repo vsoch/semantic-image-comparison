@@ -33,6 +33,7 @@ collections = api.get_collections()
 
 # Filter images to those that have a DOI
 collections = collections[collections.DOI.isnull()==False]
+# Not needed for future analyses, for documentation only
 collections.to_csv("%s/collections_with_dois.tsv" %results,encoding="utf-8",sep="\t")
 
 # Get image meta data for collections (N=1023)
@@ -40,6 +41,7 @@ images = api.get_images(collection_pks=collections.collection_id.tolist())
 
 # Filter images to those with contrasts defined (N=98)
 images = images[images.cognitive_contrast_cogatlas_id.isnull()==False]
+# Not needed for future analyses, for documentation only
 images.to_csv("%s/contrast_defined_images.tsv" %results,encoding="utf-8",sep="\t")
 
 # Get rid of any not in MNI
@@ -59,7 +61,7 @@ t = t[t.collection.isin(to_keep)]
 images = z.append(t)
 
 # Download images
-standard = "/scratch/users/vsochat/DATA/ATLAS/FSL/MNI152_T1_2mm_brain.nii.gz"
+standard = os.path.abspath("mr/MNI152_T1_2mm_brain.nii.gz")
 api.download_images(dest_dir = data,images_df=images,target=standard)
 
 # For T images, convert to Z
@@ -90,6 +92,8 @@ for zmap in zmaps:
 if len(glob("%s/*.nii.gz" %(outfolder_z))) != images.shape[0]:
     raise ValueError("ERROR: not all images were found in final folder %s" %(outfolder_z))
 
+# NEEDED for future analyses, 
+# moved to https://github.com/vsoch/semantic-image-comparison/tree/master/analysis/wang/data
 images.to_csv("%s/contrast_defined_images_filtered.tsv" %results,encoding="utf-8",sep="\t")
 
 ## STEP 2: IMAGE SIMILARITY

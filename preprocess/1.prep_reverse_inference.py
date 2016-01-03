@@ -4,10 +4,11 @@
 import pandas
 import os
 import re
+import sys
 #from vm import make_analysis_output_folder
 
 # For the VM: these paths will be environmental variables
-base = "/scratch/users/vsochat/DATA/BRAINMETA/ontological_comparison"
+base = sys.argv[1]
 results = "%s/results" %base  # any kind of tsv/result file
 data = "%s/data" %base        # mostly images
 web = "%s/web" %base
