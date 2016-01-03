@@ -33,4 +33,17 @@ cp $base/data/reverse_inference_scores.tsv ../analysis/reverse_inference_data
 # Step 5: Impact of group size on reverse inference scores
 python 5.run_explore_group_size.py $base
 
-# Step 6: STOPPED HERE I am so tired.
+# Step 6: Compile group size results (typically ~60K script runs)
+python 6.compile_explore_group_size_results.py $base
+cp $base/data/ri_explore_size_results*.tsv ../analysis/reverse_inference/data/size_results
+
+# Step 7: Run calculations for Wang Graph metric, compile results
+RSCRIPT 7.run_wang_graph_comparison_sherlock.R $base
+# This has a lot of jobs, and should be done manually
+RSCRIPT 7.compile_wang_comparison.R $base
+cp $base/data/wang_scores/contrast_defined_images_wang.tsv ../analysis/reverse_inference/data/size_results/contrast_defined_images_wang.tsv
+
+# Now move on to analysis under ../analysis
+
+
+

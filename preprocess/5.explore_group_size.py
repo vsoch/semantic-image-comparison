@@ -4,7 +4,7 @@
 #     influences the outcome. We will select ?(a subset) of concepts with many tagged images, 
 #     and at each size of the "in" set (from 1..N) calculate a score for each held out image.
 
-# For each concept, (N=140):
+# For each concept, (N=132):
 #    Select a number G from 1...[total "in" group] as the size of the set to investigate
 #        For each image in (entire) "in"set:
 #            For some number of iterations:

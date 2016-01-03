@@ -6,6 +6,9 @@ The entire pipeline in this folder is numbered in sequential order, and requires
 
 and see [here](../README.md) for instructions on installing Python and R dependencies. You can then use the [run_preprocess.sh](run_preprocess.sh) to walk through script submission, compilation, and saving of results. Detailed steps are provided below for each.
 
+
+# Part I: Reverse Inference
+
 ## 0. NeuroVault Comparison
 The initial image set comes by way of the NeuroVault database. For this work, we did extensive development to allow for the tagging of statistical brain maps with the cognitive concepts that they measure. This first script sets up an analysis output directory (called `base`) that will have the following structure:
 
@@ -90,22 +93,74 @@ and modify to work for your username and cluster environment. You may also want 
 The output of the above is over 10K files, each containing python (pickled) scores for an image against a particular concept node. We will want to compile these scores into a nice (single) data frame, and move into the analysis directory, and that is what this script [4.compile_reverse_inference_results.py](4.compile_reverse_inference_results.py) accomplishes.
 
 ### Outputs from this step moved into analysis folder:
-- $base/data/reverse_inference_scores.tsv ../analysis/reverse_inference_data
+- $base/data/reverse_inference_scores.tsv ../analysis/reverse_inference/data
 
 ## 5. Compile Reverse Inference
 We were worried about reverse inference scores changing depending on the number of images defined for the node, and wanted to find some threshold to establish stability in scores. This was the aim of this portion, and the workflow is as follows:
 
-      # For each concept, (N=140):
+      # For each concept, (N=132):
       #    Select a number G from 1...[total "in" group] as the size of the set to investigate
       #        For each image in (entire) "in"set:
       #            For some number of iterations:
       #                Randomly select G other images for "in" set, calculate P(concept|image)
-      #                Take mean score of iterations as P(concept|image)
+      #                Take mean score of iterations as P(concept|image) - and we also calculate confidence intervals, etc.
 
-The [5.run_explore_group_size.py](5.run_explore_reverse_inference.py) also has assumptions about cluster size and paths, and you should edit it to work on your cluster.
+This will power the analysis to produce [this analysis](../analysis/reverse_inference/img/explore_concept_set_sizes.pdf). The [5.run_explore_group_size.py](5.run_explore_reverse_inference.py) also has assumptions about cluster size and paths, and you should edit it to work on your cluster.
 
       python 5.run_explore_group_size.py $base
 
-## Step 6: STOPPED HERE 
 
-I am so tired.
+## Step 6: Compile Explore Group Size Results
+There are no outputs from the previous step to move into the analysis folder, because [6.compile_explore_group_size_results.py](6.compile_explore_group_size_results.py) will compile those results and we will move the compiled file.
+
+      
+      python 6.compile_explore_group_size_results.py $base
+
+
+Each of these files is a data frame with reverse inference calculated for each image, using each possible "in" set size given the contrast. For the concepts with only one tagged image (for example, [here](../analysis/reverse_inference/data/size_results/ri_explore_size_results_trm_4a3fd79d09849.tsv)) we can only calculate a score for other images given an "in" set size of 1, so we cannot say anything about how set sizes influence the scores using these data.
+
+### Outputs from this step moved into analysis folder:
+- $base/data/ri_explore_size_results*.tsv: These are ../analysis/reverse_inference/data/size_results
+
+
+# Part II: Graph Comparison
+
+## Step 7. Wang Similarity
+
+Wang Similarity is a method that has been used in bioinformatics to assess the similarity of gene sets. [This method](http://bioinformatics.oxfordjournals.org/content/23/10/1274.full)
+ aggregates the semantic contributions of ancestor terms (including this specific term), and works as follows:
+
+### Generating a list of concepts and weights for each contrast
+ 1. We start with concepts associated with the contrast
+ 2. We walk up the tree and append associated "is_a" and "part_of" concepts
+ 3. The weight for each concept is determined by multiplying the last (child node) weight by:
+       0.8 for "is_a" relationships
+       0.6 for "part_of" relationships
+       This means that weights decrease as we move up the tree toward the root
+ 3. We stop at the root node
+
+### Calculating similarity between contrasts
+ 1. We take the weights at the intersection of each list from above
+ 2. The similarity score is sum(intersected weights) / sum(all weights)
+
+This step has four parts, and is the only R code that must be run in a cluster environment:
+- [7.run_wang_graph_comparison_sherlock.R](7.run_wang_graph_comparison_sherlock.R) runs instances of
+- [7.wang_graph_comparison_sherlock.R](7.wang_graph_comparison_sherlock.R) uses the [cogat-similaR](https://github.com/CognitiveAtlas/cogat-similaR) package to calculate the metric for all images in our set.
+- [7.compile_wang_comparison.R](7.compile_wang_comparison.R): compiles all individual result files for analysis.
+- [7.wang_graph_comparison_local.R](7.wang_graph_comparison_local.R): was not used in the analysis, but is provided as an example to run the algorithm locally.
+
+      mkdir $base/data/wang_scores
+      RSCRIPT 7.run_wang_graph_comparison_sherlock.R $base
+
+As before, the [7.run_wang_graph_comparison_sherlock.R](7.run_wang_graph_comparison_sherlock.R) should be modified for your cluster environment. This script has two sections - the top is intended to run initial comparisons, and the bottom is intended to run for a subset of missing comparisons (see below).
+
+
+      RSCRIPT 7.compile_wang_comparison.R $base
+
+Use the [7.compile_wang_comparison.R](7.compile_wang_comparison.R) to do exactly that. This script has two sections - the top is intended to compile results into a "similarities" data frame, and then the bottom checks for missing results. This script makes over 60K calls to the Cognitive Atlas API, and it's likely that a small number of those calls fail. The bottom section of [7.run_wang_graph_comparison_sherlock.R](7.run_wang_graph_comparison_sherlock.R) has code for loading the `missing.Rda` file, and then [7.compile_wang_comparison.R](7.compile_wang_comparison.R) can be run again to assess for missing. For this analysis, I used this routine twice, and was able to run for all initial missing.
+
+### Outputs from this step moved into analysis folder:
+- $base/data/wang_scores/contrast_defined_images_wang.tsv: This is a data frame of images by images, with wang scores for image I against image J saved to ../analysis/reverse_inference/data/size_results
+
+# Analysis
+You've finished preprocessing! Now move on to [../analysis](../analysis)

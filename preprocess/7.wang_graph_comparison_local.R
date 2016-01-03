@@ -1,8 +1,11 @@
+# This file is provided as an example for running Wang locally
+# It was not used in the manuscript as it would take too long.
+
 options(java.parameters = "-Xmx4g") # This ensures we don't run out of memory
 library(CogatSimilar) # https://github.com/CognitiveAtlas/cogat-similaR
 
 # Read in table with images
-image_file = "/home/vanessa/Documents/Work/BRAINMETA/reverse_inference/contrast_defined_images.tsv"
+image_file = "contrast_defined_images.tsv"
 images = read.csv(image_file,sep="\t",head=TRUE,stringsAsFactors=FALSE)
 
 # We will put our results in a data frame
@@ -30,5 +33,5 @@ for (i in 1:nrow(images)){
 
 
 # Export to file
-output_file = "/home/vanessa/Documents/Work/BRAINMETA/reverse_inference/contrast_defined_images_wang.tsv"
+output_file = "contrast_defined_images_wang.tsv"
 write.csv(similarities,filename=output_file,sep="\t")

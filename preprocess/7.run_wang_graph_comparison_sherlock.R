@@ -1,10 +1,14 @@
 # Read in table with images
-image_file = "/scratch/users/vsochat/DATA/BRAINMETA/ontological_comparison/results/contrast_defined_images_filtered.tsv"
+
+args = commandArgs(TRUE)
+base = args[1]
+
+image_file = paste(base,"/results/contrast_defined_images_filtered.tsv",sep="")
+
 images = read.csv(image_file,sep="\t",head=TRUE,stringsAsFactors=FALSE)
 
-
 # Define output folders
-output_folder = "/scratch/users/vsochat/DATA/BRAINMETA/ontological_comparison/wang_scores"
+output_folder = paste(base,"/data/","wang_scores",sep="")
 
 for (i in 1:nrow(images)){ # i is the row number
   for (j in 1:nrow(images)){ # i is the row number
@@ -19,7 +23,7 @@ for (i in 1:nrow(images)){ # i is the row number
           cat("#SBATCH --error=.out/",jobby,".err\n",sep="")  
           cat("#SBATCH --time=1-00:00\n",sep="")
           cat("#SBATCH --mem=12000\n",sep="")
-          cat("Rscript /home/vsochat/SCRIPT/R/brainmeta/1.wang_graph_comparison_sherlock.R",i,j,outfile,image_file,"\n")
+          cat("Rscript 1.wang_graph_comparison_sherlock.R",i,j,outfile,image_file,"\n")
           sink()
       
           # SUBMIT R SCRIPT TO RUN ON CLUSTER  

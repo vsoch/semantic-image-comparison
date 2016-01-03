@@ -3,10 +3,12 @@ from glob import glob
 import numpy
 import pickle
 import pandas
+import sys
 import re
 import os
 
-base = "/scratch/users/vsochat/DATA/BRAINMETA/ontological_comparison"
+base = sys.argv[1]
+
 data = "%s/data" %base        # mostly images
 scores_folder = "%s/group_size_vary_scores" %(data)     # output folder for group size scores
 likelihood_pickles = glob("%s/likelihood/*.pkl" %(data))
