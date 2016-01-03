@@ -51,14 +51,14 @@ concept_node_triples(image_dict=image_lookup,output_file=output_triples_file)
 relationship_table = pandas.read_csv(output_triples_file,sep="\t")
 
 # If you want to include concept categories
-meta_data = get_concept_categories()
+#meta_data = get_concept_categories()
 
 ## STEP 2: VISUALIZATION WITH PYBRAINCOMPARE
 from pybraincompare.template.templates import save_template
 from pybraincompare.ontology.tree import named_ontology_tree_from_tsv, make_ontology_tree_d3
 
 # First let's look at the tree structure - here is with categories
-tree = named_ontology_tree_from_tsv(relationship_table,output_json=None,meta_data=meta_data)
+#tree = named_ontology_tree_from_tsv(relationship_table,output_json=None,meta_data=meta_data)
 
 # And without
 tree = named_ontology_tree_from_tsv(relationship_table,output_json=None)

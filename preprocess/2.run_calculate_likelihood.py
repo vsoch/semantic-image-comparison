@@ -1,8 +1,9 @@
 #!/usr/bin/python
 from glob import glob
+import sys
 import os
 
-base = "/scratch/users/vsochat/DATA/BRAINMETA/ontological_comparison"
+base = sys.argv[1]
 data = "%s/data" %base        # mostly images
 likelihood_pickles = glob("%s/likelihood/*.pkl" %(data))
 tables_folder = "%s/likelihood/tables" %(data) # output folder for likelihood tables
@@ -24,6 +25,6 @@ for p in range(0,len(likelihood_pickles)):
     filey.writelines("#SBATCH --error=.out/%s.err\n" %(contrast_id))
     filey.writelines("#SBATCH --time=2-00:00\n")
     filey.writelines("#SBATCH --mem=64000\n")
-    filey.writelines("python /home/vsochat/SCRIPT/python/brainmeta/ontological_comparison/cluster/classification-framework/2.calculate_likelihood.py %s %s" %(pkl, tables_folder))
+    filey.writelines("python 2.calculate_likelihood.py %s %s" %(pkl, tables_folder))
     filey.close()
     os.system("sbatch -p russpold " + ".jobs/revinf_%s.job" %(contrast_id))

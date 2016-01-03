@@ -11,7 +11,9 @@ import os
 #                Take mean score of iterations as P(concept|image)
 
 
-base = "/scratch/users/vsochat/DATA/BRAINMETA/ontological_comparison"
+base = sys.argv[1]
+queue_limit = 1000
+
 data = "%s/data" %base        # mostly images
 likelihood_pickles = glob("%s/likelihood/*.pkl" %(data))
 scores_folder = "%s/group_size_vary_scores" %(data)     # output folder for group size scores
@@ -34,7 +36,7 @@ pairs_to_run = pairs[:]
 
 while len(pairs_to_run) > 0:
     queue_count = int(os.popen("squeue -u vsochat | wc -l").read().strip("\n"))
-    if queue_count < 1000:
+    if queue_count < queue_limit:
         i,image,j = pairs_to_run.pop(0)
         node = likelihood_pickles[i]
         group = pickle.load(open(node,"rb"))
@@ -53,6 +55,6 @@ while len(pairs_to_run) > 0:
             filey.writelines("#SBATCH --error=.out/%s.err\n" %(run_id))
             filey.writelines("#SBATCH --time=2-00:00\n")
             filey.writelines("#SBATCH --mem=64000\n")
-            filey.writelines("python /home/vsochat/SCRIPT/python/brainmeta/ontological_comparison/cluster/classification-framework/5.explore_group_size.py %s %s %s %s" %(image, node, output_pkl,j))
+            filey.writelines("python 5.explore_group_size.py %s %s %s %s" %(image, node, output_pkl,j))
             filey.close()
             os.system("sbatch -p russpold " + ".jobs/ri_%s.job" %(run_id))
