@@ -59,7 +59,7 @@ t = t[t.collection.isin(to_keep)]
 images = z.append(t)
 
 # Download images
-standard = os.path.abspath("mr/MNI152_T1_2mm_brain.nii.gz")
+standard = "/scratch/users/vsochat/DATA/ATLAS/FSL/MNI152_T1_2mm_brain.nii.gz"
 api.download_images(dest_dir = data,images_df=images,target=standard)
 
 # For T images, convert to Z
