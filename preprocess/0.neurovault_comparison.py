@@ -33,7 +33,7 @@ collections = api.get_collections()
 
 # Filter images to those that have a DOI
 collections = collections[collections.DOI.isnull()==False]
-# Not needed for future analyses, for documentation only
+# We use this file to create custom web interface
 collections.to_csv("%s/collections_with_dois.tsv" %results,encoding="utf-8",sep="\t")
 
 # Get image meta data for collections (N=1023)

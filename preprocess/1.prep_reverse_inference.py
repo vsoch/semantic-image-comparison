@@ -5,7 +5,6 @@ import pandas
 import os
 import re
 import sys
-#from vm import make_analysis_output_folder
 
 # For the VM: these paths will be environmental variables
 base = sys.argv[1]
