@@ -45,7 +45,7 @@ ggplot(tmp, aes(x=sort,y=RSA,fill=RSA)) +
   xlab("Cognitive Atlas Task or Concept") +
   ylab(paste("RSA Score")) +
   scale_x_discrete(limits=tmp$sort,labels=tmp$name) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1),legend.position="none")
+  theme(axis.teuxt.x = element_text(angle = 90, hjust = 1),legend.position="none")
 
 # Now for file
 png("img/rsa_cognitiveatlas.png", width = 12, height = 12, units = 'in', res = 300)

@@ -92,6 +92,7 @@ rownames(df) = seq(1,nrow(df))
 colnames(df) = c("nid","TP","FP","TN","FN","sensitivity","specificity","accuracy","in_count","out_count","threshold")
 df = as.data.frame(df,stringsAsFactors=FALSE)
 save(df,file="result/accuracies_df_nodes.rda")
+write.csv(df,file="result/accuracies_df_nodes.csv")
 
 # Plot a basic ROC for each class
 pdf("result/roc_gr4.pdf")
@@ -146,7 +147,7 @@ for (node in nodes){
     nodes_defined = c(nodes_defined,node)
   }
 }
-
+write.csv(aucs,file="result/node_aucs_132.csv")
 # Now let's plot the AUCs
 library(dplyr)
 library(reshape2)
