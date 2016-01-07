@@ -43,6 +43,9 @@ RSCRIPT 7.run_wang_graph_comparison_sherlock.R $base
 RSCRIPT 7.compile_wang_comparison.R $base
 cp $base/data/wang_scores/contrast_defined_images_wang.tsv ../analysis/reverse_inference/data/size_results/contrast_defined_images_wang.tsv
 
+# Optional web interface to produce data files for https://github.com/vsoch/semantic-image-comparison-web/tree/master/data
+python 8.web_interface.py $base
+
 # Now move on to analysis under ../analysis
 
 

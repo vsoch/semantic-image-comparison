@@ -166,5 +166,12 @@ Use the [7.compile_wang_comparison.R](7.compile_wang_comparison.R) to do exactly
 ### Outputs from this step moved into analysis folder:
 - $base/data/wang_scores/contrast_defined_images_wang.tsv: This is a data frame of images by images, with wang scores for image I against image J saved to ../analysis/reverse_inference/data/size_results
 
+### Generation of Web Interface
+Optionally, you can generate an interactive web interface [as seen here](http://vsoch.github.io/semantic-image-comparison-web) by using the script [8.web_interface.py](8.web_interface.py) to produce data files in JSON that are uploaded to the [data folder](https://github.com/vsoch/semantic-image-comparison-web/tree/master/data) and then deployed to a web server. 
+
+      python 8.web_interface.py $base
+
+A simpler version of this interface is deployed via [continuous integration](http://www.github.com/vsoch/semantic-image-comparison-ci). For this deployment, the reverse inference scores are not included, and rather a visualization to show Cognitive Atlas tasks and associated tagged NeuroVault images is produced when the continuous integration (on Circle-CI) is re-run.
+
 # Analysis
 You've finished preprocessing! Now move on to [../analysis](../analysis)

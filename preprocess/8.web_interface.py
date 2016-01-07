@@ -7,6 +7,7 @@ from glob import glob
 import pandas
 import shutil
 import json
+import sys
 import os
 import re
 
@@ -30,17 +31,29 @@ def make_analysis_web_folder(html_snippet,folder_path,data_files=None,file_name=
             shutil.copyfile(data_file,folder_path)
 
 
-base = "/scratch/users/vsochat/DATA/BRAINMETA/ontological_comparison"
+base = sys.argv[1]
 results = "%s/results" %base  # any kind of tsv/result file
 data = "%s/data" %base        # mostly images
 web = "%s/web" %base
 
-### Step 1: Load meta data sources
-
 # We will use image meta data
 images = pandas.read_csv("%s/contrast_defined_images_filtered.tsv" %results,sep="\t")
 collections = pandas.read_csv("%s/collections_with_dois.tsv" %results,sep="\t")
+
+### Step 1: Load meta data sources
+unique_contrasts = images.cognitive_contrast_cogatlas_id.unique().tolist()
+
+# Images that do not match the correct identifier will not be used (eg, "Other")
+expression = re.compile("cnt_*")
+unique_contrasts = [u for u in unique_contrasts if expression.match(u)]
+
+image_lookup = dict()
+for u in unique_contrasts:
+   image_lookup[u] = images.image_id[images.cognitive_contrast_cogatlas_id==u].tolist()
 output_triples_file = "%s/task_contrast_triples.tsv" % results
+
+# Create a data structure of tasks and contrasts for our analysis
+concept_node_triples(image_dict=image_lookup,output_file=output_triples_file)
 relationship_table = pandas.read_csv(output_triples_file,sep="\t")
 
 # We want to give the concept categories as meta data so we produce category nodes
@@ -50,9 +63,6 @@ categories = get_concept_categories()
 scores_df = pandas.read_csv("%s/reverse_inference_scores.tsv" %data,sep="\t")
 
 unique_nodes = relationship_table.id.unique().tolist()
-
-# Output entire results table to html, in case we want it
-scores_df.to_html("%s/reverse_inference_table.html" %web)
 
 # We will store a data frame of meta data
 # Lookup for meta_data is the id of the node!
@@ -96,8 +106,8 @@ for node in unique_nodes:
             contrast_name = relationship_table_row.name.tolist()[0]
             concept = get_concept(id=node).json
             # Reverse inference scores - all images
-            if node in scores_df.node: # a node with images below it
-                meta_single["ri_scores"] = scores_df[scores_df.node == node].to_json(orient="records")
+            if node in scores_df.node.unique().tolist(): # a node with images below it
+                meta_single["scores"] = scores_df[scores_df.node == node].to_json(orient="records")
                 image_ids = scores_df[scores_df.node == node].image_id.unique().tolist()
                 meta_single["images"] = images["thumbnail"][images.image_id.isin(image_ids)].tolist()
             # Cognitive Atlas meta data
@@ -114,6 +124,7 @@ for node in unique_nodes:
             else:
                 meta_single["description"] = ""
     meta_data[node] = meta_single
+
 
 ## STEP 2: VISUALIZATION WITH PYBRAINCOMPARE
 from pybraincompare.ontology.tree import named_ontology_tree_from_tsv, make_ontology_tree_d3
@@ -141,58 +152,64 @@ if not os.path.exists(scores_export_folder):
 
 unique_images = images.image_id.unique().tolist()
 
+# Images
 for s in range(0,len(unique_images)):
     image_id = unique_images[s]
     meta_data = {}
     meta_data["image_id"] = image_id
     print "Parsing data for images %s of %s" %(s,len(unique_images))
     single_score_pkls = [x for x in single_scores if re.search("%s.pkl" %image_id,x)]
+    meta_data["scores"] = list()
+    # Parse each score object into list
     for single_score_pkl in single_score_pkls:
         ss = pickle.load(open(single_score_pkl,"rb"))
         meta_single = {}
-        ri_score_keys = [x for x in ss.keys() if re.search("ri",x)]
-        meta_single["scores"] = dict()
-        for ri_score_key in ri_score_keys:
-            meta_single["scores"][ri_score_key] = ss[ri_score_key]
+        meta_single["score"] = ss["ri_distance_query"]
         node = ss["nid"]
+        meta_single["nid"] = node
         # Again include meta data
         relationship_table_row = relationship_table[relationship_table.id==node]
         # Reverse inference scores
         meta_single["category"] = ""
         meta_single["type"] = "nii"
-        concepts = relationship_table.parent[relationship_table.name == image_id]
-        concepts = [relationship_table.name[relationship_table.id==c].tolist()[0] for c in concepts]
-        neurovault_row = images[images.image_id == int(image_id)]
-        collection_row = collections[collections.collection_id == neurovault_row.collection.tolist()[0]]
-        collection_meta = {"DOI":collection_row["DOI"].tolist()[0],
-                           "authors":collection_row["authors"].tolist()[0],
-                           "journal":collection_row["journal_name"].tolist()[0],
-                           "url":collection_row["url"].tolist()[0],
-                           "subjects":collection_row["number_of_subjects"].tolist()[0],
-                           "smoothing_fwhm":str(collection_row["smoothing_fwhm"].tolist()[0]).encode("utf-8"),
-                           "title":collection_row["name"].tolist()[0]}
-        meta_single["collection"] = collection_meta
-        meta_single["url"] = neurovault_row["url"].tolist()[0]
-        meta_single["thumbnail"] = neurovault_row["thumbnail"].tolist()[0]
-        meta_single["images"] = neurovault_row["thumbnail"].tolist()
-        meta_single["task"] = neurovault_row["cognitive_paradigm_cogatlas"].tolist()[0]
-        meta_single["contrast"] = neurovault_row["cognitive_contrast_cogatlas"].tolist()[0]
-        meta_single["download"] = neurovault_row["file"].tolist()[0]
-        meta_single["concept"] = concepts
-        if neurovault_row["description"].tolist()[0]:
-            description = str(neurovault_row["description"].tolist()[0]).encode("utf-8");
-            if description != "nan":
-                meta_single["description"] =  description
-            else:
-                meta_single["description"] = ""
+        meta_single["in_count"] = ss["in_count"]
+        meta_single["out_count"] = ss["out_count"]
+        meta_single["contrast"] = relationship_table.name[relationship_table.id==ss["nid"]].tolist()[0]
+        if numpy.isnan(ss["ri_distance_query"])==False:
+            meta_data["scores"].append(meta_single)
+    concepts = relationship_table.parent[relationship_table.name == str(image_id)].tolist()
+    concepts = [relationship_table.name[relationship_table.id==c].tolist()[0] for c in concepts]
+    neurovault_row = images[images.image_id == int(image_id)]            
+    collection_row = collections[collections.collection_id == neurovault_row.collection.tolist()[0]]
+    collection_meta = {"DOI":collection_row["DOI"].tolist()[0],
+                       "authors":collection_row["authors"].tolist()[0],
+                       "journal":collection_row["journal_name"].tolist()[0],
+                       "url":collection_row["url"].tolist()[0],
+                       "subjects":collection_row["number_of_subjects"].tolist()[0],
+                       "smoothing_fwhm":str(collection_row["smoothing_fwhm"].tolist()[0]).encode("utf-8"),
+                       "title":collection_row["name"].tolist()[0]}
+    meta_data["collection"] = collection_meta
+    meta_data["url"] = neurovault_row["url"].tolist()[0]
+    meta_data["thumbnail"] = neurovault_row["thumbnail"].tolist()[0]
+    meta_data["images"] = neurovault_row["thumbnail"].tolist()
+    meta_data["task"] = neurovault_row["cognitive_paradigm_cogatlas"].tolist()[0]
+    meta_data["contrast"] = neurovault_row["cognitive_contrast_cogatlas"].tolist()[0]
+    meta_data["download"] = neurovault_row["file"].tolist()[0]
+    meta_data["concept"] = concepts
+    if neurovault_row["description"].tolist()[0]:
+        description = str(neurovault_row["description"].tolist()[0]).encode("utf-8")
+        if description != "nan":
+            meta_data["description"] =  description
         else:
-            meta_single["description"] = ""
-        meta_data[node] = meta_single
+                meta_data["description"] = ""
+    else:
+        meta_data["description"] = ""
     output_file = "%s/ri_%s.json" %(scores_export_folder,meta_data["image_id"])
     filey = open(output_file,'wb')
     filey.write(json.dumps(meta_data, sort_keys=True,indent=4, separators=(',', ': ')))
     filey.close()
     
+scores_df = scores_df[scores_df.ri_distance.isnull()==False]
 
 ### Concepts
 for node in unique_nodes:
@@ -203,7 +220,7 @@ for node in unique_nodes:
             contrast_name = relationship_table_row.name.tolist()[0]
             concept = get_concept(id=node).json
             # Reverse inference scores? Otherwise, we don't care
-            if node in scores_df.node:
+            if node in scores_df.node.unique().tolist():
                 meta_single = {}
                 meta_single["scores"] = scores_df[scores_df.node==node].to_json(orient="records")
                 # Reverse inference scores - all images
@@ -226,5 +243,15 @@ for node in unique_nodes:
                 filey = open(output_file,'wb')
                 filey.write(json.dumps(meta_single, sort_keys=True,indent=4, separators=(',', ': ')))
                 filey.close()
+
+
+# Output entire results table to html, for web interface, first look up concept names
+names = []
+for node in scores_df.node:
+    names.append(relationship_table.name[relationship_table.id==node].tolist()[0])
+scores_df = scores_df.loc[:,["image_id","ri_distance","in_count","out_count"]]
+scores_df["concept"] = names
+scores_df["ri_distance"] = ["%.3f" %x for x in  scores_df.ri_distance]
+scores_df.to_html("%s/reverse_inference_table.html" %web)
 
 # Done!
