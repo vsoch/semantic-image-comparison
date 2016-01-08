@@ -57,7 +57,7 @@ concept_node_triples(image_dict=image_lookup,output_file=output_triples_file)
 relationship_table = pandas.read_csv(output_triples_file,sep="\t")
 
 # We want to give the concept categories as meta data so we produce category nodes
-categories = get_concept_categories()
+#categories = get_concept_categories()
 
 # Get reverse inference scores from results
 scores_df = pandas.read_csv("%s/reverse_inference_scores.tsv" %data,sep="\t")
@@ -118,7 +118,6 @@ for node in unique_nodes:
             meta_single["task"] = ""
             meta_single["contrast"] = []
             meta_single["download"] = "http://www.cognitiveatlas.org/rdf/id/%s" %node
-            meta_single["category"] = categories[node]["category"]
             if concept[0]["definition_text"]:
                 meta_single["description"] = concept[0]["definition_text"].encode("utf-8")
             else:
