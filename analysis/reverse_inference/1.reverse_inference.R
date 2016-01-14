@@ -2,7 +2,7 @@ library(plyr)
 library(dplyr)
 library(ggplot2)
 
-setwd("/home/vanessa/Documents/Dropbox/Code/papers/semantic-comparison/semantic-image-comparison-analysis/analysis/ontological_comparison")
+setwd("/home/vanessa/Documents/Dropbox/Code/papers/semantic-comparison/semantic-image-comparison-analysis/analysis/reverse_inference")
 
 # Reading in the result data - this is the file produced by 4.compile_reverse_inference_results.py
 ri_score = read.csv("data/reverse_inference_scores.tsv",sep="\t",stringsAsFactors=FALSE,row.names=1) # reverse inference scores
@@ -177,4 +177,71 @@ ggplot(tmp, aes(x=sort,y=value,fill=value)) +
   ylab(paste("AUC")) +
   scale_x_discrete(limits=tmp$sort,labels=tmp$concept) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1),legend.position="none")
+dev.off()
+
+# NEW CLASSIFICATION PROCEDURE: for each image set, look at top scores, do they match labels?
+
+# Load image lavels
+accuracies = c()
+Z = read.csv(file="result/node_concepts_binary_df.csv",row.names=1)
+for (image_id in rownames(Z)){
+  scores = ri_score[ri_score$image_id==image_id,c("ri_distance","node","in_count","out_count","image_id")]
+  scores = scores[with(scores, order(-ri_distance)), ]
+  # What % of correct labels do we get at top of list?
+  actual = names(Z[image_id,which(Z[image_id,]==1)])
+  top_n = scores[1:length(actual),]
+  number_correct = length(which(top_n$node %in% actual))
+  accuracy = number_correct / length(actual)
+  accuracies = rbind(accuracies,c(image_id,accuracy,length(actual)))
+}
+rownames(accuracies) = rownames(Z)
+accuracies = as.data.frame(accuracies,stringsAsFactors=FALSE)
+colnames(accuracies) = c("image_id","accuracy","number_labels")
+write.csv(accuracies,file="result/accuracies_mutlilabel_nodes.csv")
+
+# Next, let's do a concept basis, and we will remove the other "actual" labels
+accs = c()
+for (concept in colnames(Z)){
+  concept_accs = c()
+  for (image_id in rownames(Z)){
+    scores = ri_score[ri_score$image_id==image_id,c("ri_distance","node","in_count","out_count","image_id")]
+    scores = scores[with(scores, order(-ri_distance)), ]
+    actual = names(Z[image_id,which(Z[image_id,]==1)])
+    # Only calculate if this image is labeled as this concept
+    if (length(which(actual==concept))>0){
+      other_actual = actual[-which(actual==concept)]
+      scores = scores[-which(scores$node %in% other_actual),]
+      if (scores$node[1]==concept){
+        accs = c(accs,1)
+      } else {
+        accs = c(accs,0)
+      }
+    }
+  }
+}
+
+library(ggplot2)
+# Try comparing mean reverse inferene scores between in and out groups
+pdf("result/2sampleT_invsout.pdf",onefile=TRUE)
+for (concept in colnames(Z)){
+  scores = ri_score[which(ri_score$node==concept),]
+  in_images = rownames(Z)[which(Z[,concept]==1)]
+  if (length(in_images)>1){
+    out_images = rownames(Z)[which(Z[,concept]==0)]
+    in_scores = scores$ri_distance[scores$image_id%in%in_images]
+    out_scores = scores$ri_distance[scores$image_id%in%out_images]
+    t=t.test(in_scores,out_scores)  
+    if (t$p.value<0.05){
+      sig="SIGNIFICANTLY DIFFERENT"
+    } else {
+      sig=""
+    }
+    dat = data.frame(xx = c(in_scores,out_scores),yy = c(rep("in",each = length(in_scores)),rep("out",each = length(out_scores))))
+    g = ggplot(dat,aes(x=xx)) + 
+      geom_histogram(data=subset(dat,yy == 'in'),fill = "red", alpha = 0.2) +
+      geom_histogram(data=subset(dat,yy == 'out'),fill = "blue", alpha = 0.2) +
+      ggtitle(paste(concept,sig))
+  }      
+  print(g)
+}
 dev.off()
