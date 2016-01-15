@@ -96,7 +96,11 @@ for voxel in mr.columns:
     clf = linear_model.ElasticNet(alpha=0.1)
     clf.fit(Xtrain,Y)
     regression_params.loc[voxel,:] = clf.coef_.tolist()
-    
+
+
+# Now here is how we would predict the image
+concept_vector =  pandas.DataFrame(holdoutY)
+predicted_nii =  regression_params.dot(concept_vector)
 
 # EXTRA: Here is trying LOOCV for one concept, using whole brain for model
 predictions = pandas.DataFrame(index=image_ids,columns=["lasso_prediction"])
