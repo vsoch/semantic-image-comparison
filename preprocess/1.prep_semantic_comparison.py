@@ -81,8 +81,5 @@ output_folder = "%s/likelihood" %data
 os.mkdir(output_folder)
 # Take a look at "image_pattern" and "node_pattern" inputs if not using NeuroVault and pybraincompare tree
 
-###### 3.1 First generate priors groups
-likelihood_groups = likelihood_groups_from_tree(tree,standard_mask,input_folder,output_folder=output_folder)
-
-# These files can be read in, and priors tables generated for each contrast
-# This is run in a cluster environment, see 3.run_calculate_reverse_inference.py
+###### 3.1 First generate node groups
+groups = likelihood_groups_from_tree(tree,standard_mask,input_folder,output_folder=output_folder)
