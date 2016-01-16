@@ -67,8 +67,8 @@ holdout2Y = X.loc[image2_holdout,:]
 
 regression_params = pandas.DataFrame(0,index=mr.columns,columns=concepts)
 
+print "Training voxels..."
 for voxel in mr.columns:
-    print "Training voxel %s" %(voxel)
     train = [x for x in X.index if x not in [image1_holdout,image2_holdout] and x in mr.index]
     Y = mr.loc[train,voxel].tolist()
     Xtrain = X.loc[train,:] 
@@ -79,6 +79,7 @@ for voxel in mr.columns:
 
 result["regression_params"] = regression_params
 
+print "Making predictions..."
 # Use regression parameters to generate predicted images
 concept_vector1 =  pandas.DataFrame(holdout1Y)
 concept_vector2 =  pandas.DataFrame(holdout2Y)
@@ -145,4 +146,4 @@ if acc2.loc[acc2.predicted==image2_holdout,"cca_score"].tolist()[0] > acc2.loc[a
     correct+=1
 
 result["number_correct"] = correct
-pickle.dump(results,open(output_file,"wb"))
+pickle.dump(result,open(output_file,"wb"))
