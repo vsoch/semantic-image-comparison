@@ -24,8 +24,8 @@ import sys
 import re
 import os
 
-image1_holdout = sys.argv[1]
-image2_holdout = sys.argv[2]
+image1_holdout = int(sys.argv[1])
+image2_holdout = int(sys.argv[2])
 node_folder = sys.argv[3]   
 output_file = sys.argv[4]
 labels_tsv = sys.argv[5]

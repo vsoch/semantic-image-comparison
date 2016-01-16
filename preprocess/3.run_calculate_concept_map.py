@@ -29,19 +29,20 @@ if not os.path.exists(output_folder):
     os.mkdir(output_folder)
 
 for image1_holdout in images.index.tolist():
-    print "Parsing %s" %(image1)
+    print "Parsing %s" %(image1_holdout)
     for image2_holdout in images.index.tolist():
-        if (image1 != image2) and (image1 < image2):
+        if (image1_holdout != image2_holdout) and (image1_holdout < image2_holdout):
             output_file = "%s/%s_%s_predict.pkl" %(output_folder,image1_holdout,image2_holdout)
             if not os.path.exists(output_file):
-                filey = ".jobs/class_%s.job" %(contrast_id)
+                job_id = "%s_%s" %(image1_holdout,image2_holdout)
+                filey = ".job/class_%s.job" %(job_id)
                 filey = open(filey,"w")
                 filey.writelines("#!/bin/bash\n")
-                filey.writelines("#SBATCH --job-name=%s\n" %(contrast_id))
-                filey.writelines("#SBATCH --output=.out/%s.out\n" %(contrast_id))
-                filey.writelines("#SBATCH --error=.out/%s.err\n" %(contrast_id))
+                filey.writelines("#SBATCH --job-name=%s\n" %(job_id))
+                filey.writelines("#SBATCH --output=.out/%s.out\n" %(job_id))
+                filey.writelines("#SBATCH --error=.out/%s.err\n" %(job_id))
                 filey.writelines("#SBATCH --time=2-00:00\n")
                 filey.writelines("#SBATCH --mem=64000\n")
-                filey.writelines("python 2.calculate_concept_map.py %s %s %s %s %s" %(image1_holdout, image2_holdout, node_folder, output_file, labels_tsv))
+                filey.writelines("python 3.calculate_concept_map.py %s %s %s %s %s" %(image1_holdout, image2_holdout, node_folder, output_file, labels_tsv))
                 filey.close()
-                os.system("sbatch -p russpold " + ".jobs/class_%s.job" %(contrast_id))
+                os.system("sbatch -p russpold " + ".job/class_%s.job" %(job_id))
