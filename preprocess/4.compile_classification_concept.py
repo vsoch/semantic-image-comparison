@@ -8,6 +8,7 @@ import os
 
 #base = sys.argv[1]
 base = "/scratch/users/vsochat/DATA/BRAINMETA/ontological_comparison"
+results = "%s/results" %(base)
 scores_folder = "%s/classification" %(base)
 scores = glob("%s/*.pkl" %scores_folder)
 
@@ -24,3 +25,10 @@ for i in range(0,len(scores)):
     comparison_df = comparison_df.append(result["comparison_df"])
 
 accuracy = correct/float(total)
+result = dict()
+result["comparison_df"] = comparison_df
+result["total"] = total
+result["correct"] = correct
+result["accuracy"] = accuracy
+pickle.dump(result,open("%s/classification_results_binary.tsv" %results,"wb"))
+
