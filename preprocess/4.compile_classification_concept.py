@@ -64,4 +64,14 @@ result["comparison_df"] = comparison_weighted
 result["total"] = total
 result["correct"] = correct
 result["accuracy"] = accuracy
-pickle.dump(result,open("%s/classification_results_weighted.tsv" %results,"wb"))
+pickle.dump(result,open("%s/classification_results_weighted.pkl" %results,"wb"))
+
+# Remove data frames from saved files (to make space)
+for i in range(7,len(scores)):
+    print "Parsing score %s of %s" %(i,len(scores))
+    try:
+        single_result = pickle.load(open(scores[i],"rb"))
+        single_result.pop("regression_params",None)
+        pickle.dump(scores[i],open(scores[i],"wb"))
+    except:
+        os.remove(scores[i])

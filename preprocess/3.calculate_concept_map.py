@@ -77,7 +77,7 @@ for voxel in mr.columns:
     clf.fit(Xtrain,Y)
     regression_params.loc[voxel,:] = clf.coef_.tolist()
 
-result["regression_params"] = regression_params
+#result["regression_params"] = regression_params
 
 print "Making predictions..."
 # Use regression parameters to generate predicted images
