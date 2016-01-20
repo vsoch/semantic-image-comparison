@@ -14,8 +14,8 @@ from pybraincompare.compare.maths import calculate_correlation
 from pybraincompare.compare.mrutils import get_images_df
 from pybraincompare.mr.datasets import get_standard_mask
 from pybraincompare.mr.transformation import *
-import matplotlib.pyplot as plt
 from sklearn import linear_model
+from random import shuffle
 from glob import glob
 import pickle
 import pandas
@@ -75,10 +75,16 @@ for image_pair in image_pairs:
 
     regression_params = pandas.DataFrame(0,index=mr.columns,columns=concepts)
 
+    # We will use the above df to get the test data, and the below (shuffled) to train
+    Xshuffled = X.copy()
+    train = [x for x in Xshuffled.index if x not in [image1_holdout,image2_holdout] and x in mr.index]
+    Xtrain = Xshuffled.loc[train,:]
+    Xshuffled_index = Xtrain.index.tolist()
+    shuffle(Xshuffled_index)
+    Xtrain.index = Xshuffled_index
+
     for voxel in mr.columns:
-        train = [x for x in X.index if x not in [image1_holdout,image2_holdout] and x in mr.index]
-        Y = mr.loc[train,voxel].tolist()
-        Xtrain = X.loc[train,:] 
+        Y = mr.loc[Xshuffled_index,voxel].tolist()
         # Use regularized regression
         clf = linear_model.ElasticNet(alpha=0.1)
         clf.fit(Xtrain,Y)
