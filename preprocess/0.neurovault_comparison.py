@@ -7,9 +7,11 @@ import shutil
 import nibabel
 import pandas
 import sys
+import numpy
 from glob import glob
 from pyneurovault import api
 from cognitiveatlas.api import get_task, get_concept
+from nilearn.image import resample_img
 from pybraincompare.compare.maths import TtoZ
 
 ## STEP 1: DOWNLOAD OF NV IMAGES ######################################################
@@ -133,3 +135,16 @@ for id1 in image_ids:
         simmatrix.loc[id2,id1] = score
 
 simmatrix.to_csv("%s/contrast_defined_images_pearsonpd_similarity.tsv" %results,sep="\t")
+
+# Finally, resample images to 4mm voxel for classification analysis
+outfolder_z4mm = "%s/resampled_z_4mm" %(data)
+if not os.path.exists(outfolder_z):
+    os.mkdir(outfolder_z)
+
+maps = glob("%s/*.nii.gz" %outfolder_z)
+for mr in maps:
+    image_name = os.path.basename(mr)
+    print "Resampling %s to 4mm..." %(image_name)
+    nii = nibabel.load(mr)
+    nii_resamp = resample_img(nii,target_affine=numpy.diag([4,4,4]))
+    nibabel.save(nii_resamp,"%s/%s" %(outfolder_z4mm,image_name))

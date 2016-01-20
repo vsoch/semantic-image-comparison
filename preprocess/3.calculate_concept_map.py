@@ -21,7 +21,6 @@ import pickle
 import pandas
 import nibabel
 import sys
-import re
 import os
 
 image1_holdout = int(sys.argv[1])
@@ -36,18 +35,19 @@ X = pandas.read_csv(labels_tsv,sep="\t",index_col=0)
 # Node pickles
 node_pickles = glob("%s/*.pkl" %node_folder)
 
-# Get standard mask
-standard_mask=get_standard_mask()
+# Get standard mask, 4mm
+standard_mask=get_standard_mask(4)
 
 # We will save data to dictionary
 result = dict()
 
-# Images that do not match the correct identifier will not be used (eg, "Other")
-expression = re.compile("cnt_*")
-
 # Load any group data to get image paths
 group = node_pickles[0]
 group = pickle.load(open(group,"rb"))
+
+# Change paths in group pickle to point to 4mm folder
+group["in"] = [x.replace("resampled_z","resampled_z_4mm") for x in group["in"]]
+group["out"] = [x.replace("resampled_z","resampled_z_4mm") for x in group["out"]]
 
 concepts = X.columns.tolist()
 
@@ -77,7 +77,8 @@ for voxel in mr.columns:
     clf.fit(Xtrain,Y)
     regression_params.loc[voxel,:] = clf.coef_.tolist()
 
-#result["regression_params"] = regression_params
+
+result["regression_params"] = regression_params
 
 print "Making predictions..."
 # Use regression parameters to generate predicted images
@@ -94,8 +95,8 @@ nii2[standard_mask.get_data()!=0] = predicted_nii2[image2_holdout].tolist()
 nii1 = nibabel.Nifti1Image(nii1,affine=standard_mask.get_affine())
 nii2 = nibabel.Nifti1Image(nii2,affine=standard_mask.get_affine())
 
-result["image1_predicted"] = predicted_nii1
-result["image2_predicted"] = predicted_nii2
+#result["image1_predicted"] = predicted_nii1
+#result["image2_predicted"] = predicted_nii2
 
 # Turn the holdout image data back into nifti
 actual1 = mr.loc[image1_holdout,:]
