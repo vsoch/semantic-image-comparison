@@ -47,12 +47,12 @@ def run_job(group_list,iter_number,group_number):
         filey.writelines("#SBATCH --error=.out/%s.err\n" %(job_id))
         filey.writelines("#SBATCH --time=2-00:00\n")
         filey.writelines("#SBATCH --mem=64000\n")
-        filey.writelines("python 3.calculate_null.py %s %s %s %s %s" %(group_list, node_folder, output_file, labels_tsv))
+        filey.writelines("python 3.calculate_null.py %s %s %s %s" %(group_list, node_folder, output_file, labels_tsv))
         filey.close()
         os.system("sbatch -p russpold " + ".job/null_%s.job" %(job_id))
 
 # We want to start off with 750 iterations, meaning splitting ~4000 images into four groups, so we get 3000 jobs in queue at once, each job should take ~19 hours.
-for i in range(750):
+for i in range(430):
     image_choices = image_pairs[:]
     shuffle(image_choices)
     # Split into four groups of images
