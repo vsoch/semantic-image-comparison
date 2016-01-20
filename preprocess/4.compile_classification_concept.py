@@ -24,8 +24,6 @@ for i in range(0,len(scores)):
     correct=correct+single_result["number_correct"]
     comparison_df = comparison_df.append(single_result["comparison_df"])
 
-
-
 # Use file names for index
 index_names = []
 for score in scores:
@@ -39,7 +37,7 @@ result["comparison_df"] = comparison_df
 result["total"] = total
 result["correct"] = correct
 result["accuracy"] = accuracy
-pickle.dump(result,open("%s/classification_results_binary.tsv" %results,"wb"))
+pickle.dump(result,open("%s/classification_results_binary_4mm.tsv" %results,"wb"))
 
 
 # Parse results for weighted (ontology based) classification
@@ -64,7 +62,7 @@ result["comparison_df"] = comparison_weighted
 result["total"] = total
 result["correct"] = correct
 result["accuracy"] = accuracy
-pickle.dump(result,open("%s/classification_results_weighted.pkl" %results,"wb"))
+pickle.dump(result,open("%s/classification_results_weighted_4mm.pkl" %results,"wb"))
 
 # Remove data frames from saved files (to make space)
 for i in range(7,len(scores)):
