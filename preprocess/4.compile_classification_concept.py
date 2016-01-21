@@ -73,3 +73,18 @@ for i in range(7,len(scores)):
         pickle.dump(scores[i],open(scores[i],"wb"))
     except:
         os.remove(scores[i])
+
+# Compile null
+# Parse results for weighted (ontology based) classification
+scores_folder = "%s/classification_null" %(base)
+scores = glob("%s/*.pkl" %scores_folder)
+
+# Let's save a big data frame of the prediction scores
+comparison_null = []
+
+for i in range(0,len(scores)):
+    print "Parsing score %s of %s" %(i,len(scores))
+    single_result = pickle.load(open(scores[i],"rb"))
+    comparison_null.append(single_result["accuracy"])
+
+accuracy = numpy.mean(comparison_null)
