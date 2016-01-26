@@ -33,6 +33,8 @@ for image1_holdout in images.index.tolist():
 # We want approximately 1/4 for each group
 group_size = int(numpy.floor(len(image_pairs)/4.0))
 
+# SHERLOCK CLUSTER (slurm environment) #################################
+
 # Here is a function for writing and running the job script
 def run_job(group_list,iter_number,group_number):
     job_id = "%s_%s" %(iter_number,group_number)
@@ -64,3 +66,31 @@ for i in range(750):
     run_job(group2,i,2)
     run_job(group3,i,3)
     run_job(group4,i,4)
+
+# TACC CLUSTER (launch with slurm environment) ############################
+
+# Here is a function for outputting all commands to a single file (for launch environment)
+def write_job(group_list,iter_number,group_number,filey):
+    job_id = "%s_%s" %(iter_number,group_number)
+    output_file = "%s/%s_predict.pkl" %(output_folder,job_id)
+    group_list = ",".join(group_list)
+    if not os.path.exists(output_file):
+        filey.writelines('python 3.calculate_null.py "%s" %s %s %s' %(group_list, node_folder, output_file, labels_tsv))
+
+job_file = "image_comparison_launch.job"
+filey = open(job_file,"w")
+for i in range(4000):
+    image_choices = image_pairs[:]
+    shuffle(image_choices)
+    # Split into four groups of images
+    group1 = image_choices[0:group_size]
+    group2 = image_choices[group_size:group_size*2]
+    group3 = image_choices[group_size*2:group_size*3]
+    group4 = image_choices[group_size*3:]
+    write_job(group1,i,1,filey)
+    write_job(group2,i,2,filey)
+    write_job(group3,i,3,filey)
+    write_job(group4,i,4,filey)
+
+filey.close()
+os.system("launch -s %s" %(job_file))

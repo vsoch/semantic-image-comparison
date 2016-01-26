@@ -79,7 +79,6 @@ for i in range(7,len(scores)):
 scores_folder = "%s/classification_null" %(base)
 scores = glob("%s/*.pkl" %scores_folder)
 
-# Let's save a big data frame of the prediction scores
 comparison_null = []
 
 for i in range(0,len(scores)):

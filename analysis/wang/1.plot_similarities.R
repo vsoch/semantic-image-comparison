@@ -53,6 +53,9 @@ color_vector = array(dim=nrow(both))
 color_vector[which(both$image1_task==both$image2_task)] = both$image1_task[which(both$image1_task==both$image2_task)]
 color_vector[is.na(color_vector)] = "tasks not equal"
 
+# Calculate the correlation
+correlation = cor.test(both$spatial_score,both$graph_score,method=c("pearson"))
+
 both$color = color_vector
 png("img/scatter_spatial_semantic_bytask.png", width = 16, height = 12, units = 'in', res = 300)
 ggplot(both, aes(x=graph_score,y=spatial_score,color=color,group=color)) + 
