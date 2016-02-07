@@ -25,8 +25,10 @@ data = "%s/data" %base        # mostly images
 
 if not os.path.exists(base):
     os.mkdirs(base)
+
 if not os.path.exists(results):
     os.mkdir(results)
+
 if not os.path.exists(data):
     os.mkdir(data)
 
@@ -57,9 +59,9 @@ z = images[images.map_type == "Z map"]
 t = images[images.map_type == "T map"]
 
 # Remove tmaps that do not have # subjects defined
-t_collections = collections[collections.collection_id.isin([int(x) for x in t.collection])]
+t_collections = collections[collections.collection_id.isin([int(x) for x in t.collection_id])]
 to_keep = t_collections.collection_id[t_collections.number_of_subjects.isnull()==False]
-t = t[t.collection.isin(to_keep)]
+t = t[t.collection_id.isin(to_keep)]
 images = z.append(t)
 
 # Download images
@@ -72,7 +74,7 @@ tmaps = [ "%s/resampled/%06d.nii.gz" %(data,x) for x in t.image_id.tolist()]
 # Look up number of subjects, and calculate dofs
 dofs = []
 for row in t.iterrows():
-    dof = collections.number_of_subjects[collections.collection_id == int(row[1].collection)].tolist()[0] -2
+    dof = collections.number_of_subjects[collections.collection_id == int(row[1].collection_id)].tolist()[0] -2
     dofs.append(dof)
 
 outfolder_z = "%s/resampled_z" %(data)
@@ -138,8 +140,8 @@ simmatrix.to_csv("%s/contrast_defined_images_pearsonpd_similarity.tsv" %results,
 
 # Finally, resample images to 4mm voxel for classification analysis
 outfolder_z4mm = "%s/resampled_z_4mm" %(data)
-if not os.path.exists(outfolder_z):
-    os.mkdir(outfolder_z)
+if not os.path.exists(outfolder_z4mm):
+    os.mkdir(outfolder_z4mm)
 
 maps = glob("%s/*.nii.gz" %outfolder_z)
 for mr in maps:

@@ -27,10 +27,9 @@ import os
 #            classify image 1 as fitting best to PR1 or PR2
 #            classify image 2 as fitting best to PR1 or PR2
 
-#base = sys.argv[1]
-base = "/scratch/users/vsochat/DATA/BRAINMETA/ontological_comparison"
+base = sys.argv[1]
 data = "%s/data" %base
-node_folder = "%s/likelihood" %data
+node_folder = "%s/groups" %data
 output_folder = "%s/classification_weighted" %base  # any kind of tsv/result file
 results = "%s/results" %base  # any kind of tsv/result file
 

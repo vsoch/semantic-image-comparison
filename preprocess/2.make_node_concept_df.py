@@ -9,10 +9,9 @@ import pickle
 import re
 import os
 
-#base = sys.argv[1]
-base = "/scratch/users/vsochat/DATA/BRAINMETA/ontological_comparison"
+base = sys.argv[1]
 data = "%s/data" %base
-node_pickles = glob("%s/likelihood/*.pkl" %data)
+node_pickles = glob("%s/groups/*.pkl" %data)
 results = "%s/results" %base
 images_tsv = "%s/contrast_defined_images_filtered.tsv" %results
 images = pandas.read_csv(images_tsv,sep="\t")
@@ -38,7 +37,9 @@ for group_pkl in node_pickles:
     image_ids_out = [int(os.path.basename(x).split(".")[0]) for x in group["out"]]
     X.loc[image_ids_in,concept_id] = 1 
 
-X = X[X.sum(axis=1)!=0]
+# Looked this up manually - bug in API right now
+X.loc[109,["trm_567982752ff4a","trm_4a3fd79d0afcf","trm_5534111a8bc96","trm_557b48a224b95","trm_557b4a81a4a17","trm_4a3fd79d0b64e","trm_4a3fd79d0a33b","trm_557b4a7315f1b","trm_4a3fd79d0af71","trm_557b4b56de455","trm_557b4add1837e"]] = 1
+#X = X[X.sum(axis=1)!=0]
 X.to_csv("%s/images_contrasts_df.tsv" %results,sep="\t")
 
 

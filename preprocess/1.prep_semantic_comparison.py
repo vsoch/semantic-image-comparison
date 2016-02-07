@@ -63,23 +63,35 @@ from pybraincompare.ontology.tree import named_ontology_tree_from_tsv, make_onto
 tree = named_ontology_tree_from_tsv(relationship_table,output_json=None)
 
 html_snippet = make_ontology_tree_d3(tree)
-web_folder = "%s/concepttree" %web
-if not os.path.exists(web_folder):
-    os.mkdir(web_folder)
+save_template(html_snippet,"%s/index.html" %web)
 
-save_template(html_snippet,"%s/index.html" %web_folder)
-
-## STEP 3: DERIVATION OF LIKELIHOOD GROUPS
+## STEP 3: DERIVATION OF CONCEPT NODE GROUPS
 # The following steps should be run in a cluster environment
 # this will show an example in a single batch script
-from pybraincompare.ontology.inference import likelihood_groups_from_tree
+from pybraincompare.ontology.inference import groups_from_tree
 from pybraincompare.mr.datasets import get_standard_mask
 
 standard_mask = get_standard_mask()
 input_folder = "%s/resampled_z" %data # Images folder
-output_folder = "%s/likelihood" %data
+output_folder = "%s/groups" %data
 os.mkdir(output_folder)
 # Take a look at "image_pattern" and "node_pattern" inputs if not using NeuroVault and pybraincompare tree
 
 ###### 3.1 First generate node groups
-groups = likelihood_groups_from_tree(tree,standard_mask,input_folder,output_folder=output_folder)
+groups = groups_from_tree(tree,standard_mask,input_folder,output_folder=output_folder)
+
+# Bug that image 109 is not included in groups, here are the contrasts
+concept_109 =["trm_567982752ff4a","trm_4a3fd79d0afcf","trm_5534111a8bc96","trm_557b48a224b95","trm_557b4a81a4a17","trm_4a3fd79d0b64e","trm_4a3fd79d0a33b","trm_557b4a7315f1b","trm_4a3fd79d0af71","trm_557b4b56de455","trm_557b4add1837e"]
+
+pickle_folder = "%s/groups" %data
+image109 = "%s/resampled_z/000109.nii.gz" %data
+for single_concept in concept_109:
+    concept_pickle = pickle.load(open("%s/pbc_group_%s.pkl" %(pickle_folder,single_concept),"rb"))
+    concept_pickle["in"].append(image109)  
+    pickle.dump(concept_pickle,open("%s/pbc_group_%s.pkl" %(pickle_folder,single_concept),"wb"))
+
+concept_out = [x for x in concepts if x not in concept_109]
+for single_concept in concept_out:
+    concept_pickle = pickle.load(open("%s/pbc_group_%s.pkl" %(pickle_folder,single_concept),"rb"))
+    concept_pickle["out"].append(image109)  
+    pickle.dump(concept_pickle,open("%s/pbc_group_%s.pkl" %(pickle_folder,single_concept),"wb"))

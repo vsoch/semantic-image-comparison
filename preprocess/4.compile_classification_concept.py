@@ -6,8 +6,7 @@ import pandas
 import sys
 import os
 
-#base = sys.argv[1]
-base = "/scratch/users/vsochat/DATA/BRAINMETA/ontological_comparison"
+base = sys.argv[1]
 results = "%s/results" %(base)
 scores_folder = "%s/classification" %(base)
 scores = glob("%s/*.pkl" %scores_folder)
@@ -87,3 +86,26 @@ for i in range(0,len(scores)):
     comparison_null.append(single_result["accuracy"])
 
 accuracy = numpy.mean(comparison_null)
+result = dict()
+result["comparison_null"] = comparison_null
+result["accuracy"] = accuracy
+pickle.dump(result,open("%s/classification_results_null_4mm.pkl" %results,"wb"))
+
+# Do two sample T test against actual vs null accuracies
+result_weighted = pickle.load(open("%s/classification_results_weighted_4mm.pkl" %results,"rb"))
+result_binary = pickle.load(open("%s/classification_results_binary_4mm.tsv" %results,"rb"))
+from scipy.stats import ttest_1samp
+tstat_weighted,pval_weighted = ttest_1samp(comparison_null,result_weighted["accuracy"])
+tstat_binary,pval_binary = ttest_1samp(comparison_null,result_binary["accuracy"])
+
+# Add to saved results
+result_weighted["tstat"] = tstat_weighted
+# (-940.98065892317265, 0.0)
+result_weighted["pval"] = pval_weighted
+# weighted not the appropriate null distribution, but tested anyway
+result_binary["tstat"] = tstat_binary
+result_binary["pval"] = pval_binary
+# (-945.32360460633618, 0.0) - 
+
+pickle.dump(result_binary,open("%s/classification_results_binary_4mm.pkl" %results,"wb"))
+pickle.dump(result_weighted,open("%s/classification_results_weighted_4mm.pkl" %results,"wb"))

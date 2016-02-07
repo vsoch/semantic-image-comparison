@@ -6,10 +6,9 @@ import numpy
 import pandas
 import os
 
-#base = sys.argv[1]
-base = "/scratch/users/vsochat/DATA/BRAINMETA/ontological_comparison"
+base = sys.argv[1]
 data = "%s/data" %base
-node_folder = "%s/likelihood" %data
+node_folder = "%s/groups" %data
 output_folder = "%s/classification_null" %base
 results = "%s/results" %base  # any kind of tsv/result file
 
@@ -68,6 +67,7 @@ for i in range(750):
     run_job(group4,i,4)
 
 # TACC CLUSTER (launch with slurm environment) ############################
+# The analysis was not done here, this is provided as an option only
 
 # Here is a function for outputting all commands to a single file (for launch environment)
 def write_job(group_list,iter_number,group_number,filey):
@@ -75,11 +75,11 @@ def write_job(group_list,iter_number,group_number,filey):
     output_file = "%s/%s_predict.pkl" %(output_folder,job_id)
     group_list = ",".join(group_list)
     if not os.path.exists(output_file):
-        filey.writelines('python 3.calculate_null.py "%s" %s %s %s' %(group_list, node_folder, output_file, labels_tsv))
+        filey.writelines('python 3.calculate_null.py "%s" %s %s %s\n' %(group_list, node_folder, output_file, labels_tsv))
 
 job_file = "image_comparison_launch.job"
 filey = open(job_file,"w")
-for i in range(4000):
+for i in range(1000):
     image_choices = image_pairs[:]
     shuffle(image_choices)
     # Split into four groups of images
@@ -93,4 +93,4 @@ for i in range(4000):
     write_job(group4,i,4,filey)
 
 filey.close()
-os.system("launch -s %s" %(job_file))
+os.system("launch -s %s --runtime=2-00:00 --jobname='semantic-comparison-sochat' -N 1" %(job_file))
