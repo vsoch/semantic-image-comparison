@@ -1,0 +1,133 @@
+	CONCEPT_NAMES	0	1	2	3	4	5	6	7	8	9
+trm_4a3fd79d09af8	auditory word recognition	prefrontal	prefrontal cortex	memory	cognitive	disorder	dorsolateral	pfc	medial	cognitive control	reasoning
+trm_558c7439832d9	visual letter recognition	state	resting	resting state	cingulate	state functional	clinical	states	correlated	matter	continuous
+trm_557b4aeaeb744	tool maintenance	fusiform	face	occipito temporal	occipito	task	color	visual	working memory	working	occipitotemporal
+trm_558c7b14c076e	auditory sentence recognition	visual	intraparietal	intraparietal sulcus	occipital	ips	superior parietal	extrastriate	visual cortex	eye	visually
+trm_4a3fd79d0a775	language comprehension	cingulate	cingulate cortex	anterior cingulate	medial prefrontal	posterior cingulate	default mode	default	mode	mode network	anterior
+trm_557b482a7c62b	emotional face recognition	occipital	visual	lateral occipital	occipito	object	objects	occipito temporal	occipital cortex	v1	fusiform
+trm_557b4b7e68727	visual place recognition	medial prefrontal	state	social	emotional	positive	mental states	posterior cingulate	theory mind	medial	emotion
+trm_557b48aeb7d58	motion detection	visual	occipital	intraparietal	intraparietal sulcus	object	occipito	ips	color	occipito temporal	sulcus ips
+trm_55b6b952c1b4c	right toe response execution	contralateral	hand	ipsilateral	finger	motor task	primary	motor cortex	sensorimotor cortex	hands	m1
+trm_4a3fd79d0a1d1	emotional suppression	matter	gray	cingulate cortex	abnormalities	negative	disorder	regulation	prefrontal cortex	gray matter	positive
+trm_4a3fd79d09c5b	causal inference	foot	sma	supplementary	supplementary motor	extension	motor sma	motor	limb	execution	motor imagery
+trm_4a3fd79d0b89e	sentence processing	fusiform	objects	fusiform gyrus	occipito temporal	occipito	face	occipitotemporal	object	ffa	fusiform face
+trm_4a3fd79d0b967	recognition	faces	fusiform	face	occipital	fusiform gyrus	recognition	ventral visual	face ffa	fusiform face	ffa
+trm_557b4a913f8cc	risk processing	correlation	maps	level signal	states	intensity	cingulate	structures	detect	evidence	follow
+trm_559f09a5cdca9	subjective food value	intraparietal	visual	intraparietal sulcus	object	motion	sulcus	observation	moving	superior parietal	action
+trm_4a3fd79d0a30c	face recognition	visual	occipital	lateral occipital	object	parieto occipital	grasping	motion	mt	vision	shape
+trm_51a690a7492eb	emotion regulation	matter	gray	cingulate cortex	abnormalities	negative	disorder	regulation	prefrontal cortex	gray matter	positive
+trm_4a3fd79d0aab0	object recognition	visual	occipital	occipito	occipito temporal	occipital cortex	extrastriate	lateral occipital	visually	intraparietal	intraparietal sulcus
+trm_5519b80525e89	stimulus detection	visual	extrastriate	occipital	visual cortex	occipital cortex	v5	lateral occipital	v1	mt	occipito
+trm_558c7b5228ed4	visual sentence recognition	temporal sulcus	temporal	theory mind	middle temporal	posterior superior	psts	mind	sentence	social	sulcus psts
+trm_557b4891e9265	feature comparison	state	resting	cingulate	resting state	pain	cingulate cortex	healthy	state functional	posterior cingulate	mode network
+trm_4ee8facd77dfc	self control	matter	gray	cingulate cortex	abnormalities	negative	disorder	regulation	prefrontal cortex	gray matter	positive
+trm_557b4b56de455	visual object detection	finger	index finger	finger movements	tapping	finger tapping	cerebellum	cortex supplementary	cerebellar	movements	premotor cortex
+trm_5534111a8bc96	punishment processing	visual	occipital	occipital cortex	extrastriate	lateral occipital	visual cortex	v1	occipito	mt	object
+trm_557b4b7176394	visual recognition	social	faces	emotional	neutral	emotion	face	amygdala	anterior temporal	ventromedial	medial prefrontal
+trm_4a3fd79d0afcf	risk	auditory	auditory cortex	sounds	listening	heschl	heschl gyrus	acoustic	primary auditory	speech	planum temporale
+trm_4a3fd79d09d93	color perception	listening	auditory cortex	acoustic	comprehension	sounds	temporal gyrus	temporal	listened	state	speech
+trm_4c3e05903e4bb	updating	task	intraparietal	tasks	intraparietal sulcus	visual	working memory	working	ips	sulcus ips	fronto parietal
+trm_557b4a7315f1b	response execution	execution	supplementary motor	supplementary	task	sma	premotor	tasks	motor	parietal	premotor cortex
+trm_4a3fd79d0af66	response inhibition	cingulate	cingulate cortex	state	resting	resting state	posterior cingulate	prefrontal cortex	anterior	healthy	medial prefrontal
+trm_557b495cdde57	potential monetary reward	maps	states	progressive	32	cingulate	pre	test	strongly	potentially	scale
+trm_557b4abe521af	spatial selective attention	state	resting	resting state	healthy	cingulate	matter	state functional	gray	clinical	gray matter
+trm_5159beaf80413	animacy perception	speech production	production	somatosensory	premotor	premotor cortex	motor	ventral premotor	sensorimotor	overt	s1
+trm_557b4855a12b4	emotional self-evaluation	mt	v5	occipital	motion	lateral occipital	extrastriate	visual motion	visual	visual field	occipital cortex
+trm_4a3fd79d0b4a9	visual object recognition	visual	intraparietal	intraparietal sulcus	task	ips	sulcus ips	occipital	tasks	attentional	fronto parietal
+trm_568427366401c	sentence recognition 	fusiform	objects	fusiform gyrus	occipito temporal	occipito	face	occipitotemporal	object	ffa	fusiform face
+trm_55ef153d47bc0	confidence judgment	correlation	maps	level signal	states	intensity	cingulate	structures	detect	evidence	follow
+trm_4a3fd79d09c28	categorization	matter	depression	posterior cingulate	prefrontal cortex	negative	prefrontal	memory	voxel	disorder	retrieval
+trm_557b476527a27	auditory tone discrimination	medial prefrontal	posterior cingulate	default	medial	state	default mode	mode network	network dmn	dmn	resting
+trm_4a3fd79d0b58f	word recognition	resting state	resting	state functional	occipital	dmn	mode network	precuneus	network dmn	default mode	state
+trm_557b478ce1c24	color recognition	negative	depression	disorder	risk	positive	resting state	abnormalities	matter	episodic	posterior cingulate
+trm_56798c5f25b0c	context representation	visual	occipital	intraparietal	intraparietal sulcus	object	occipito	color	task	ips	sulcus ips
+trm_4a3fd79d0a20c	error detection	state	resting	cingulate	resting state	posterior cingulate	medial prefrontal	default mode	default	mode network	cingulate cortex
+trm_55b6b92c1fd76	left finger response execution	premotor	motor	execution	premotor cortex	movements	supplementary	supplementary motor	hand	superior parietal	sma
+trm_559f0986182cc	visual object maintenance	posterior cingulate	cingulate	state	resting	resting state	network dmn	cingulate cortex	mode network	dmn	default mode
+trm_4a3fd79d0a723	judgment	intraparietal	intraparietal sulcus	sulcus	visual	object	motion	observation	action	superior parietal	parietal
+trm_4a3fd79d0a613	inhibition	cingulate	cingulate cortex	state	resting	resting state	posterior cingulate	prefrontal cortex	anterior	healthy	medial prefrontal
+trm_4a3fd79d0b64e	risk seeking	prefrontal cortex	negative	prefrontal	depression	posterior cingulate	medial prefrontal	medial	memory retrieval	recollection	regulation
+trm_557b499fac085	resistance to distractor inference	structural	matter	white	faces	white matter	fearful	resolution	structure	perception	limited
+trm_55ef1fd2bc418	visual string recognition	fusiform	face	fusiform face	occipito temporal	ffa	face ffa	fusiform gyrus	occipito	visual	occipitotemporal
+trm_55ef687f48a9d	auditory recognition	working memory	working	dorsolateral	dorsolateral prefrontal	task	parietal cortex	frontoparietal	memory	parietal	executive
+trm_557b48e337218	negative feedback processing	visual	v1	occipital	visual cortex	occipital cortex	primary visual	extrastriate	vision	mt	visual field
+trm_557b4b8cd05ca	visual tool recognition	fusiform	face	occipito temporal	occipito	task	color	visual	working memory	working	occipitotemporal
+trm_5678a999f1c19	numerical comparison	middle	frontal	frontal lobe	anterior	lobe	suggesting	future	inferior	provide	32
+trm_559f0a5b4cd36	monetary reward prediction error	visual	occipital	intraparietal	intraparietal sulcus	object	occipito	color	task	ips	sulcus ips
+trm_558c73f3c8c6f	visual pseudoword recognition	speech production	production	vocal	pitch	auditory cortices	overt	sparse	speech	heschl	heschl gyrus
+trm_557b4acdee820	string maintenance	fusiform	face	fusiform face	occipito temporal	ffa	face ffa	fusiform gyrus	occipito	visual	occipitotemporal
+trm_4a3fd79d0a5ed	inference	foot	sma	supplementary	supplementary motor	extension	motor sma	motor	limb	execution	motor imagery
+trm_557b49ad14adf	response conflict	structural	matter	white	faces	white matter	fearful	resolution	structure	perception	limited
+trm_557b4af7cc1cb	visual body recognition	visual	occipital	visual cortex	occipital cortex	objects	lateral occipital	occipito	v1	object	extrastriate
+trm_557b471bc6cd8	animacy decision	visual	occipital	intraparietal	intraparietal sulcus	object	occipito	ips	color	occipito temporal	sulcus ips
+trm_557b477b4a15f	body maintenance	visual	occipital	visual cortex	occipital cortex	objects	lateral occipital	occipito	v1	object	extrastriate
+trm_4a3fd79d0af71	response selection	matter	state	resting	cingulate	posterior cingulate	resting state	state functional	medial prefrontal	voxel	cingulate cortex
+trm_4a3fd79d09902	attention	visual	occipital	v1	spatial	intraparietal sulcus	intraparietal	early visual	visual cortex	lingual	color
+trm_55ef3ba010121	vocal response execution	state	resting	resting state	cingulate	posterior cingulate	state functional	medial prefrontal	mode network	default	default mode
+trm_567982752ff4a	decision under uncertainty	prefrontal cortex	negative	prefrontal	depression	posterior cingulate	medial prefrontal	medial	memory retrieval	recollection	regulation
+trm_55b6b96e77df6	left toe response execution	risk	depressive	depression	making	compulsive	fractional	abnormalities	obsessive	obsessive compulsive	negatively
+trm_557b49851e991	proactive control	voxel	matter	resting	state	healthy	morphometry	treatment	volume	resting state	voxel morphometry
+trm_4a3fd79d0b4b5	visual perception	face	fusiform	faces	fusiform gyrus	viewing	visual	perception	occipital	viewed	temporal
+trm_558c7ae1eaf86	arithmetic processing	prefrontal cortex	prefrontal	disorder	negative	pfc	medial	orbitofrontal	depression	memory	cognitive
+trm_557b4b154e0d9	visual face recognition	visual	occipital	lateral occipital	object	parieto occipital	grasping	motion	mt	vision	shape
+trm_4a3fd79d0a398	form perception	visual	occipital	intraparietal	intraparietal sulcus	task	tasks	ips	v1	color	occipito
+trm_4a3fd79d0b5a7	working memory	state	resting	resting state	foot	default	default mode	mode	dmn	mode network	network dmn
+trm_557b4993a0fdd	reinforcement learning	posterior cingulate	cingulate	acoustic	state	cingulate cortex	listening	midline	anterior	speech	heard
+trm_4a3fd79d0b802	language processing	fusiform	objects	fusiform gyrus	occipito temporal	occipito	face	occipitotemporal	object	ffa	fusiform face
+trm_4a3fd79d0b1b2	spatial attention	visual	occipital	v1	spatial	intraparietal sulcus	intraparietal	early visual	visual cortex	lingual	color
+trm_4a3fd79d0ab7c	perception	state	medial prefrontal	posterior cingulate	resting	states	positive	emotional	resting state	emotion	self
+trm_557b4a81a4a17	reward anticipation	auditory	sounds	auditory cortex	listening	acoustic	heschl	heschl gyrus	planum temporale	temporale	planum
+trm_557b4b652cbec	visual pattern recognition	pain	secondary somatosensory	insula	somatosensory	secondary	foot	sii	insular	painful	noxious
+trm_557b4b47d994a	visual number recognition	visual	occipital	object	objects	intraparietal	intraparietal sulcus	occipito	occipito temporal	lateral occipital	ips
+trm_558c736199abd	subjective value judgment	intraparietal	intraparietal sulcus	sulcus	visual	object	motion	observation	action	superior parietal	parietal
+trm_557b4b9ccdc4a	visual word recognition	resting	resting state	state functional	occipital	dmn	mode network	precuneus	network dmn	default mode	state
+trm_4a3fd79d0a891	memory	faces	fusiform	face	occipital	fusiform gyrus	recognition	ventral visual	face ffa	fusiform face	ffa
+trm_555cfb890d721	relational comparison	voxel	matter	negative	depression	morphometry	posterior cingulate	state	positive	voxel morphometry	medial prefrontal
+trm_557b48f22ba99	numerical scale judgment	cuneus	precuneus	lingual	resting	resting state	cortex precuneus	posterior cingulate	occipital	navigation	mode network
+trm_4c3e04d656f06	interference resolution	structural	matter	white	faces	white matter	fearful	resolution	structure	perception	limited
+trm_55b6b910b4b23	right finger response execution	listening	acoustic	sounds	heard	speech	auditory	auditory cortex	heschl	music	heschl gyrus
+trm_5519b7525d7a2	discrimination	medial prefrontal	state	posterior cingulate	autobiographical	medial	temporal	default	comprehension	positive	default mode
+trm_557b4add1837e	task difficulty	faces	depression	negative	disorder	medial	hippocampus	background	risk	methods	parahippocampal
+trm_557b4b3a6a34d	visual form recognition	visual	intraparietal	intraparietal sulcus	occipital	ips	sulcus ips	parietal	object	lateral occipital	occipito
+trm_558c7b707f606	left hand response execution	cingulate	state	resting	cingulate cortex	healthy	resting state	insula	insular	clinical	matter
+trm_55b6b9d7c9435	working memory maintenance	task	working memory	working	intraparietal	intraparietal sulcus	ips	color	sulcus ips	fronto parietal	tasks
+trm_55c298bbe56d5	high energy density food recognition	speech production	production	vocal	naming	sparse	speech	sampling	structural	oral	voxel
+trm_4a3fd79d0aa76	object detection	finger	movements	cerebellar	finger movements	premotor cortex	premotor	hand	cerebellum	grasping	motor
+trm_4a3fd79d09849	anticipation	listening	acoustic	speech	heard	sounds	listened	sentence	comprehension	voice	matter
+trm_557b47abe9a34	decision certainty	default mode	default	mode network	dmn	posterior cingulate	mode	network dmn	resting	medial prefrontal	state
+trm_557b48a224b95	loss anticipation	listening	acoustic	speech	sounds	heard	auditory cortex	auditory	listened	temporal gyrus	comprehension
+trm_4a3fd79d0a908	mental representation	visual	occipital	intraparietal	intraparietal sulcus	object	occipito	color	task	ips	sulcus ips
+trm_557b4817db34d	economic value processing	correlation	maps	level signal	states	intensity	cingulate	structures	detect	evidence	follow
+trm_4a3fd79d0a33b	feedback processing	ventral premotor	v5	premotor cortex	movements	premotor	static	finger	movement	motion	perception
+trm_4a3fd79d0a7bb	learning	posterior cingulate	cingulate	acoustic	state	cingulate cortex	listening	midline	anterior	speech	heard
+trm_4a3fd79d0b13d	social cognition	finger	finger movements	finger tapping	sequential	tapping	coordination	motor task	motor	secondary	premotor
+trm_557b491318742	oddball detection	auditory cortex	sounds	auditory	listening	superior temporal	acoustic	heschl	heschl gyrus	planum	planum temporale
+trm_55b6b9a666604	working memory updating	visual	lateral occipital	occipital	objects	object	extrastriate	occipito temporal	occipito	motion	occipitotemporal
+trm_557b493e4203a	positive feedback processing	language	temporal sulcus	sentences	speech	superior temporal	reading	sentence	temporal	word	comprehension
+trm_4aae62e4ad209	cognitive control	occipito	occipito temporal	fusiform	visual	occipital	lateral occipital	inferior occipital	selective	orthographic	color
+trm_4a3fd79d0ba30	maintenance	dorsolateral	dorsolateral prefrontal	control	working memory	error	task	working	response inhibition	supplementary	dlpfc
+trm_557b4b05ae470	visual color discrimination	auditory	sounds	auditory cortex	listening	speech	acoustic	superior temporal	heschl	heschl gyrus	stg
+trm_4a3fd79d0a17f	emotion	vmpfc	ventromedial prefrontal	ventromedial	cortex vmpfc	medial prefrontal	default	default mode	mode	posterior cingulate	prefrontal cortex
+trm_557b49206928b	pattern maintenance	cingulate	cingulate cortex	state	resting	resting state	anterior	posterior cingulate	insula	state functional	anterior cingulate
+trm_557b494ca540d	potential monetary loss	negative	emotional	emotion	positive	state	medial prefrontal	social	medial	emotions	posterior cingulate
+trm_557b493133416	place maintenance	cingulate	state	resting	resting state	cingulate cortex	posterior cingulate	prefrontal cortex	state functional	matter	mode network
+trm_4a3fd79d0a038	decision making	supplementary	supplementary motor	sma	motor	motor imagery	motor sma	premotor	movements	foot	movement
+trm_55c6f87595b39	face maintenance	somatosensory	primary	somatosensory cortex	contralateral	somatosensory cortices	ipsilateral	primary motor	motor cortex	stimulation	primary somatosensory
+trm_557b4bb7cf05b	word maintenance	intraparietal	task	intraparietal sulcus	visual	working memory	working	tasks	ips	sulcus ips	fronto parietal
+trm_55b6b98b88f45	tongue response execution	visual	occipital	task	objects	object	occipito	occipito temporal	intraparietal	intraparietal sulcus	color
+trm_4a3fd79d0b665	emotion recognition	occipital	visual	lateral occipital	occipito	object	objects	occipito temporal	occipital cortex	v1	fusiform
+trm_4a3fd79d0b392	theory of mind	finger	finger movements	finger tapping	sequential	tapping	coordination	motor task	motor	secondary	premotor
+trm_55ce70b20186b	detection	visual	intraparietal	intraparietal sulcus	occipital	extrastriate	object	visual cortex	visually	occipito	perceptual
+trm_4a3fd79d0b46f	visual attention	visual	occipital	v1	spatial	intraparietal sulcus	intraparietal	early visual	visual cortex	lingual	color
+trm_557b4b27dfd5e	visual form discrimination	auditory	sounds	auditory cortex	listening	speech	acoustic	superior temporal	heschl	heschl gyrus	stg
+trm_4a3fd79d0b043	selective attention	state	resting	resting state	healthy	cingulate	matter	state functional	gray	clinical	gray matter
+trm_558c7b337080f	right hand response execution	face	fusiform	temporal	fusiform gyrus	temporal cortex	temporal sulcus	faces	ffa	semantic	fusiform face
+trm_557b48d40d3cf	negative emotion	vmpfc	ventromedial prefrontal	ventromedial	cortex vmpfc	medial prefrontal	default	default mode	mode	posterior cingulate	prefrontal cortex
+trm_557b4904ee26d	object maintenance	acoustic	listening	pain	insula	somatosensory	sounds	auditory cortex	auditory	auditory cortices	heschl
+trm_55c6f58e77fbe	story comprehension	cingulate	cingulate cortex	anterior cingulate	medial prefrontal	posterior cingulate	default mode	default	mode	mode network	anterior
+trm_557b4aa070c10	selective control	fusiform	face	occipital	face ffa	lateral occipital	fusiform face	ffa	fusiform gyrus	inferior occipital	faces
+trm_55ef273a77a86	auditory tone perception	resting	state	resting state	matter	clinical	gray	voxel	state functional	cingulate	healthy
+trm_4a3fd79d0b61f	decision	inferior occipital	matching task	color	occipital gyrus	retrieval	agent	recollection	judgment	occipital	word
+trm_557b474e2b578	auditory tone detection	inferior occipital	face	stimuli	matching	faces	occipito temporal	amygdala responses	matching task	importance	fusiform gyrus
+trm_4a3fd79d0ab65	pattern recognition	pain	secondary somatosensory	insula	somatosensory	secondary	foot	sii	insular	painful	noxious
+trm_4a3fd79d09ab2	auditory perception	state	negative	positive	medial prefrontal	posterior cingulate	resting state	resting	emotional	social	medial
