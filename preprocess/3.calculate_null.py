@@ -63,6 +63,9 @@ image_ids_out = [int(os.path.basename(x).split(".")[0]) for x in group["out"]]
 image_ids = image_ids_in + image_ids_out
 mr.index = image_ids
 
+# We will save a data frame of pearson scores (to calculate accuracies later)
+comparison_dfs = pandas.DataFrame()
+
 for image_pair in image_pairs:
     
     image1_holdout,image2_holdout = [int(x) for x in image_pair.split("|")]
@@ -104,7 +107,6 @@ for image_pair in image_pairs:
     nii2[standard_mask.get_data()!=0] = predicted_nii2[image2_holdout].tolist()
     nii1 = nibabel.Nifti1Image(nii1,affine=standard_mask.get_affine())
     nii2 = nibabel.Nifti1Image(nii2,affine=standard_mask.get_affine())
-
     # Turn the holdout image data back into nifti
     actual1 = mr.loc[image1_holdout,:]
     actual2 = mr.loc[image2_holdout,:]
@@ -114,14 +116,12 @@ for image_pair in image_pairs:
     actual_nii2[standard_mask.get_data()!=0] = actual2.tolist()
     actual_nii1 = nibabel.Nifti1Image(actual_nii1,affine=standard_mask.get_affine())
     actual_nii2 = nibabel.Nifti1Image(actual_nii2,affine=standard_mask.get_affine())
-
     # Make a dictionary to lookup images based on nifti
     lookup = dict()
     lookup[actual_nii1] = image1_holdout
     lookup[actual_nii2] = image2_holdout
     lookup[nii1] = image1_holdout
     lookup[nii2] = image2_holdout
-
     comparison_df = pandas.DataFrame(columns=["actual","predicted","cca_score"])
     comparisons = [[actual_nii1,nii1],[actual_nii1,nii2],[actual_nii2,nii1],[actual_nii2,nii2]]
     count=0
@@ -137,6 +137,7 @@ for image_pair in image_pairs:
     #1    3186        420   0.485644
     #2     420       3186   0.044668
     #3     420        420   0.657109
+    comparison_dfs = comparison_dfs.append(comparison_df)
 
     # Calculate accuracy
     acc1 = comparison_df[comparison_df.actual==image1_holdout]
@@ -156,5 +157,6 @@ for image_pair in image_pairs:
 result = dict()
 result["total"] = total
 result["correct"] = correct
+result["comparison_df"] = comparison_dfs
 result["accuracy"] = correct/float(total)
 pickle.dump(result,open(output_file,"wb"))

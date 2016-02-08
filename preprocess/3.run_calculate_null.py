@@ -15,6 +15,7 @@ results = "%s/results" %base  # any kind of tsv/result file
 # Images by Concepts data frame
 labels_tsv = "%s/images_contrasts_df.tsv" %results
 images = pandas.read_csv(labels_tsv,sep="\t",index_col=0)
+images.index = images.image_id
 
 if not os.path.exists(output_folder):
     os.mkdir(output_folder)
