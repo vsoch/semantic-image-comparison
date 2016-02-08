@@ -105,6 +105,7 @@ pickle.dump(result,open("%s/regression_params_dfs.pkl" %output_folder,"wb"))
 print "Starting neurosynth decoding..."
 from neurosynth.base.dataset import Dataset
 from neurosynth.analysis import decode
+from nilearn.image import resample_img
 
 neurosynth_data = "%s/neurosynth-data" %base
 dataset = Dataset('%s/database.txt' %neurosynth_data)
@@ -113,5 +114,15 @@ decoder = decode.Decoder(dataset) # select all features
 pickle.dump(decoder,open("%s/decoder.pkl" %output_folder,"wb"))
 
 concept_maps = glob("%s/*.nii.gz" %output_folder)
+brain_2mm = get_standard_mask(2)
+
+# Decoder needs 2mm images
+concept_maps_2mm = []
+for concept_map in concept_maps:
+    twomm = concept_map.replace("regparam_z","regparam_z_2mm")
+    nii = resample_img(concept_map,target_affine=brain_2mm.get_affine())
+    nibabel.save(nii,twomm)
+    concept_maps_2mm.append(twomm)
+
 decode_result_file = "%s/concept_regparam_decoding.txt" %results
-decode_result = decoder.decode(concept_maps, save=decode_result_file)
+decode_result = decoder.decode(concept_maps_2mm, save=decode_result_file)
