@@ -96,13 +96,15 @@ The output of the above is over 10K files, each containing python (pickled) scor
 
 
 ## Comparison with NeuroSynth
-We decode each of the Z score regression parameter maps as a "soft validation," to supplement the classification tests. We would want to see the maps, for each concept, be "decoded" as similar to relevant terms in the NeuroSynth database.
+We decode each of the Z score regression parameter maps as a "soft validation," to supplement the classification tests. We would want to see the maps, for each concept, be "decoded" as similar to relevant terms in the NeuroSynth database. Note that to make this easy, I uploaded the images to neurovault, and then used the collection_id to do the decoding programatically. If you instead want to use the neurosynth API, see the commented out portion of the script.
 
-      python 4.comparison_with_neurosynth.py $base
+   
+      neurovault_collection=1170
+      python 4.comparison_with_neurosynth.py $base $neurovault_collection
 
 
 ### Outputs from this step moved into analysis folder:
- - [$base/results/concept_regparam_decoding.txt](../analysis/classification/data/concept_regparam_decoding.txt)
+ - [$base/results/concept_regparam_decoding.tsv](../analysis/classification/data/concept_regparam_decoding.tsv)
 
 
 # Part II: Graph Comparison

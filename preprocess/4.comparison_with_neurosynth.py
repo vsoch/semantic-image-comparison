@@ -24,6 +24,7 @@ import sys
 import os
 
 base = sys.argv[1]
+neurovault_collection = int(sys.argv[2])
 data = "%s/data" %base
 node_folder = "%s/likelihood" %data
 results = "%s/results" %base  # any kind of tsv/result file
@@ -131,6 +132,8 @@ decode_result = decoder.decode(concept_maps_2mm, save=decode_result_file)
 
 # URL-based decoding (possible since all images are in NeuroVault) - much faster!
 
+from pyneurovault.api import get_images
+from cognitiveatlas.api import get_concept
 from urllib2 import Request, urlopen, HTTPError
 import pandas
 import json
@@ -146,15 +149,42 @@ terms = []
 for term in  ns["data"]:
     terms.append(term["analysis"])
 
-# Now decode each of our images
+# In case we want it, decode each of our original images
 unique_images = images.image_id.unique().tolist()
 decode = pandas.DataFrame(index=unique_images,columns=terms)
 
 for unique_image in unique_images:
-    print "Decoding image %s" %(unique_image)
+    print "Decoding original image %s" %(unique_image)
     ns = json.loads(get_url("http://neurosynth.org/decode/data/?neurovault=%s" %unique_image))
     for term in  ns["data"]:
         decode.loc[unique_image,term["analysis"]] = term["r"]
 
-decode_result_file = "%s/concept_regparam_decoding.tsv" %results
-decode.to_csv(decode_results_file,sep="\t")
+decode_result_file = "%s/original_images_decoding.tsv" %results
+decode.to_csv(decode_result_file,sep="\t")
+
+# Now we will decode our collection of images!
+rp_images = get_images(collection_pks=[neurovault_collection])
+unique_rp_images = rp_images.image_id.unique().tolist()
+rp_decode = pandas.DataFrame(index=unique_rp_images,columns=terms)
+
+for unique_image in unique_rp_images:
+    print "Decoding regression parameter image %s" %(unique_image)
+    ns = json.loads(get_url("http://neurosynth.org/decode/data/?neurovault=%s" %unique_image))
+    for term in ns["data"]:
+        rp_decode.loc[unique_image,term["analysis"]] = term["r"]
+
+# Now let's add some cognitive atlas meta data, so we don't have to look up later
+image_urls = rp_images.file[rp_images.image_id.isin(unique_rp_images)]
+rp_decode["0image_urls"] = image_urls.tolist()
+concept_ids = [str(x.split("/")[-1].replace(".nii.gz","").replace("_regparam_z","")) for x in image_urls]
+rp_decode["0cognitive_atlas_concept_id"] = concept_ids
+
+concept_names = []
+for concept_id in concept_ids:
+    concept = get_concept(id=concept_id).json
+    concept_names.append(concept[0]["name"])
+
+rp_decode["0cognitive_atlas_concept_name"] = concept_names
+
+decode_rp_file = "%s/concept_regparam_decoding.tsv" %results
+decode.to_csv(decode_rp_file,sep="\t")

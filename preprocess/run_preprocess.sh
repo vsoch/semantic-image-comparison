@@ -47,9 +47,11 @@ cp $base/results/classification_results_null_4mm.tsv ../analysis/classification/
 mkdir ../analysis/classification/data/concept_maps
 cp $base/results/classification_final/*.nii.gz ../analysis/classification/data/concept_maps
 
-# Comparison with neurosynth (decoding of Z score concept maps of regression parameters)
-python 4.comparison_with_neurosynth.py $base
-cp $base/results/concept_regparam_decoding.txt ../analysis/classification/data
+# Comparison with neurosynth (decoding of Z score concept maps of regression parameters) - done easily by uploading to a neurovault collection
+neurovault_collection=1170
+python 4.comparison_with_neurosynth.py $base $neurovault_collection
+cp $base/results/concept_regparam_decoding.tsv ../analysis/classification/data
+cp $base/results/original_images_decoding.tsv ../analysis/classification/data
 
 # Step 5: Run calculations for Wang Graph metric, compile results
 RSCRIPT 5.run_wang_graph_comparison_sherlock.R $base
