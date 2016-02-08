@@ -104,7 +104,10 @@ We decode each of the Z score regression parameter maps as a "soft validation," 
 
 
 ### Outputs from this step moved into analysis folder:
- - [$base/results/concept_regparam_decoding.tsv](../analysis/classification/data/concept_regparam_decoding.tsv)
+ - [$base/results/concept_regparam_decoding.tsv](../analysis/classification/data/concept_regparam_decoding.tsv) is the version produced with the REST API (fewer terms)
+ - [$base/results/concept_regparam_decoding.csv](../analysis/classification/data/concept_regparam_decoding.tsv) is the version produced with the python API (takes a lot longer, but over 3K terms)
+
+Finally, if you want to generate a heatmap to show terms, you can use the R script in the classification folder.
 
 
 # Part II: Graph Comparison

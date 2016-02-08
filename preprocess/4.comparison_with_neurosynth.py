@@ -101,10 +101,11 @@ result["regression_params_z"] = regression_params_z
 pickle.dump(result,open("%s/regression_params_dfs.pkl" %output_folder,"wb"))
 #result = pickle.load(open("%s/regression_params_dfs.pkl" %output_folder,"rb"))
 
-# DECODING
+# DECODING - METHOD 1 uses the neurosynth python API
+
 print "Starting neurosynth decoding..."
-'''
-# Here is how to do with neurosynth API - it's slow and annoying. Do not recommend
+# Here is how to do with neurosynth API - it's slow and annoying, and this is
+what was done for the paper, as it returns a larger number of concepts
 from neurosynth.base.dataset import Dataset
 from neurosynth.analysis import decode
 from nilearn.image import resample_img
@@ -128,8 +129,32 @@ for concept_map in concept_maps:
 
 decode_result_file = "%s/concept_regparam_decoding.txt" %results
 decode_result = decoder.decode(concept_maps_2mm, save=decode_result_file)
-'''
+df = pandas.DataFrame(decode_result)
+df.columns = [x.replace("%s/classification_final/" %results,"").replace("_regparam_z_2mm.nii.gz","") for x in df.columns.tolist()]
 
+# Look up concept names
+concept_names = []
+for concept_id in df.columns:
+    concept = get_concept(id=concept_id).json
+    concept_names.append(concept[0]["name"])
+decode_result_file = "%s/concept_regparam_decoding.csv" %results
+df = df.transpose()
+df["0.concept_name"] = concept_names
+df.to_csv(decode_result_file)
+
+# Finally, just look at top ten scores per concept
+top_tens = pandas.DataFrame(index=df.index,columns=range(0,10))
+for concept_id in df.index.tolist():
+    top_ten = df.loc[concept_id,:]
+    top_ten = top_ten.drop("0.concept_name")
+    top_ten = top_ten.abs()
+    top_ten.sort_values(ascending=False,inplace=True)
+    top_tens.loc[concept_id,:] = top_ten.index[0:10]
+
+top_tens["0.CONCEPT_NAMES"] = concept_names
+top_tens.to_csv("%s/concept_regparam_decoding_topten_abs.tsv" %results,sep="\t")
+
+# METHOD 2 uses the neurosynth web/REST API
 # URL-based decoding (possible since all images are in NeuroVault) - much faster!
 
 from pyneurovault.api import get_images
@@ -187,4 +212,4 @@ for concept_id in concept_ids:
 rp_decode["0cognitive_atlas_concept_name"] = concept_names
 
 decode_rp_file = "%s/concept_regparam_decoding.tsv" %results
-decode.to_csv(decode_rp_file,sep="\t")
+rp_decode.to_csv(decode_rp_file,sep="\t")

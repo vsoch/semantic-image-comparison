@@ -50,7 +50,12 @@ cp $base/results/classification_final/*.nii.gz ../analysis/classification/data/c
 # Comparison with neurosynth (decoding of Z score concept maps of regression parameters) - done easily by uploading to a neurovault collection
 neurovault_collection=1170
 python 4.comparison_with_neurosynth.py $base $neurovault_collection
+# This is version done with REST API
 cp $base/results/concept_regparam_decoding.tsv ../analysis/classification/data
+# This is version done with python API (more terms)
+cp $base/results/concept_regparam_decoding.csv ../analysis/classification/data
+# Just list of top ten (absolute value taken)
+cp $base/results/concept_regparam_decoding_topten_abs.tsv ../analysis/classification/data
 cp $base/results/original_images_decoding.tsv ../analysis/classification/data
 
 # Step 5: Run calculations for Wang Graph metric, compile results
