@@ -23,8 +23,7 @@ import nibabel
 import sys
 import os
 
-#base = sys.argv[1]
-base = "/scratch/users/vsochat/DATA/BRAINMETA/ontological_comparison"
+base = sys.argv[1]
 data = "%s/data" %base
 node_folder = "%s/likelihood" %data
 results = "%s/results" %base  # any kind of tsv/result file
@@ -103,6 +102,8 @@ pickle.dump(result,open("%s/regression_params_dfs.pkl" %output_folder,"wb"))
 
 # DECODING
 print "Starting neurosynth decoding..."
+'''
+# Here is how to do with neurosynth API - it's slow and annoying. Do not recommend
 from neurosynth.base.dataset import Dataset
 from neurosynth.analysis import decode
 from nilearn.image import resample_img
@@ -126,3 +127,34 @@ for concept_map in concept_maps:
 
 decode_result_file = "%s/concept_regparam_decoding.txt" %results
 decode_result = decoder.decode(concept_maps_2mm, save=decode_result_file)
+'''
+
+# URL-based decoding (possible since all images are in NeuroVault) - much faster!
+
+from urllib2 import Request, urlopen, HTTPError
+import pandas
+import json
+
+def get_url(url):
+    request = Request(url)
+    response = urlopen(request)
+    return response.read()
+
+# First, just get all the terms
+ns = json.loads(get_url("http://neurosynth.org/decode/data/?neurovault=308"))
+terms = []
+for term in  ns["data"]:
+    terms.append(term["analysis"])
+
+# Now decode each of our images
+unique_images = images.image_id.unique().tolist()
+decode = pandas.DataFrame(index=unique_images,columns=terms)
+
+for unique_image in unique_images:
+    print "Decoding image %s" %(unique_image)
+    ns = json.loads(get_url("http://neurosynth.org/decode/data/?neurovault=%s" %unique_image))
+    for term in  ns["data"]:
+        decode.loc[unique_image,term["analysis"]] = term["r"]
+
+decode_result_file = "%s/concept_regparam_decoding.tsv" %results
+decode.to_csv(decode_results_file,sep="\t")
