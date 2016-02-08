@@ -3,6 +3,7 @@ from glob import glob
 import numpy
 import pickle
 import pandas
+import json
 import sys
 import os
 
@@ -37,6 +38,55 @@ result["total"] = total
 result["correct"] = correct
 result["accuracy"] = accuracy
 pickle.dump(result,open("%s/classification_results_binary_4mm.tsv" %results,"wb"))
+
+# Create a confusion matrix
+binary = pickle.load(open("%s/classification_results_binary_4mm.tsv" %results,"rb"))
+binary_df = binary["comparison_df"]
+
+unique_images = [int(x) for x in binary_df.actual.unique().tolist()]
+confusion = pandas.DataFrame(0,index=unique_images,columns=unique_images)
+
+print "Generating confusion matrix..."
+for i in range(0,len(scores)):
+    print "Parsing confusion matrix for %s of %s" %(i,len(scores))
+    single_result = pickle.load(open(scores[i],"rb"))    
+    cdf = single_result["comparison_df"]
+    actuals = cdf.actual.unique().tolist()
+    cdf.index = cdf.predicted.tolist()
+    for actual in actuals:
+        predictions = cdf.cca_score[cdf.actual==actual]
+        predictions.sort_values(ascending=False,inplace=True)
+        predicted = int(predictions.index[0])
+        actual = int(actual)  
+        confusion.loc[actual,predicted] = confusion.loc[actual,predicted] + 1
+
+confusion.to_csv("%s/classification_confusion_binary_4mm.tsv" %results,sep="\t")
+
+# We also want to output a format for a visualization
+# var data = [
+#  {
+#    z: [[1, 20, 30, 50, 1], [20, 1, 60, 80, 30], [30, 60, 1, -10, 20]],
+#    x: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+#    y: ['Morning', 'Afternoon', 'Evening'],
+#    type: 'heatmap'
+#  }
+# ];
+
+# Use image contrast names
+names = images.cognitive_contrast_cogatlas[images.image_id.isin(unique_images)].tolist()
+
+data = {"type":"heatmap"}
+data["x"] = names
+data["y"] = names
+z = []
+for row in confusion.iterrows():
+    z.append(row[1].tolist())
+
+
+data["z"] = z
+filey = open("%s/classification_confusion_binary_4mm.json" %results,'wb')
+filey.write(json.dumps(data, sort_keys=True,indent=4, separators=(',', ': ')))
+filey.close()
 
 
 # Parse results for weighted (ontology based) classification

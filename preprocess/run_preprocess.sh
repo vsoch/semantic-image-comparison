@@ -57,6 +57,9 @@ cp $base/results/concept_regparam_decoding.csv ../analysis/classification/data
 # Just list of top ten (absolute value taken)
 cp $base/results/concept_regparam_decoding_topten_abs.tsv ../analysis/classification/data
 cp $base/results/original_images_decoding.tsv ../analysis/classification/data
+# Confusion matrix
+cp $base/results/classification_confusion_binary_4mm.tsv ../analysis/classification/data
+cp $base/results/classification_confusion_binary_4mm.json ../analysis/classification/data
 
 # Step 5: Run calculations for Wang Graph metric, compile results
 RSCRIPT 5.run_wang_graph_comparison_sherlock.R $base

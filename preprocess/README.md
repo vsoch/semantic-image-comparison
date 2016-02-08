@@ -92,6 +92,8 @@ The output of the above is over 10K files, each containing python (pickled) scor
  - [$base/results/classification_results_binary_4mm.tsv](../analysis/classification/data/classification_results_binary_4mm.tsv)
  - [$base/results/classification_results_weighted_4mm.tsv](../analysis/classification/data/classification_results_weighted_4mm.tsv)
  - [$base/results/classification_results_null_4mm.tsv](../analysis/classification/data/classification_results_null_4mm.tsv)
+ - [$base/results/classification_confusion_binary_4mm.tsv](../analysis/classification/data/classification_confusion_binary_4mm.tsv) is the confusion matrix (tsv) file for the binary classification task.
+ - [$base/results/classification_confusion_binary_4mm.json](../analysis/classification/data/classification_confusion_binary_4mm.json) is json format of this data, for input into a visualizaiton.
  - $base/results/classification_final/*.nii.gz: these are the [concept maps](../analysis/classification/data/concept_maps)
 
 

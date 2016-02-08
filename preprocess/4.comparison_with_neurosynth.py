@@ -147,12 +147,11 @@ top_tens = pandas.DataFrame(index=df.index,columns=range(0,10))
 for concept_id in df.index.tolist():
     top_ten = df.loc[concept_id,:]
     top_ten = top_ten.drop("0.concept_name")
-    top_ten = top_ten.abs()
     top_ten.sort_values(ascending=False,inplace=True)
     top_tens.loc[concept_id,:] = top_ten.index[0:10]
 
-top_tens["0.CONCEPT_NAMES"] = concept_names
-top_tens.to_csv("%s/concept_regparam_decoding_topten_abs.tsv" %results,sep="\t")
+top_tens["CONCEPT_NAMES"] = concept_names
+top_tens.to_csv("%s/concept_regparam_decoding_topten.tsv" %results,sep="\t")
 
 # METHOD 2 uses the neurosynth web/REST API
 # URL-based decoding (possible since all images are in NeuroVault) - much faster!
