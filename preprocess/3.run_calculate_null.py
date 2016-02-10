@@ -70,7 +70,7 @@ for i in range(250):
 # The analysis was not done here, this is provided as an option only
 
 # Here is a function for outputting all commands to a single file (for launch environment)
-def write_job(group_list,iter_number,run,group_number,filey):
+def write_job(group_list,run,iter_number,group_number,filey):
     job_id = "%s_%s_%s" %(run,iter_number,group_number)
     output_file = "%s/%s_predict.pkl" %(output_folder,job_id)
     group_list = ",".join(group_list)
