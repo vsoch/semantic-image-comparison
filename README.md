@@ -3,7 +3,7 @@
 ## Overview
 This work aims to assess the value of semantic (ontological) image comparison. We conduct the following analyses:
 
-- [classification value](analysis/classification): Our main analysis is testing the ability of semantic image comparison scores on our ability to classify images. We show that semantic annotations can be used succesfully in a classification framework, and thus that there is value in performing semantic image comparison.
+- [classification value](analysis/classification): Our main analysis is testing the ability of semantic image comparison scores on our ability to classify images. We show that semantic annotations can be used succesfully in a classification framework, can be used for decoding, and thus that there is value in performing semantic image comparison.
 - [wang graph similarity](analysis/wang): The Wang Graph metric is a commonly used strategy to assess the similarity of gene sets, and we apply this to compare images based on their Cognitive Atlas tags. We compare an image similarity matrix of this metric against traditional spatial image comparison to assess if the method captures something that we understand about images.
 
 ## Tools
