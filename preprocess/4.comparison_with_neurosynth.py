@@ -105,7 +105,7 @@ pickle.dump(result,open("%s/regression_params_dfs.pkl" %output_folder,"wb"))
 
 print "Starting neurosynth decoding..."
 # Here is how to do with neurosynth API - it's slow and annoying, and this is
-what was done for the paper, as it returns a larger number of concepts
+# what was done for the paper, as it returns a larger number of concepts
 from neurosynth.base.dataset import Dataset
 from neurosynth.analysis import decode
 from nilearn.image import resample_img
