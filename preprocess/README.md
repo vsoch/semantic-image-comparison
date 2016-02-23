@@ -97,21 +97,6 @@ The output of the above is over 10K files, each containing python (pickled) scor
  - $base/results/classification_final/*.nii.gz: these are the [concept maps](../analysis/classification/data/concept_maps)
 
 
-## Comparison with NeuroSynth
-We decode each of the Z score regression parameter maps as a "soft validation," to supplement the classification tests. We would want to see the maps, for each concept, be "decoded" as similar to relevant terms in the NeuroSynth database. Note that to make this easy, I uploaded the images to neurovault, and then used the collection_id to do the decoding programatically. If you instead want to use the neurosynth API, see the commented out portion of the script.
-
-   
-      neurovault_collection=1170
-      python 4.comparison_with_neurosynth.py $base $neurovault_collection
-
-
-### Outputs from this step moved into analysis folder:
- - [$base/results/concept_regparam_decoding.tsv](../analysis/classification/data/concept_regparam_decoding.tsv) is the version produced with the REST API (fewer terms)
- - [$base/results/concept_regparam_decoding.csv](../analysis/classification/data/concept_regparam_decoding.tsv) is the version produced with the python API (takes a lot longer, but over 3K terms)
-
-Finally, if you want to generate a heatmap to show terms, you can use the R script in the classification folder.
-
-
 # Part II: Graph Comparison
 
 ## Step 5. Wang Similarity
