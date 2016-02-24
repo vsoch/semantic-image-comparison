@@ -1,6 +1,6 @@
 library(pheatmap)
-data = read.csv("data/concept_regparam_decoding_named.csv",row.names=1)
+data = read.csv("data/concept_regparam_decoding.csv",row.names=1)
 
-pdf("data/decoding_result.pdf",width=60,height=20)
+pdf("data/decoding_result.pdf",width=30,height=20)
 pheatmap(data)
 dev.off()

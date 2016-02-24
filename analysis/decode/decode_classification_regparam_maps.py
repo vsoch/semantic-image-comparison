@@ -142,10 +142,10 @@ for row in abstracts.iterrows():
 
 # We want to drop activation
 normalized_features = normalized_features.drop(["activation"],axis=1)
-normalized_features_file = "%s/concepts_613_cognitive_atlas_normalized.tsv" %decode_folder
+normalized_features_file = "%s/concepts_211_cognitive_atlas_normalized.tsv" %decode_folder
 normalized_features.to_csv(normalized_features_file,sep="\t")
 
-# Now we want to save as a features.txt file to do decoding - you will need to open file in vim and add pmid to appear before "action." There are 419 of these cognitive atlas terms (out of 613) that are not in neurosynth
+# Now we want to save as a features.txt file to do decoding 
 
 # DECODING - METHOD 1 uses the neurosynth python API
 
@@ -156,12 +156,14 @@ from neurosynth.analysis import meta
 from neurosynth.analysis import decode
 
 neurosynth_data = "%s/neurosynth-data" %base
+
+# you will need to open the features file in vim and add pmid as the first column name to appear before "action." 
 dataset = Dataset('%s/database.txt' %neurosynth_data, normalized_features_file)
 
 # Create decoder to decode our images
 
 from nilearn.image import resample_img
-decoder = decode.Decoder(dataset) # select all features
+decoder = decode.Decoder(dataset) # select all 211 features from our set
 pickle.dump(decoder,open("%s/decoder.pkl" %output_folder,"wb"))
 concept_maps = glob("%s/*.nii.gz" %output_folder)
 
