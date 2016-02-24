@@ -28,7 +28,7 @@ sS'tstat'
 p12
 g2
 (g6
-S'd\x08\x03\xbe\x96\x8a\x8d\xc0'
+S'?\xd0\xf5\x02=a\x8d\xc0'
 p13
 tp14
 Rp15
