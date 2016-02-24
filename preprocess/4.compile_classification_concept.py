@@ -61,6 +61,10 @@ for i in range(0,len(scores)):
         confusion.loc[actual,predicted] = confusion.loc[actual,predicted] + 1
 
 confusion.to_csv("%s/classification_confusion_binary_4mm.tsv" %results,sep="\t")
+# Normalize confusion 
+confusion = confusion.divide(confusion.sum(1).tolist())
+confusion.to_csv("%s/classification_confusion_binary_4mm_norm.tsv" %results,sep="\t")
+
 
 # We also want to output a format for a visualization
 # var data = [
@@ -73,6 +77,7 @@ confusion.to_csv("%s/classification_confusion_binary_4mm.tsv" %results,sep="\t")
 # ];
 
 # Use image contrast names
+images = pandas.read_csv("%s/contrast_defined_images_filtered.tsv" %results,encoding="utf-8",sep="\t")
 names = images.cognitive_contrast_cogatlas[images.image_id.isin(unique_images)].tolist()
 
 data = {"type":"heatmap"}
@@ -89,42 +94,7 @@ filey.write(json.dumps(data, sort_keys=True,indent=4, separators=(',', ': ')))
 filey.close()
 
 
-# Parse results for weighted (ontology based) classification
-scores_folder = "%s/classification_weighted" %(base)
-scores = glob("%s/*.pkl" %scores_folder)
-
-# Let's save a big data frame of the prediction scores
-comparison_weighted = pandas.DataFrame(columns=["actual","predicted","cca_score"])
-
-total = 0
-correct = 0
-for i in range(0,len(scores)):
-    print "Parsing score %s of %s" %(i,len(scores))
-    single_result = pickle.load(open(scores[i],"rb"))
-    total=total+2
-    correct=correct+single_result["number_correct"]
-    comparison_weighted = comparison_weighted.append(single_result["comparison_df"])
-
-accuracy = correct/float(total)
-result = dict()
-result["comparison_df"] = comparison_weighted
-result["total"] = total
-result["correct"] = correct
-result["accuracy"] = accuracy
-pickle.dump(result,open("%s/classification_results_weighted_4mm.pkl" %results,"wb"))
-
-# Remove data frames from saved files (to make space)
-for i in range(7,len(scores)):
-    print "Parsing score %s of %s" %(i,len(scores))
-    try:
-        single_result = pickle.load(open(scores[i],"rb"))
-        single_result.pop("regression_params",None)
-        pickle.dump(scores[i],open(scores[i],"wb"))
-    except:
-        os.remove(scores[i])
-
 # Compile null
-# Parse results for weighted (ontology based) classification
 scores_folder = "%s/classification_null" %(base)
 scores = glob("%s/*.pkl" %scores_folder)
 
