@@ -89,6 +89,7 @@ for row in confusion.iterrows():
 
 
 data["z"] = z
+data = [data]
 filey = open("%s/classification_confusion_binary_4mm.json" %results,'wb')
 filey.write(json.dumps(data, sort_keys=True,indent=4, separators=(',', ': ')))
 filey.close()
