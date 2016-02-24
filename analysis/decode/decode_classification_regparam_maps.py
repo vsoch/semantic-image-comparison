@@ -1,13 +1,8 @@
 #!/usr/bin/python
 
-
-from pybraincompare.compare.maths import calculate_correlation
-from pybraincompare.compare.mrutils import get_images_df
 from pybraincompare.mr.datasets import get_standard_mask
 from pybraincompare.mr.transformation import *
 from cognitiveatlas.api import get_concept
-import matplotlib.pyplot as plt
-from sklearn import linear_model
 from nltk.corpus import stopwords
 from nltk.stem.porter import *
 from nltk.stem import *
@@ -21,7 +16,6 @@ import sys
 import os
 
 base = sys.argv[1]
-neurovault_collection = int(sys.argv[2])
 data = "%s/data" %base
 node_folder = "%s/groups" %data
 results = "%s/results" %base  # any kind of tsv/result file
@@ -35,31 +29,20 @@ labels_tsv = "%s/images_contrasts_df.tsv" %results
 images = pandas.read_csv(labels_tsv,sep="\t",index_col=0)
 output_folder = "%s/classification_final" %results
 
-# Node pickles
-node_pickles = glob("%s/*.pkl" %node_folder)
-
 # Get standard mask, 4mm
 standard_mask=get_standard_mask(4)
 
 # Load the regression params data frame
 result = pickle.load(open("%s/regression_params_dfs.pkl" %output_folder,"rb"))
 
-# Cognitive Atlas Terms - we will decode using all of them
-#concept_ids = images.columns.tolist()
-#concepts = dict()
-#for concept_id in concept_ids:
-#    concepts[concept_id] = get_concept(id=concept_id).json[0]["name"]
-
 all_concepts = get_concept().json
 concepts = dict()
 for concept in all_concepts:
     concepts[concept["id"]] = str(concept["name"])
 
-
 # You will need to copy abstracts.txt into this folder from the repo
 abstracts = pandas.read_csv("%s/abstracts.txt" %decode_folder,sep="\t",index_col=0,header=None)
 abstracts.columns = ["text"]
-
 
 # Functions to parse text
 def remove_nonenglish_chars(text):
@@ -114,32 +97,6 @@ def do_stem(words,return_unique=False,remove_non_english_words=True):
 
 
 # Prepare feature data frame -
-# one row per abstract, one column per feature. The first column must be named 'pmid', and contains the PMID of the article (which is also the first column in the text file). 
-features = pandas.DataFrame(columns=concepts.values())
-
-count = 1
-for row in abstracts.iterrows():
-    pmid = row[0]
-    text = row[1].text
-    if str(text) != "nan":
-        words = do_stem(processText(text))
-        abstracts.loc[pmid,"count"] = len(words)
-        text = " ".join(words)
-        abstracts.loc[pmid,"text_processed"] = text
-        print "Parsing pmid %s, %s of %s" %(pmid,count,len(abstracts))
-        # search for each cognitive atlas term, take a count
-        for concept in features.columns:
-            stemmed_concept = " ".join(do_stem(processText(str(concept))))
-            features.loc[pmid,concept] = len(re.findall(stemmed_concept,text))
-        print "Found %s total occurrences for pmid" %(features.loc[pmid].sum())
-        count +=1
-
-# Save basic count data frame
-#features.to_csv("%s/concepts_132_neurosynth_counts.tsv" %decode_folder,sep="\t")
-features.to_csv("%s/concepts_800_neurosynth_counts.tsv" %decode_folder,sep="\t")
-abstracts.to_csv("%s/abstracts_processed.tsv" %decode_folder,sep="\t")
-#abstracts = abstracts.read_csv("%s/abstracts_processed.tsv" %decode_folder,sep="\t",index_col=0)
-
 featuresraw = pandas.DataFrame(columns=concepts.values())
 
 count = 1
@@ -164,10 +121,9 @@ featuresraw.to_csv("%s/concepts_800_nostem_neurosynth_counts.tsv" %decode_folder
 counts = featuresraw.sum().copy()
 counts.sort_values(inplace=True,ascending=False)
 counts.to_csv("%s/concepts_800_nostem_counts.tsv" %decode_folder,sep="\t")
-#counts.to_csv("%s/concepts_132_counts.tsv" %decode_folder,sep="\t")
 
-# We will include those that are found in abstracts
-nonzeros = counts[counts!=0].index.tolist()
+# We only want to keep those with counts >=50
+nonzeros = counts[counts>=50].index.tolist()
 
 # Each subsequent column is a feature, with the value in the header being used as the feature name. The weights can be whatever we want; in practice, it's not going to matter much because neurosynth (Tal) uses a binary threshold for inclusion. 
 normalized_features = pandas.DataFrame(columns=nonzeros)
@@ -179,9 +135,9 @@ for row in abstracts.iterrows():
     if pmid in features.index:
         count = row[1]["count"]
         # We will take the normalized term frequency (i.e., number of occurrences in abstract, divided by number of words in abstract).
-        normalized_features.loc[pmid] = featuresraw.loc[pmid] / count
+        normalized_features.loc[pmid,nonzeros] = featuresraw.loc[pmid,nonzeros] / count
         # Then pick a cut-off like 0.001 or something (basically it amounts to minimum one occurrence, so it's not even clear the normalization matters).
-        normalized_features.loc[pmid][normalized_features.loc[pmid] < 0.001] = 0    
+        normalized_features.loc[pmid,nonzeros][normalized_features.loc[pmid,nonzeros] < 0.001] = 0    
         counter +=1
 
 # We want to drop activation
