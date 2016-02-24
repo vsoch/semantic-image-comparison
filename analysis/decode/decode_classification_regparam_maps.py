@@ -209,6 +209,17 @@ for concept_id in df.index.tolist():
 
 top_tens.to_csv("%s/concept_regparam_decoding_named_topten.tsv" %results,sep="\t")
 
+# Look at top tens (absolute value)
+top_tens_abs = pandas.DataFrame(index=df.index,columns=range(0,10))
+for concept_id in df.index.tolist():
+    top_ten = df.loc[concept_id,:]
+    top_ten = top_ten.abs()
+    top_ten.sort_values(ascending=False,inplace=True)
+    top_tens_abs.loc[concept_id,:] = top_ten.index[0:10]
+
+top_tens_abs.to_csv("%s/concept_regparam_decoding_named_topten_abs.tsv" %results,sep="\t")
+
+
 # METHOD 2 uses the neurosynth web/REST API - we cannot use our own features
 # URL-based decoding (possible since all images are in NeuroVault) - much faster!
 # Note this was not used for the analysis, as the current neurosynth database doesn't
