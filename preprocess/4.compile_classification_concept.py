@@ -138,9 +138,17 @@ conceptnames = []
 for conceptname in concepts_df.index:
     conceptnames.append(get_concept(id=conceptname).json[0]["name"])
 
-conceptnames = images.cognitive_contrast_cogatlas[images.image_id.isin(confusion.index.tolist())].tolist()
 concepts_df.index = conceptnames        
 concepts_df.to_csv("%s/classification_concept_confusion.tsv" %results,sep="\t")
+
+# Finally, normalize by the row count (to see what percentage of the time we get it wrong/right)
+concepts_df_norm = pandas.DataFrame(columns=["correct","incorrect"])
+for row in concepts_df.iterrows():
+   rowsum = row[1].sum()
+   if rowsum != 0:
+       concepts_df_norm.loc[row[0]] = [float(x)/rowsum for x in row[1].tolist()]
+
+concepts_df_norm.to_csv("%s/classification_concept_confusion_norm.tsv" %results,sep="\t")
 
 # Compile null
 scores_folder = "%s/classification_null" %(base)
