@@ -114,7 +114,7 @@ filey.close()
 
 
 # Finally, let's generate a RIGHT/WRONG by concepts data frame, to see how often different concepts are associated with correct or incorrect prediction
-concepts_df = pandas.DataFrame(0,columns=["correct","incorrect"],index=concepts)
+concepts_df = pandas.DataFrame(0,columns=["correct","incorrect","number_images"],index=concepts)
 confusion = pandas.read_csv("%s/classification_confusion_binary_4mm.tsv" %results,sep="\t",index_col=0)
 
 # Read in concept labels
@@ -130,8 +130,9 @@ for row in confusion.iterrows():
             concepts_df.loc[actual_concepts,"correct"] = concepts_df.loc[actual_concepts,"correct"] + predicted_count
         else:
             concepts_df.loc[actual_concepts,"incorrect"] = concepts_df.loc[actual_concepts,"incorrect"] + predicted_count
+        concepts_df.loc[actual_concepts,"number_images"] = concepts_df.loc[actual_concepts,"number_images"] + 1
 
-concepts_df.to_csv("%s/classification_concept_confusion.tsv" %results,sep="\t")
+concepts_df.to_csv("%s/classification_concept_confusion_cogatid.tsv" %results,sep="\t")
 
 # Replace concept ids with concept names
 conceptnames = []
@@ -142,12 +143,13 @@ concepts_df.index = conceptnames
 concepts_df.to_csv("%s/classification_concept_confusion.tsv" %results,sep="\t")
 
 # Finally, normalize by the row count (to see what percentage of the time we get it wrong/right)
-concepts_df_norm = pandas.DataFrame(columns=["correct","incorrect"])
+concepts_df_norm = pandas.DataFrame(columns=["correct","incorrect","number_images"])
 for row in concepts_df.iterrows():
    rowsum = row[1].sum()
    if rowsum != 0:
-       concepts_df_norm.loc[row[0]] = [float(x)/rowsum for x in row[1].tolist()]
+       concepts_df_norm.loc[row[0]] = [float(x)/rowsum for x in row[1].tolist()[0:2]] + [concepts_df.loc[row[0],"number_images"]]
 
+concepts_df_norm = concepts_df_norm.sort(columns=["correct"],ascending=False)
 concepts_df_norm.to_csv("%s/classification_concept_confusion_norm.tsv" %results,sep="\t")
 
 # Compile null
