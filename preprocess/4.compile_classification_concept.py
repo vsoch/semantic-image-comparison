@@ -112,9 +112,9 @@ filey = open("%s/classification_confusion_binary_4mm.json" %results,'wb')
 filey.write(json.dumps(data, sort_keys=True,indent=4, separators=(',', ': ')))
 filey.close()
 
-
-# Finally, let's generate a RIGHT/WRONG by concepts data frame, to see how often different concepts are associated with correct or incorrect prediction
-concepts_df = pandas.DataFrame(0,columns=["correct","incorrect","number_images"],index=concepts)
+# CONCEPT CONFUSION ####################################################################
+# generate a RIGHT/WRONG by concepts data frame, to see how often different concepts are associated with correct or incorrect prediction
+concepts_df = pandas.DataFrame(0,columns=["correct","incorrect"],index=concepts)
 confusion = pandas.read_csv("%s/classification_confusion_binary_4mm.tsv" %results,sep="\t",index_col=0)
 
 # Read in concept labels
@@ -130,7 +130,11 @@ for row in confusion.iterrows():
             concepts_df.loc[actual_concepts,"correct"] = concepts_df.loc[actual_concepts,"correct"] + predicted_count
         else:
             concepts_df.loc[actual_concepts,"incorrect"] = concepts_df.loc[actual_concepts,"incorrect"] + predicted_count
-        concepts_df.loc[actual_concepts,"number_images"] = concepts_df.loc[actual_concepts,"number_images"] + 1
+
+# Add the number of images
+for concept_name in labels.columns:
+    number_images = labels[concept_name][labels[concept_name]==1].shape[0]
+    concepts_df.loc[concept_name,"number_images"] = number_images
 
 concepts_df.to_csv("%s/classification_concept_confusion_cogatid.tsv" %results,sep="\t")
 
@@ -142,17 +146,72 @@ for conceptname in concepts_df.index:
 concepts_df.index = conceptnames        
 concepts_df.to_csv("%s/classification_concept_confusion.tsv" %results,sep="\t")
 
-# Finally, normalize by the row count (to see what percentage of the time we get it wrong/right)
+# Normalize by the row count (to see what percentage of the time we get it wrong/right)
 concepts_df_norm = pandas.DataFrame(columns=["correct","incorrect","number_images"])
 for row in concepts_df.iterrows():
-   rowsum = row[1].sum()
+   rowsum = row[1][0:2].sum()
    if rowsum != 0:
-       concepts_df_norm.loc[row[0]] = [float(x)/rowsum for x in row[1].tolist()[0:2]] + [concepts_df.loc[row[0],"number_images"]]
+       norm_values = [float(x)/rowsum for x in row[1].tolist()[0:2]]
+       norm_values.append(concepts_df.loc[row[0],"number_images"])
+       concepts_df_norm.loc[row[0]] = norm_values
 
 concepts_df_norm = concepts_df_norm.sort(columns=["correct"],ascending=False)
 concepts_df_norm.to_csv("%s/classification_concept_confusion_norm.tsv" %results,sep="\t")
 
-# Compile null
+# COLLECTION / TASK CONFUSION ###########################################################
+unique_images = confusion.index.tolist()
+collections = images.collection_id[images.image_id.isin(unique_images)].tolist()
+tasks = images.cognitive_paradigm_cogatlas_id[images.image_id.isin(unique_images)].tolist()
+
+confusion_categories = pandas.DataFrame(index=unique_images,columns=unique_images)
+confusion.columns = [int(x) for x in confusion.columns.tolist()]
+
+for i in range(len(confusion)):
+    image1_name = confusion.index[i]
+    row_counts = confusion.loc[image1_name]
+    row_counts[image1_name] = 0 # get rid of diagonal
+    for j in range(len(row_counts)):
+        image2_name = row_counts.index[j]
+        count = row_counts[image2_name]
+        if image1_name==image2_name:
+            continue
+        if collections[i]==collections[j]:
+            if tasks[i]==tasks[j]:
+                confusion_categories.loc[image1_name,image2_name] = 0
+            else:
+                confusion_categories.loc[image1_name,image2_name] = 1
+        else:
+            confusion_categories.loc[image1_name,image2_name] = 2
+            
+confusion_categories
+confusion_result = dict()
+# within-task (0), within-collection (between-task) (1), bw-collection (2)
+confusion_result["confusion_categories_df"] = confusion_categories
+confusion_result["confusion_categories"] = {0:"within-task",1:"within-collection (between-task)",2:"between-collection"}
+pickle.dump(confusion_result,open("%s/confusion_categories.pkl" %results,"wb"))
+
+# Now calculate final answers!
+value_counts = confusion_categories.apply(pandas.value_counts).fillna(0).sum(axis=1)
+# First column shows the index (the value in the DataFrame) and second shows the count
+value_counts
+#0     302
+#1     450
+#2    6904
+
+confusion = pandas.read_csv("%s/classification_confusion_binary_4mm.tsv" %results,sep="\t",index_col=0)
+confusion.columns = [int(x) for x in confusion.columns.tolist()]
+
+confusion_labels = ["within-task","within-collection (between-task)","between-collection"]
+normalized_confusion = dict()
+for i in range(3):
+    normalized_value = numpy.sum(confusion.values[confusion_categories.values==i])/value_counts.loc[i]
+    normalized_confusion[confusion_labels[i]] = normalized_value
+ 
+normalized_confusion
+# {'within-collection (between-task)': 0.20222222222222222, 'within-task': 0.17880794701986755, 'between-collection': 0.18293742757821552}
+
+
+# COMPILE NULL ######################################################################
 scores_folder = "%s/classification_null" %(base)
 scores = glob("%s/*.pkl" %scores_folder)
 
