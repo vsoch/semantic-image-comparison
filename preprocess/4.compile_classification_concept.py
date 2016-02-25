@@ -204,11 +204,20 @@ confusion.columns = [int(x) for x in confusion.columns.tolist()]
 confusion_labels = ["within-task","within-collection (between-task)","between-collection"]
 normalized_confusion = dict()
 for i in range(3):
-    normalized_value = numpy.sum(confusion.values[confusion_categories.values==i])/value_counts.loc[i]
+    normalized_value = float(numpy.sum(confusion.values[confusion_categories.values==i]))/confusion[confusion_categories.isin([0,1,2])].sum().sum()
     normalized_confusion[confusion_labels[i]] = normalized_value
  
 normalized_confusion
-# {'within-collection (between-task)': 0.20222222222222222, 'within-task': 0.17880794701986755, 'between-collection': 0.18293742757821552}
+# {'within-collection (between-task)': 0.064630681818181823, 'within-task': 0.038352272727272728, 'between-collection': 0.89701704545454541}
+
+confusion_labels = ["within-task","within-collection (between-task)","between-collection"]
+normalized_confusion = dict()
+for i in range(3):
+    normalized_value = value_counts[i]/numpy.sum(value_counts)
+    normalized_confusion[confusion_labels[i]] = normalized_value
+
+normalized confusion
+# {'within-collection (between-task)': 0.058777429467084641, 'within-task': 0.039446185997910138, 'between-collection': 0.90177638453500519}
 
 
 # COMPILE NULL ######################################################################
