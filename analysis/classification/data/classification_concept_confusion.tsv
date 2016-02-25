@@ -1,0 +1,133 @@
+	correct	incorrect
+visual pseudoword recognition	84	5
+word maintenance	85	4
+auditory recognition	374	71
+sentence recognition 	581	42
+cognitive control	1838	559
+visual form recognition	2528	407
+memory	4573	585
+face recognition	430	15
+recognition	4573	585
+emotional suppression	81	8
+auditory tone discrimination	146	120
+decision making	1470	132
+visual pattern recognition	353	3
+animacy decision	66	23
+right finger response execution	242	25
+word recognition	855	213
+perception	4665	848
+loss anticipation	180	83
+visual word recognition	855	213
+self control	81	8
+high energy density food recognition	59	28
+selective control	369	163
+response inhibition	342	103
+arithmetic processing	65	113
+auditory perception	662	227
+left hand response execution	178	0
+emotional face recognition	252	15
+form perception	2607	417
+face maintenance	178	0
+visual number recognition	184	81
+visual place recognition	267	0
+inhibition	342	103
+emotion	0	0
+visual recognition	4140	486
+economic value processing	84	3
+learning	494	40
+discrimination	225	130
+reinforcement learning	494	40
+risk seeking	155	21
+context representation	0	0
+auditory tone detection	431	103
+subjective value judgment	84	3
+left toe response execution	86	3
+stimulus detection	614	187
+visual object maintenance	84	92
+body maintenance	178	0
+response selection	3646	355
+reward anticipation	124	138
+visual color discrimination	79	10
+spatial selective attention	82	7
+visual attention	148	30
+positive feedback processing	260	7
+auditory tone perception	85	4
+visual body recognition	178	0
+pattern recognition	353	3
+working memory updating	91	87
+color recognition	177	1
+working memory maintenance	988	80
+error detection	583	40
+animacy perception	9	78
+emotional self-evaluation	125	53
+decision	70	19
+proactive control	741	147
+decision certainty	0	0
+emotion regulation	81	8
+visual object recognition	930	49
+maintenance	1142	191
+visual string recognition	67	22
+auditory word recognition	32	57
+auditory sentence recognition	342	14
+motion detection	66	23
+decision under uncertainty	155	21
+visual face recognition	430	15
+causal inference	258	9
+language processing	581	42
+tool maintenance	174	4
+oddball detection	589	123
+inference	258	9
+numerical comparison	50	39
+numerical scale judgment	209	56
+color perception	256	11
+relational comparison	200	67
+right hand response execution	175	3
+categorization	686	26
+monetary reward prediction error	0	0
+feature comparison	460	74
+potential monetary reward	24	64
+object detection	183	84
+object recognition	989	77
+right toe response execution	88	1
+judgment	84	3
+mental representation	0	0
+negative feedback processing	270	86
+language comprehension	79	10
+risk processing	84	3
+tongue response execution	89	0
+visual sentence recognition	239	28
+working memory	120	58
+vocal response execution	170	8
+attention	148	30
+selective attention	82	7
+updating	972	272
+string maintenance	67	22
+visual object detection	268	86
+potential monetary loss	80	9
+visual letter recognition	86	3
+risk	100	74
+anticipation	119	145
+spatial attention	148	30
+visual perception	4402	580
+feedback processing	530	91
+response execution	4059	209
+interference resolution	8	79
+punishment processing	112	64
+visual form discrimination	79	10
+emotion recognition	252	15
+place maintenance	178	0
+task difficulty	93	81
+detection	838	230
+confidence judgment	84	3
+resistance to distractor inference	8	79
+social cognition	431	101
+pattern maintenance	87	2
+negative emotion	0	0
+story comprehension	79	10
+response conflict	8	79
+left finger response execution	87	2
+sentence processing	581	42
+theory of mind	431	101
+visual tool recognition	174	4
+object maintenance	154	111
+subjective food value	0	0

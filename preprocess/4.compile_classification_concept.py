@@ -113,6 +113,35 @@ filey.write(json.dumps(data, sort_keys=True,indent=4, separators=(',', ': ')))
 filey.close()
 
 
+# Finally, let's generate a RIGHT/WRONG by concepts data frame, to see how often different concepts are associated with correct or incorrect prediction
+concepts_df = pandas.DataFrame(0,columns=["correct","incorrect"],index=concepts)
+confusion = pandas.read_csv("%s/classification_confusion_binary_4mm.tsv" %results,sep="\t",index_col=0)
+
+# Read in concept labels
+labels_tsv = "%s/images_contrasts_df.tsv" %results
+labels = pandas.read_csv(labels_tsv,sep="\t",index_col=0)
+
+for row in confusion.iterrows():
+    actual = str(row[0])
+    actual_concepts = labels.loc[int(actual)][labels.loc[int(actual)]==1].index.tolist()
+    predictions = row[1]
+    for predicted,predicted_count in predictions.iteritems():
+        if predicted == actual:
+            concepts_df.loc[actual_concepts,"correct"] = concepts_df.loc[actual_concepts,"correct"] + predicted_count
+        else:
+            concepts_df.loc[actual_concepts,"incorrect"] = concepts_df.loc[actual_concepts,"incorrect"] + predicted_count
+
+concepts_df.to_csv("%s/classification_concept_confusion.tsv" %results,sep="\t")
+
+# Replace concept ids with concept names
+conceptnames = []
+for conceptname in concepts_df.index:
+    conceptnames.append(get_concept(id=conceptname).json[0]["name"])
+
+conceptnames = images.cognitive_contrast_cogatlas[images.image_id.isin(confusion.index.tolist())].tolist()
+concepts_df.index = conceptnames        
+concepts_df.to_csv("%s/classification_concept_confusion.tsv" %results,sep="\t")
+
 # Compile null
 scores_folder = "%s/classification_null" %(base)
 scores = glob("%s/*.pkl" %scores_folder)
