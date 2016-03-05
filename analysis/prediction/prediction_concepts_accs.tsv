@@ -1,0 +1,133 @@
+	accuracy	name	number_images
+trm_557b4b7e68727	0.935483870968	visual place recognition	3
+trm_557b4817db34d	0.935483870968	economic value processing	1
+trm_557b4a913f8cc	0.935483870968	risk processing	1
+trm_55ef153d47bc0	0.935483870968	confidence judgment	1
+trm_4a3fd79d0a20c	0.924731182796	error detection	7
+trm_558c73f3c8c6f	0.89247311828	visual pseudoword recognition	1
+trm_557b495cdde57	0.89247311828	potential monetary reward	1
+trm_4a3fd79d0a613	0.881720430108	inhibition	5
+trm_55b6b96e77df6	0.881720430108	left toe response execution	1
+trm_557b493133416	0.881720430108	place maintenance	2
+trm_4a3fd79d0af66	0.881720430108	response inhibition	5
+trm_51a690a7492eb	0.870967741935	emotion regulation	1
+trm_557b47abe9a34	0.870967741935	decision certainty	1
+trm_4a3fd79d0a1d1	0.870967741935	emotional suppression	1
+trm_4ee8facd77dfc	0.870967741935	self control	1
+trm_559f0986182cc	0.860215053763	visual object maintenance	2
+trm_55b6b910b4b23	0.860215053763	right finger response execution	3
+trm_558c7ae1eaf86	0.860215053763	arithmetic processing	2
+trm_555cfb890d721	0.860215053763	relational comparison	3
+trm_55ef273a77a86	0.860215053763	auditory tone perception	1
+trm_4a3fd79d09af8	0.849462365591	auditory word recognition	1
+trm_558c7b707f606	0.849462365591	left hand response execution	2
+trm_558c7b5228ed4	0.849462365591	visual sentence recognition	3
+trm_5678a999f1c19	0.849462365591	numerical comparison	1
+trm_567982752ff4a	0.838709677419	decision under uncertainty	2
+trm_4a3fd79d0a17f	0.838709677419	emotion	1
+trm_557b4904ee26d	0.838709677419	object maintenance	3
+trm_557b48d40d3cf	0.838709677419	negative emotion	1
+trm_557b4abe521af	0.838709677419	spatial selective attention	1
+trm_4a3fd79d0b043	0.838709677419	selective attention	1
+trm_55c298bbe56d5	0.838709677419	high energy density food recognition	1
+trm_4a3fd79d0b64e	0.838709677419	risk seeking	2
+trm_55ef3ba010121	0.827956989247	vocal response execution	2
+trm_558c7439832d9	0.827956989247	visual letter recognition	1
+trm_557b49206928b	0.827956989247	pattern maintenance	1
+trm_4a3fd79d09849	0.817204301075	anticipation	3
+trm_557b48a224b95	0.817204301075	loss anticipation	3
+trm_557b478ce1c24	0.817204301075	color recognition	2
+trm_557b4993a0fdd	0.806451612903	reinforcement learning	6
+trm_4a3fd79d09c28	0.806451612903	categorization	8
+trm_4a3fd79d09ab2	0.806451612903	auditory perception	10
+trm_4a3fd79d09d93	0.806451612903	color perception	3
+trm_557b494ca540d	0.806451612903	potential monetary loss	1
+trm_4a3fd79d0a7bb	0.806451612903	learning	6
+trm_5519b7525d7a2	0.806451612903	discrimination	4
+trm_557b48f22ba99	0.795698924731	numerical scale judgment	3
+trm_557b4b652cbec	0.795698924731	visual pattern recognition	4
+trm_557b4a81a4a17	0.795698924731	reward anticipation	3
+trm_557b49851e991	0.795698924731	proactive control	10
+trm_4a3fd79d0ab65	0.795698924731	pattern recognition	4
+trm_557b4891e9265	0.795698924731	feature comparison	6
+trm_557b476527a27	0.795698924731	auditory tone discrimination	3
+trm_4a3fd79d0b5a7	0.774193548387	working memory	2
+trm_4a3fd79d0b392	0.774193548387	theory of mind	6
+trm_4a3fd79d0b13d	0.774193548387	social cognition	6
+trm_4a3fd79d0b58f	0.763440860215	word recognition	12
+trm_557b4b9ccdc4a	0.763440860215	visual word recognition	12
+trm_558c7b337080f	0.752688172043	right hand response execution	2
+trm_557b4add1837e	0.752688172043	task difficulty	3
+trm_5159beaf80413	0.731182795699	animacy perception	1
+trm_55c6f58e77fbe	0.731182795699	story comprehension	1
+trm_4a3fd79d0a775	0.731182795699	language comprehension	1
+trm_55c6f87595b39	0.698924731183	face maintenance	2
+trm_4a3fd79d0afcf	0.677419354839	risk	2
+trm_557b4a7315f1b	0.655913978495	response execution	48
+trm_557b491318742	0.655913978495	oddball detection	8
+trm_4c3e04d656f06	0.634408602151	interference resolution	1
+trm_557b49ad14adf	0.634408602151	response conflict	1
+trm_4a3fd79d0b61f	0.634408602151	decision	1
+trm_557b499fac085	0.634408602151	resistance to distractor inference	1
+trm_4aae62e4ad209	0.591397849462	cognitive control	27
+trm_557b48e337218	0.591397849462	negative feedback processing	4
+trm_557b4b05ae470	0.58064516129	visual color discrimination	1
+trm_557b4b27dfd5e	0.58064516129	visual form discrimination	1
+trm_557b493e4203a	0.569892473118	positive feedback processing	3
+trm_55b6b9d7c9435	0.559139784946	working memory maintenance	12
+trm_557b4b3a6a34d	0.548387096774	visual form recognition	33
+trm_4a3fd79d0a398	0.548387096774	form perception	34
+trm_557b4855a12b4	0.537634408602	emotional self-evaluation	2
+trm_55b6b952c1b4c	0.537634408602	right toe response execution	1
+trm_55b6b92c1fd76	0.52688172043	left finger response execution	1
+trm_4a3fd79d0b967	0.516129032258	recognition	58
+trm_4a3fd79d0a891	0.516129032258	memory	58
+trm_4a3fd79d0b4b5	0.483870967742	visual perception	56
+trm_557b4b154e0d9	0.483870967742	visual face recognition	5
+trm_4a3fd79d0a30c	0.483870967742	face recognition	5
+trm_4c3e05903e4bb	0.47311827957	updating	14
+trm_557b477b4a15f	0.462365591398	body maintenance	2
+trm_557b474e2b578	0.462365591398	auditory tone detection	6
+trm_557b4af7cc1cb	0.462365591398	visual body recognition	2
+trm_4a3fd79d0a33b	0.451612903226	feedback processing	7
+trm_4a3fd79d0af71	0.451612903226	response selection	45
+trm_4a3fd79d0ba30	0.440860215054	maintenance	15
+trm_557b4b56de455	0.440860215054	visual object detection	4
+trm_55b6b98b88f45	0.430107526882	tongue response execution	1
+trm_4a3fd79d0a038	0.41935483871	decision making	18
+trm_5519b80525e89	0.408602150538	stimulus detection	9
+trm_55ce70b20186b	0.408602150538	detection	12
+trm_557b4aa070c10	0.397849462366	selective control	6
+trm_4a3fd79d0a723	0.376344086022	judgment	2
+trm_4a3fd79d0b4a9	0.376344086022	visual object recognition	11
+trm_557b4b7176394	0.376344086022	visual recognition	52
+trm_558c736199abd	0.376344086022	subjective value judgment	2
+trm_559f09a5cdca9	0.376344086022	subjective food value	1
+trm_5534111a8bc96	0.365591397849	punishment processing	2
+trm_55ef687f48a9d	0.354838709677	auditory recognition	5
+trm_4a3fd79d0aa76	0.344086021505	object detection	3
+trm_559f0a5b4cd36	0.333333333333	monetary reward prediction error	1
+trm_558c7b14c076e	0.333333333333	auditory sentence recognition	4
+trm_557b471bc6cd8	0.333333333333	animacy decision	1
+trm_56798c5f25b0c	0.333333333333	context representation	1
+trm_557b48aeb7d58	0.333333333333	motion detection	1
+trm_4a3fd79d0a908	0.333333333333	mental representation	1
+trm_557b482a7c62b	0.322580645161	emotional face recognition	3
+trm_4a3fd79d0aab0	0.322580645161	object recognition	12
+trm_4a3fd79d09902	0.322580645161	attention	2
+trm_4a3fd79d0b665	0.322580645161	emotion recognition	3
+trm_4a3fd79d0b46f	0.322580645161	visual attention	2
+trm_4a3fd79d0b1b2	0.322580645161	spatial attention	2
+trm_557b4b47d994a	0.311827956989	visual number recognition	3
+trm_557b4bb7cf05b	0.301075268817	word maintenance	1
+trm_55b6b9a666604	0.301075268817	working memory updating	2
+trm_4a3fd79d0ab7c	0.290322580645	perception	62
+trm_557b4aeaeb744	0.279569892473	tool maintenance	2
+trm_557b4b8cd05ca	0.279569892473	visual tool recognition	2
+trm_4a3fd79d0b89e	0.258064516129	sentence processing	7
+trm_4a3fd79d09c5b	0.258064516129	causal inference	3
+trm_4a3fd79d0a5ed	0.258064516129	inference	3
+trm_4a3fd79d0b802	0.258064516129	language processing	7
+trm_557b4acdee820	0.258064516129	string maintenance	1
+trm_55ef1fd2bc418	0.258064516129	visual string recognition	1
+trm_568427366401c	0.258064516129	sentence recognition 	7

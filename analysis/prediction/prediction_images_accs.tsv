@@ -1,0 +1,94 @@
+	percent_correct	total_number_concepts	contrast	task
+2731	0.931818181818	5	feedback	Probabilistic classification task
+2866	0.901515151515	4	0-back Face	working memory fMRI task paradigm
+8719	0.833333333333	3	left audio click	functional localizer fMRI tasks
+2883	0.818181818182	2	single task classification learning trials	single-task weather prediction 
+111	0.80303030303	3	Cue	motor fMRI task paradigm
+1587	0.795454545455	2	pumps average real reaction time	balloon analogue risk task (BART)
+122	0.787878787879	4	reappraise negative stimulus minus attend negative stimulus	emotional regulation task
+1750	0.772727272727	13	tone counting trials	tone counting
+3040	0.765151515152	2	deterministic classification trials	deterministic classification
+2824	0.742424242424	13	negative feedback	Probabilistic classification task
+1586	0.734848484848	13	parametric gain	mixed gambles task
+136	0.727272727273	12	failed stop-noncritical 	conditional stop signal task
+144	0.719696969697	12	difference from indifference	mixed gambles task
+2963	0.719696969697	3	2-back Face	working memory fMRI task paradigm
+2723	0.712121212121	4	attend negative minus attend neutral stimulus	emotional regulation task
+3158	0.712121212121	2	Right Foot	motor fMRI task paradigm
+138	0.704545454545	12	feedback	deterministic classification
+142	0.69696969697	20	Relational Processing	relational processing fMRI task paradigm
+159	0.681818181818	9	go trial	stop signal task
+143	0.681818181818	11	unsuccessful stop minus successful stop	conditional stop signal task
+10924	0.681818181818	4	explode average	balloon analogue risk task (BART)
+4	0.674242424242	3	failed stop	stop signal task
+1583	0.651515151515	16	pumps parametric	balloon analogue risk task (BART)
+1585	0.643939393939	3	visual standard stimulus presentation	oddball task
+186	0.643939393939	14	positive feedback	Probabilistic classification task
+412	0.643939393939	7	dual task classification learning trials	dual-task weather prediction
+3191	0.643939393939	15	0-back Body	working memory fMRI task paradigm
+3160	0.636363636364	2	attend neutral stimulus	emotional regulation task
+3194	0.636363636364	15	[why face minus how nonsocial] minus [why nonsocial minus how face]	why/how task
+3041	0.636363636364	10	video sentences	functional localizer fMRI tasks
+120	0.628787878788	11	reappraise negative rating	emotional regulation task
+3192	0.628787878788	16	visual targets minus standards	oddball task
+3186	0.628787878788	14	go trial	stop signal task with pseudo word naming
+2729	0.628787878788	5	successful stop minus go	conditional stop signal task
+3039	0.621212121212	3	food choice periods of high energy trials versus food choice periods of low energy trials	eating/drinking
+3188	0.621212121212	13	auditory targets minus standards	oddball task
+3156	0.621212121212	2	Story minus Math	language processing fMRI task paradigm
+3162	0.621212121212	2	go-critical minus go-noncritical	conditional stop signal task
+1584	0.621212121212	5	right audio click	functional localizer fMRI tasks
+3164	0.621212121212	2	objects	word one-back task
+164	0.613636363636	12	failed stop-critical 	conditional stop signal task
+190	0.613636363636	13	Matching	relational processing fMRI task paradigm
+109	0.613636363636	11	Left Hand	motor fMRI task paradigm
+3193	0.613636363636	13	[why hand minus how nonsocial] minus [why nonsocial minus how hand]	why/how task
+146	0.613636363636	19	0-back Tool	working memory fMRI task paradigm
+188	0.613636363636	11	incorrect minus correct	Eriksen flanker task
+3129	0.606060606061	15	2-back Place	working memory fMRI task paradigm
+3185	0.598484848485	13	Mental Interaction minus Random Interaction	social cognition (theory of mind) fMRI task paradigm
+8820	0.598484848485	3	cash average	balloon analogue risk task (BART)
+154	0.598484848485	17	Left Foot	motor fMRI task paradigm
+3175	0.590909090909	14	why nonsocial minus how nonsocial	why/how task
+8625	0.590909090909	5	Faces	emotion processing fMRI task paradigm
+178	0.590909090909	5	Shapes	emotion processing fMRI task paradigm
+3179	0.583333333333	16	Go trial	stop signal task with letter naming
+420	0.575757575758	10	parametric loss	mixed gambles task
+141	0.575757575758	11	why hand minus how hand	why/how task
+116	0.575757575758	1	0-back Place	working memory fMRI task paradigm
+135	0.575757575758	11	auditory standard	oddball task
+8718	0.568181818182	1	classification trials: probabilistic	classification probe without feedback
+119	0.568181818182	9	audio computation	functional localizer fMRI tasks
+2714	0.568181818182	14	go-noncritical	conditional stop signal task
+3	0.568181818182	16	incongruent minus congruent correct	Eriksen flanker task
+149	0.560606060606	18	probabilistic classification trials	Probabilistic classification task
+2826	0.560606060606	15	high-value go choice at probe	cue approach task
+157	0.560606060606	15	task minus baseline	mixed gambles task
+165	0.560606060606	20	dual-task tone counting probe	dual-task weather prediction
+2718	0.560606060606	7	Random Interaction	social cognition (theory of mind) fMRI task paradigm
+418	0.55303030303	10	parametric context based action reward error	dot motion task
+3173	0.55303030303	13	congruent correct	Eriksen flanker task
+147	0.55303030303	17	video computation	functional localizer fMRI tasks
+140	0.55303030303	13	Right Hand	motor fMRI task paradigm
+3187	0.55303030303	11	target 1-back minus 0-back	object one-back task
+166	0.545454545455	24	left video click	functional localizer fMRI tasks
+118	0.545454545455	9	tone counting probe	tone counting
+394	0.545454545455	10	consonant strings	word one-back task
+187	0.545454545455	12	2-back Body	working memory fMRI task paradigm
+139	0.545454545455	13	right video click	functional localizer fMRI tasks
+172	0.537878787879	18	why face minus how face	why/how task
+3131	0.537878787879	11	false belief question minus false picture question	false belief task
+3180	0.530303030303	4	scrambled objects	word one-back task
+8727	0.530303030303	2	all	object one-back task
+2863	0.530303030303	6	reappraise negative rating	emotional regulation task
+173	0.530303030303	17	successful stop-critical	conditional stop signal task
+177	0.522727272727	1	Relational Processing minus Matching	relational processing fMRI task paradigm
+8730	0.522727272727	13	pumps average	balloon analogue risk task (BART)
+407	0.515151515152	12	classification trials: deterministic	classification probe without feedback
+415	0.515151515152	5	checkerboard	functional localizer fMRI tasks
+3154	0.507575757576	11	pre-cash trials minus pre-pump trials matched for risk level	balloon analogue risk task (BART)
+183	0.507575757576	14	audio sentences	functional localizer fMRI tasks
+419	0.5	9	Tongue	motor fMRI task paradigm
+395	0.5	7	2-back Tool	working memory fMRI task paradigm
+401	0.5	12	words	word one-back task
+3142	0.424242424242	9	successful stop trial	stop signal task
