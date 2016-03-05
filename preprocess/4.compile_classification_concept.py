@@ -49,25 +49,33 @@ confusion = pandas.DataFrame(0,index=unique_images,columns=unique_images)
 # We cannot evaluate images with NaN - meaning the predicted image vector was empty
 nanimages = []
 
+# We also don't want to include images with the same contrast
+images_tsv = "%s/contrast_defined_images_filtered.tsv" %results
+images = pandas.read_csv(images_tsv,sep="\t")
+
 print "Generating confusion matrix..."
 for i in range(0,len(scores)):
     print "Parsing confusion matrix for %s of %s" %(i,len(scores))
     single_result = pickle.load(open(scores[i],"rb"))    
     cdf = single_result["comparison_df"]
-    actuals = cdf.actual.unique().tolist()
-    cdf.index = cdf.predicted.tolist()
-    if cdf["cca_score"].isnull().any():
-        predicted_nulls = cdf["predicted"][cdf["cca_score"].isnull()].unique()
-        for predicted_null in predicted_nulls:
-            if predicted_null not in nanimages:
-                nanimages.append(predicted_null)
-    else:
-        for actual in actuals:
-            predictions = cdf.cca_score[cdf.actual==actual]
-            predictions.sort_values(ascending=False,inplace=True)
-            predicted = int(predictions.index[0])
-            actual = int(actual)  
-            confusion.loc[actual,predicted] = confusion.loc[actual,predicted] + 1
+    two_images = cdf["actual"].unique().tolist()
+    contrast_ids = images.cognitive_contrast_cogatlas_id[images.image_id.isin(two_images)].unique()
+    # Only include for images with different contrast
+    if len(contrast_ids) == 2:
+        actuals = cdf.actual.unique().tolist()
+        cdf.index = cdf.predicted.tolist()
+        if cdf["cca_score"].isnull().any():
+            predicted_nulls = cdf["predicted"][cdf["cca_score"].isnull()].unique()
+            for predicted_null in predicted_nulls:
+                if predicted_null not in nanimages:
+                    nanimages.append(predicted_null)
+        else:
+            for actual in actuals:
+                predictions = cdf.cca_score[cdf.actual==actual]
+                predictions.sort_values(ascending=False,inplace=True)
+                predicted = int(predictions.index[0])
+                actual = int(actual)  
+                confusion.loc[actual,predicted] = confusion.loc[actual,predicted] + 1
 
 #nanimages
 # [8718.0, 2963.0, 8727.0, 116.0, 111.0]

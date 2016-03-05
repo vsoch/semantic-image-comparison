@@ -56,8 +56,6 @@ W = W.transpose()
 
 # For each example "n", the encoding model is given by X_{n,:} = Y{n,:} x W + b
 
-X = Ymat.dot(W)
-
 #====================================================
 #Explanation
 #====================================================
@@ -100,6 +98,7 @@ import numpy
 from sklearn.naive_bayes import GaussianNB
 
 predictions = pandas.DataFrame(index=Xmat.index,columns=Ymat.columns)
+only_positive_examples = 0
 for concept in concepts:
     print "Predicting images for %s" %concept
     for heldout in Xmat.index.tolist():
@@ -113,6 +112,9 @@ for concept in concepts:
         if len(clf.theta_)==2:
             clf.theta_[1] = W.loc[concept,:]
             clf.sigma_[1] = numpy.ones(W.shape[1])
+        else:
+            print "Found %s positive examples!" %numpy.sum(Ytrain)
+            only_positive_examples +=1
         # You should fix this to m0_{j, d} = b_{j}
         clf.theta_[0] = numpy.zeros(W.shape[1])
         # with no other information, might as well fix this to s1_{j, d} = 1.0
@@ -121,14 +123,24 @@ for concept in concepts:
         Yhat = clf.predict(Xtest)[0]
         predictions.loc[heldout,concept] = Yhat
 
-# Calculate an overall accuracy for each concept
-concept_acc = pandas.DataFrame(index=concepts,columns=["accuracy"])
+# Calculate accuracy metrics for concepts
+# @poldrack I guess what I would like to know is for every concept, how many times was that concept predicted to be present, and how many of those were accurate (i.e. 1 - false alarm rate).  and then also, how many times was the concept actually present, and how many of those were accurately predicted (i.e. hit rate).
+
+concept_acc = pandas.DataFrame(index=concepts,columns=["n_accurate_predictions_1","accurate_predictions_1_outof_predicted_1_total","n_predicted_present","n_actually_present","hit_rate"])
 for concept in concepts:
     Yp = predictions.loc[:,concept]
-    Ya = Ymat.loc[Yp.index,concept].tolist()
-    Yp = Yp.tolist()
-    acc = numpy.sum([1 for x in range(len(Yp)) if Yp[x]==Ya[x]]) / float(len(Yp))
-    concept_acc.loc[concept,"accuracy"] = acc
+    #how many times was the concept actually present
+    predicted_present = Yp[Yp==1]
+    Ya = Ymat.loc[predicted_present.index,concept]
+    actually_present = Ya[Ya==1]
+    concept_acc.loc[concept,"n_actually_present"] = len(actually_present)
+    concept_acc.loc[concept,"n_predicted_present"] = len(predicted_present)
+    # how many times was that concept predicted to be present, and how many of those were accurate
+    concept_acc.loc[concept,"n_accurate_predictions_1"] = len([x for x in predicted_present if x in actually_present])
+    acc = concept_acc.loc[concept,"n_accurate_predictions_1"] / len(predicted_present)
+    concept_acc.loc[concept,"accurate_predictions_1_outof_predicted_1_total"] = acc
+    #acc = numpy.sum([1 for x in range(len(Yp)) if Yp[x]==Ya[x]]) / float(len(Yp))
+    #concept_acc.loc[concept,"accuracy"] = acc
   
 concept_acc = concept_acc.sort(columns=["accuracy"],ascending=False)
 
