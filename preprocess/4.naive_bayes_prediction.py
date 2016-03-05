@@ -167,6 +167,11 @@ images_acc["contrast"] = cons.tolist()
 images_acc["task"] = tasks.tolist()
 images_acc.to_csv("%s/prediction_images_accs.tsv" %results,sep="\t")
 
+# Count contrasts for Sanmi
+contrast_counts = images.cognitive_contrast_cogatlas.value_counts()
+contrast_counts.sort(ascending=False,inplace=True)
+contrast_counts.to_csv("%s/contrast_counts.tsv" %results,sep="\t")
+
 #====================================================
 #Tuning
 #====================================================
