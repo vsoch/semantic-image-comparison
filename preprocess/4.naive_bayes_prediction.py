@@ -143,6 +143,8 @@ predictions.to_csv("%s/prediction_concept_matrix.tsv" %results,sep="\t")
 # - predicted category present, true category absent (“false alarm”)
 # - predicted category absent, true category present (“miss”)
 # - predicted category absent, true category absent (“correct rejection”)
+# - Aprime 0.5 + (abs(hit-false_alarm) / (hit-false_alarm)) * ((hit - false_alarm)^2 + abs(hit-false_alarm))
+# (continued) / (4*max(hit,false_alarm)-4*hit*false_alarm)
 
 # Function to compare two vectors to calculate the above
 def calculate_hits(Ya,Yp,Va,Vp):
@@ -151,16 +153,26 @@ def calculate_hits(Ya,Yp,Va,Vp):
     group2_images = Ya[Ya==Va].index.tolist()
     return len([x for x in group1_images if x in group2_images])
 
-concept_acc = pandas.DataFrame(index=concepts,columns=["hit","false_alarm","miss","correct_rejection"])
+concept_acc = pandas.DataFrame(index=concepts,columns=["hit","false_alarm","miss","correct_rejection","aprime"])
 for concept in concepts:
     Yp = predictions.loc[:,concept]
     Ya = Ymat.loc[Yp.index,concept]
     # - predicted category present, true category present (“hit”)
-    concept_acc.loc[concept,"hit"] = calculate_hits(Ya,Yp,1,1)
-    concept_acc.loc[concept,"false_alarm"] = calculate_hits(Ya,Yp,0,1)
+    hit = calculate_hits(Ya,Yp,1,1)
+    concept_acc.loc[concept,"hit"] = hit
+    false_alarm = calculate_hits(Ya,Yp,0,1)
+    concept_acc.loc[concept,"false_alarm"] = false_alarm
+    if hit-false_alarm != 0:
+        aprime_num = 0.5 + (abs(hit-false_alarm) / (hit-false_alarm)) * ((hit - false_alarm)^2 + abs(hit-false_alarm)) 
+        aprime_denom = (4*max(hit,false_alarm)-4*hit*false_alarm)
+        if aprime_denom != 0:
+            aprime = 0
+    else:
+        aprime = 0
+    concept_acc.loc[concept,"aprime"] = aprime
     concept_acc.loc[concept,"miss"] = calculate_hits(Ya,Yp,1,0)
     concept_acc.loc[concept,"correct_rejection"] = calculate_hits(Ya,Yp,0,0)
-
+ 
 
 ############# OLD
 #concept_acc = pandas.DataFrame(index=concepts,columns=["n_accurate_predictions_1","accurate_predictions_1_outof_predicted_1_total","n_predicted_present","n_actually_present"])
