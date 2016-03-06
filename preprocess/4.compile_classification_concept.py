@@ -37,21 +37,21 @@ result["comparison_df"] = comparison_df
 result["total"] = total
 result["correct"] = correct
 result["accuracy"] = accuracy
-pickle.dump(result,open("%s/classification_results_binary_4mm.tsv" %results,"wb"))
+pickle.dump(result,open("%s/classification_results_binary_4mm_notfilt.tsv" %results,"wb"))
 
 # Create a confusion matrix
-binary = pickle.load(open("%s/classification_results_binary_4mm.tsv" %results,"rb"))
+binary = pickle.load(open("%s/classification_results_binary_4mm_notfilt.tsv" %results,"rb"))
 binary_df = binary["comparison_df"]
 
 unique_images = [int(x) for x in binary_df.actual.unique().tolist()]
 confusion = pandas.DataFrame(0,index=unique_images,columns=unique_images)
 
-# We cannot evaluate images with NaN - meaning the predicted image vector was empty
-nanimages = []
-
-# We also don't want to include images with the same contrast
+# If images are the same contrast, don't include in accuracy calculation
 images_tsv = "%s/contrast_defined_images_filtered.tsv" %results
 images = pandas.read_csv(images_tsv,sep="\t")
+
+# We cannot evaluate images with NaN - meaning the predicted image vector was empty
+nanimages = []
 
 print "Generating confusion matrix..."
 for i in range(0,len(scores)):

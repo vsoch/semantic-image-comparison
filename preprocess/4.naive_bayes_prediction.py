@@ -107,26 +107,63 @@ for concept in concepts:
         Xtrain = X.loc[Xmat.index!=heldout,:]
         Ytrain = Ymat.loc[Xtrain.index,concept].tolist()
         clf.fit(Xtrain, Ytrain)
+        # b = average [X_{n,:} - Y{n,:}W]
+        #b = (Xtrain - Ymat.loc[Xtrain.index,:].dot(W)).mean()
+        #print b.unique()
         # You should fix this to m1_{j, d} = W_{j, d} + b_{j}
         # Why would this only have one dimension? A bad model?
         if len(clf.theta_)==2:
-            clf.theta_[1] = W.loc[concept,:]
+            clf.theta_[1] = W.loc[concept,:] #+ b
             clf.sigma_[1] = numpy.ones(W.shape[1])
+            # You should fix this to m0_{j, d} = b_{j}
+            clf.theta_[0] = numpy.zeros(W.shape[1])#b
+            # with no other information, might as well fix this to s1_{j, d} = 1.0
+            clf.sigma_[0] = numpy.ones(W.shape[1])
+            Xtest = Xmat.loc[heldout,:]
+            Yhat = clf.predict(Xtest)[0]
+            predictions.loc[heldout,concept] = Yhat
+        # For 42/12,276, the Y vector is all 0s, so let's assign a value of 2, 
+        # we will give no accuracy for this
         else:
             print "Found %s positive examples!" %numpy.sum(Ytrain)
             only_positive_examples +=1
-        # You should fix this to m0_{j, d} = b_{j}
-        clf.theta_[0] = numpy.zeros(W.shape[1])
-        # with no other information, might as well fix this to s1_{j, d} = 1.0
-        clf.sigma_[0] = numpy.ones(W.shape[1])
-        Xtest = Xmat.loc[heldout,:]
-        Yhat = clf.predict(Xtest)[0]
-        predictions.loc[heldout,concept] = Yhat
+            predictions.loc[heldout,concept] = 2
+
+only_positive_examples
+#42
+
+predictions.to_csv("%s/prediction_concept_matrix.tsv" %results,sep="\t")
+
 
 # Calculate accuracy metrics for concepts
 # @poldrack I guess what I would like to know is for every concept, how many times was that concept predicted to be present, and how many of those were accurate (i.e. 1 - false alarm rate).  and then also, how many times was the concept actually present, and how many of those were accurately predicted (i.e. hit rate).
 
-concept_acc = pandas.DataFrame(index=concepts,columns=["n_accurate_predictions_1","accurate_predictions_1_outof_predicted_1_total","n_predicted_present","n_actually_present","hit_rate"])
+# I would like to see for each concept a count of how many times each of the following outcomes occurred:
+# - predicted category present, true category present (“hit”)
+# - predicted category present, true category absent (“false alarm”)
+# - predicted category absent, true category present (“miss”)
+# - predicted category absent, true category absent (“correct rejection”)
+
+# Function to compare two vectors to calculate the above
+def calculate_hits(Ya,Yp,Va,Vp):
+    # Y: Y values, V: 0 or 1
+    group1_images = Yp[Yp==Vp].index.tolist()
+    group2_images = Ya[Ya==Va].index.tolist()
+    return len([x for x in group1_images if x in group2_images])
+
+concept_acc = pandas.DataFrame(index=concepts,columns=["hit","false_alarm","miss","correct_rejection"])
+for concept in concepts:
+    Yp = predictions.loc[:,concept]
+    Ya = Ymat.loc[predicted_present.index,concept]
+    # - predicted category present, true category present (“hit”)
+    concept_acc.loc[concept,"hit"] = calculate_hits(Ya,Yp,1,1)
+    concept_acc.loc[concept,"false_alarm"] = calculate_hits(Ya,Yp,0,1)
+    concept_acc.loc[concept,"miss"] = calculate_hits(Ya,Yp,1,0)
+    concept_acc.loc[concept,"correct_rejection"] = calculate_hits(Ya,Yp,0,0)
+
+
+############# OLD
+concept_acc = pandas.DataFrame(index=concepts,columns=["n_accurate_predictions_1","accurate_predictions_1_outof_predicted_1_total","n_predicted_present","n_actually_present"])
 for concept in concepts:
     Yp = predictions.loc[:,concept]
     #how many times was the concept actually present
@@ -136,25 +173,25 @@ for concept in concepts:
     concept_acc.loc[concept,"n_actually_present"] = len(actually_present)
     concept_acc.loc[concept,"n_predicted_present"] = len(predicted_present)
     # how many times was that concept predicted to be present, and how many of those were accurate
-    concept_acc.loc[concept,"n_accurate_predictions_1"] = len([x for x in predicted_present if x in actually_present])
-    acc = concept_acc.loc[concept,"n_accurate_predictions_1"] / len(predicted_present)
+    concept_acc.loc[concept,"n_accurate_predictions_1"] = len([x for x in predicted_present.index.tolist() if x in actually_present.index.tolist()])
+    acc = concept_acc.loc[concept,"n_accurate_predictions_1"] / float(len(predicted_present))
     concept_acc.loc[concept,"accurate_predictions_1_outof_predicted_1_total"] = acc
-    #acc = numpy.sum([1 for x in range(len(Yp)) if Yp[x]==Ya[x]]) / float(len(Yp))
-    #concept_acc.loc[concept,"accuracy"] = acc
   
-concept_acc = concept_acc.sort(columns=["accuracy"],ascending=False)
+concept_acc = concept_acc.sort(columns=["accurate_predictions_1_outof_predicted_1_total"],ascending=False)
 
 # Add the concept name
 from cognitiveatlas.api import get_concept
 concept_names = []
 for concept in concept_acc.index:
     concept_names.append(get_concept(id=concept).json[0]["name"])
+
 concept_acc["name"] = concept_names
 
 # Add the number of images
 number_images = []
 for concept in concept_acc.index:
     number_images.append(Ymat.loc[:,concept].sum())
+
 concept_acc["number_images"] = number_images
 concept_acc.to_csv("%s/prediction_concepts_accs.tsv" %results,sep="\t")
 
