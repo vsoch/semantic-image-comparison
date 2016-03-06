@@ -108,15 +108,14 @@ for concept in concepts:
         Ytrain = Ymat.loc[Xtrain.index,concept].tolist()
         clf.fit(Xtrain, Ytrain)
         # b = average [X_{n,:} - Y{n,:}W]
-        #b = (Xtrain - Ymat.loc[Xtrain.index,:].dot(W)).mean()
-        #print b.unique()
+        b = (Xmat - Ymat.dot(W)).mean(axis=0)
         # You should fix this to m1_{j, d} = W_{j, d} + b_{j}
         # Why would this only have one dimension? A bad model?
         if len(clf.theta_)==2:
-            clf.theta_[1] = W.loc[concept,:] #+ b
+            clf.theta_[1] = W.loc[concept,:] + b
             clf.sigma_[1] = numpy.ones(W.shape[1])
             # You should fix this to m0_{j, d} = b_{j}
-            clf.theta_[0] = numpy.zeros(W.shape[1])#b
+            clf.theta_[0] = b
             # with no other information, might as well fix this to s1_{j, d} = 1.0
             clf.sigma_[0] = numpy.ones(W.shape[1])
             Xtest = Xmat.loc[heldout,:]
@@ -151,7 +150,9 @@ def calculate_hits(Ya,Yp,Va,Vp):
     # Y: Y values, V: 0 or 1
     group1_images = Yp[Yp==Vp].index.tolist()
     group2_images = Ya[Ya==Va].index.tolist()
-    return len([x for x in group1_images if x in group2_images])
+    group_overlap = len([x for x in group1_images if x in group2_images])
+    normalized = group_overlap / float(len(Yp))   
+    return normalized
 
 concept_acc = pandas.DataFrame(index=concepts,columns=["hit","false_alarm","miss","correct_rejection","aprime"])
 for concept in concepts:
@@ -162,12 +163,7 @@ for concept in concepts:
     concept_acc.loc[concept,"hit"] = hit
     false_alarm = calculate_hits(Ya,Yp,0,1)
     concept_acc.loc[concept,"false_alarm"] = false_alarm
-    aprime = 0
-    if hit-false_alarm != 0:
-        aprime_num = 0.5 + (abs(hit-false_alarm) / (hit-false_alarm)) * ((hit - false_alarm)^2 + abs(hit-false_alarm)) 
-        aprime_denom = (4*max(hit,false_alarm)-4*hit*false_alarm)
-        if aprime_denom != 0:
-            aprime = aprime_num / aprime_denom            
+    aprime_num = 0.5 + (abs(hit-false_alarm) / (hit-false_alarm)) * (numpy.power(hit - false_alarm,2) + abs(hit-false_alarm)) / (4*max(hit,false_alarm)-4*hit*false_alarm)
     concept_acc.loc[concept,"aprime"] = aprime
     concept_acc.loc[concept,"miss"] = calculate_hits(Ya,Yp,1,0)
     concept_acc.loc[concept,"correct_rejection"] = calculate_hits(Ya,Yp,0,0)

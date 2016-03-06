@@ -80,6 +80,8 @@ for i in range(0,len(scores)):
 #nanimages
 # [8718.0, 2963.0, 8727.0, 116.0, 111.0]
 
+confusion.to_csv("%s/classification_confusion_binary_4mm_prefilter.tsv" %results,sep="\t")
+
 # Remove images that are not comparable
 for nanimage in nanimages:
     confusion = confusion.drop(nanimage,axis=0)
@@ -119,6 +121,8 @@ data = [data]
 filey = open("%s/classification_confusion_binary_4mm.json" %results,'wb')
 filey.write(json.dumps(data, sort_keys=True,indent=4, separators=(',', ': ')))
 filey.close()
+
+# STOPPED HERE - need to finish redoing this work without images that are equivalent contrasts...
 
 # CONCEPT CONFUSION ####################################################################
 # generate a RIGHT/WRONG by concepts data frame, to see how often different concepts are associated with correct or incorrect prediction
