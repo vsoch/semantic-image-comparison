@@ -154,7 +154,7 @@ def calculate_hits(Ya,Yp,Va,Vp):
 concept_acc = pandas.DataFrame(index=concepts,columns=["hit","false_alarm","miss","correct_rejection"])
 for concept in concepts:
     Yp = predictions.loc[:,concept]
-    Ya = Ymat.loc[predicted_present.index,concept]
+    Ya = Ymat.loc[Yp.index,concept]
     # - predicted category present, true category present (“hit”)
     concept_acc.loc[concept,"hit"] = calculate_hits(Ya,Yp,1,1)
     concept_acc.loc[concept,"false_alarm"] = calculate_hits(Ya,Yp,0,1)
@@ -163,21 +163,21 @@ for concept in concepts:
 
 
 ############# OLD
-concept_acc = pandas.DataFrame(index=concepts,columns=["n_accurate_predictions_1","accurate_predictions_1_outof_predicted_1_total","n_predicted_present","n_actually_present"])
-for concept in concepts:
-    Yp = predictions.loc[:,concept]
-    #how many times was the concept actually present
-    predicted_present = Yp[Yp==1]
-    Ya = Ymat.loc[predicted_present.index,concept]
-    actually_present = Ya[Ya==1]
-    concept_acc.loc[concept,"n_actually_present"] = len(actually_present)
-    concept_acc.loc[concept,"n_predicted_present"] = len(predicted_present)
-    # how many times was that concept predicted to be present, and how many of those were accurate
-    concept_acc.loc[concept,"n_accurate_predictions_1"] = len([x for x in predicted_present.index.tolist() if x in actually_present.index.tolist()])
-    acc = concept_acc.loc[concept,"n_accurate_predictions_1"] / float(len(predicted_present))
-    concept_acc.loc[concept,"accurate_predictions_1_outof_predicted_1_total"] = acc
+#concept_acc = pandas.DataFrame(index=concepts,columns=["n_accurate_predictions_1","accurate_predictions_1_outof_predicted_1_total","n_predicted_present","n_actually_present"])
+#for concept in concepts:
+#    Yp = predictions.loc[:,concept]
+#    #how many times was the concept actually present
+#    predicted_present = Yp[Yp==1]
+#    Ya = Ymat.loc[predicted_present.index,concept]
+#    actually_present = Ya[Ya==1]
+#    concept_acc.loc[concept,"n_actually_present"] = len(actually_present)
+#    concept_acc.loc[concept,"n_predicted_present"] = len(predicted_present)
+#    # how many times was that concept predicted to be present, and how many of those were accurate
+#    concept_acc.loc[concept,"n_accurate_predictions_1"] = len([x for x in predicted_present.index.tolist() if x in actually_present.index.tolist()])
+#    acc = concept_acc.loc[concept,"n_accurate_predictions_1"] / float(len(predicted_present))
+#    concept_acc.loc[concept,"accurate_predictions_1_outof_predicted_1_total"] = acc
   
-concept_acc = concept_acc.sort(columns=["accurate_predictions_1_outof_predicted_1_total"],ascending=False)
+concept_acc = concept_acc.sort(columns=["hit"],ascending=False)
 
 # Add the concept name
 from cognitiveatlas.api import get_concept
