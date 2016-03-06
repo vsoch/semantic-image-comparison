@@ -162,13 +162,12 @@ for concept in concepts:
     concept_acc.loc[concept,"hit"] = hit
     false_alarm = calculate_hits(Ya,Yp,0,1)
     concept_acc.loc[concept,"false_alarm"] = false_alarm
+    aprime = 0
     if hit-false_alarm != 0:
         aprime_num = 0.5 + (abs(hit-false_alarm) / (hit-false_alarm)) * ((hit - false_alarm)^2 + abs(hit-false_alarm)) 
         aprime_denom = (4*max(hit,false_alarm)-4*hit*false_alarm)
         if aprime_denom != 0:
-            aprime = 0
-    else:
-        aprime = 0
+            aprime = aprime_num / aprime_denom            
     concept_acc.loc[concept,"aprime"] = aprime
     concept_acc.loc[concept,"miss"] = calculate_hits(Ya,Yp,1,0)
     concept_acc.loc[concept,"correct_rejection"] = calculate_hits(Ya,Yp,0,0)
