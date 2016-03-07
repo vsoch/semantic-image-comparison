@@ -4,20 +4,20 @@ word maintenance	85	4	1.0
 auditory recognition	374	71	5.0
 sentence recognition 	581	42	7.0
 cognitive control	1838	559	27.0
-visual form recognition	2528	407	33.0
-memory	4573	585	58.0
+visual form recognition	2527	406	33.0
+memory	4572	584	58.0
 face recognition	430	15	5.0
-recognition	4573	585	58.0
+recognition	4572	584	58.0
 emotional suppression	81	8	1.0
 auditory tone discrimination	146	120	3.0
 decision making	1470	132	18.0
 visual pattern recognition	353	3	4.0
 animacy decision	66	23	1.0
 right finger response execution	242	25	3.0
-word recognition	855	213	12.0
-perception	4665	848	62.0
+word recognition	854	212	12.0
+perception	4664	847	62.0
 loss anticipation	180	83	3.0
-visual word recognition	855	213	12.0
+visual word recognition	854	212	12.0
 self control	81	8	1.0
 high energy density food recognition	59	28	1.0
 selective control	369	163	6.0
@@ -26,13 +26,13 @@ arithmetic processing	65	113	2.0
 auditory perception	662	227	10.0
 left hand response execution	178	0	2.0
 emotional face recognition	252	15	3.0
-form perception	2607	417	34.0
+form perception	2606	416	34.0
 face maintenance	178	0	2.0
 visual number recognition	184	81	3.0
 visual place recognition	267	0	3.0
 inhibition	342	103	5.0
 emotion	0	0	1.0
-visual recognition	4140	486	52.0
+visual recognition	4139	485	52.0
 economic value processing	84	3	1.0
 learning	494	40	6.0
 discrimination	225	130	4.0
@@ -45,7 +45,7 @@ left toe response execution	86	3	1.0
 stimulus detection	614	187	9.0
 visual object maintenance	84	92	2.0
 body maintenance	178	0	2.0
-response selection	3646	355	45.0
+response selection	3645	354	45.0
 reward anticipation	124	138	3.0
 visual color discrimination	79	10	1.0
 spatial selective attention	82	7	1.0
@@ -59,7 +59,7 @@ color recognition	177	1	2.0
 working memory maintenance	988	80	12.0
 error detection	583	40	7.0
 animacy perception	9	78	1.0
-emotional self-evaluation	125	53	2.0
+emotional self-evaluation	124	52	2.0
 decision	70	19	1.0
 proactive control	741	147	10.0
 decision certainty	0	0	1.0
@@ -78,7 +78,7 @@ tool maintenance	174	4	2.0
 oddball detection	589	123	8.0
 inference	258	9	3.0
 numerical comparison	50	39	1.0
-numerical scale judgment	209	56	3.0
+numerical scale judgment	208	55	3.0
 color perception	256	11	3.0
 relational comparison	200	67	3.0
 right hand response execution	175	3	2.0
@@ -108,9 +108,9 @@ visual letter recognition	86	3	1.0
 risk	100	74	2.0
 anticipation	119	145	3.0
 spatial attention	148	30	2.0
-visual perception	4402	580	56.0
+visual perception	4401	579	56.0
 feedback processing	530	91	7.0
-response execution	4059	209	48.0
+response execution	4058	208	48.0
 interference resolution	8	79	1.0
 punishment processing	112	64	2.0
 visual form discrimination	79	10	1.0

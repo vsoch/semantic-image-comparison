@@ -110,7 +110,6 @@ for concept in concepts:
         # b = average [X_{n,:} - Y{n,:}W]
         b = (Xmat - Ymat.dot(W)).mean(axis=0)
         # You should fix this to m1_{j, d} = W_{j, d} + b_{j}
-        # Why would this only have one dimension? A bad model?
         if len(clf.theta_)==2:
             clf.theta_[1] = W.loc[concept,:] + b
             clf.sigma_[1] = numpy.ones(W.shape[1])
@@ -235,4 +234,5 @@ contrast_counts.to_csv("%s/contrast_counts.tsv" %results,sep="\t")
 #====================================================
 #If the performance is bad, It may be worth tuning a bit to see if you can improve. The easiest place to tune is to change the m0_{j, d}'s (especially if you didnt fit a bias in the forward model). Next, you can tune s0_{j, d}'s. 
 
-#Since there are so many parameters, I would tune by fixing the same m0_{j, :} = m0_j - same for for all voxels but separate for each process. Similarly, and s0_{j, :} = s0_j - same for for all voxels but separate for each process
+# Note - we set bias b = (Xmat - Ymat.dot(W)).mean(axis=0)
+

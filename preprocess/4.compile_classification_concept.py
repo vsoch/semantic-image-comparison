@@ -15,14 +15,23 @@ scores = glob("%s/*.pkl" %scores_folder)
 # Let's save a big data frame of the prediction scores
 comparison_df = pandas.DataFrame(columns=["actual","predicted","cca_score"])
 
+# If images are the same contrast, don't include in accuracy calculation
+images_tsv = "%s/contrast_defined_images_filtered.tsv" %results
+images = pandas.read_csv(images_tsv,sep="\t")
+
 total = 0
 correct = 0
 for i in range(0,len(scores)):
     print "Parsing score %s of %s" %(i,len(scores))
     single_result = pickle.load(open(scores[i],"rb"))
-    total=total+2
-    correct=correct+single_result["number_correct"]
-    comparison_df = comparison_df.append(single_result["comparison_df"])
+    cdf = single_result["comparison_df"]
+    two_images = cdf["actual"].unique().tolist()
+    contrast_ids = images.cognitive_contrast_cogatlas_id[images.image_id.isin(two_images)].unique()
+    # Only include for images with different contrast
+    if len(contrast_ids) == 2:
+        total=total+2
+        correct=correct+single_result["number_correct"]
+        comparison_df = comparison_df.append(single_result["comparison_df"])
 
 # Use file names for index
 index_names = []
@@ -45,10 +54,6 @@ binary_df = binary["comparison_df"]
 
 unique_images = [int(x) for x in binary_df.actual.unique().tolist()]
 confusion = pandas.DataFrame(0,index=unique_images,columns=unique_images)
-
-# If images are the same contrast, don't include in accuracy calculation
-images_tsv = "%s/contrast_defined_images_filtered.tsv" %results
-images = pandas.read_csv(images_tsv,sep="\t")
 
 # We cannot evaluate images with NaN - meaning the predicted image vector was empty
 nanimages = []
@@ -126,12 +131,13 @@ filey.close()
 
 # CONCEPT CONFUSION ####################################################################
 # generate a RIGHT/WRONG by concepts data frame, to see how often different concepts are associated with correct or incorrect prediction
-concepts_df = pandas.DataFrame(0,columns=["correct","incorrect"],index=concepts)
 confusion = pandas.read_csv("%s/classification_confusion_binary_4mm.tsv" %results,sep="\t",index_col=0)
 
 # Read in concept labels
 labels_tsv = "%s/images_contrasts_df.tsv" %results
 labels = pandas.read_csv(labels_tsv,sep="\t",index_col=0)
+concepts = labels.columns.tolist()
+concepts_df = pandas.DataFrame(0,columns=["correct","incorrect"],index=concepts)
 
 for row in confusion.iterrows():
     actual = str(row[0])
@@ -167,7 +173,7 @@ for row in concepts_df.iterrows():
        norm_values.append(concepts_df.loc[row[0],"number_images"])
        concepts_df_norm.loc[row[0]] = norm_values
 
-concepts_df_norm = concepts_df_norm.sort(columns=["correct"],ascending=False)
+concepts_df_norm.sort(columns=["correct"],ascending=False,inplace=True)
 concepts_df_norm.to_csv("%s/classification_concept_confusion_norm.tsv" %results,sep="\t")
 
 # COLLECTION / TASK CONFUSION ###########################################################
@@ -195,7 +201,6 @@ for i in range(len(confusion)):
         else:
             confusion_categories.loc[image1_name,image2_name] = 2
             
-confusion_categories
 confusion_result = dict()
 # within-task (0), within-collection (between-task) (1), bw-collection (2)
 confusion_result["confusion_categories_df"] = confusion_categories
@@ -220,16 +225,7 @@ for i in range(3):
     normalized_confusion[confusion_labels[i]] = normalized_value
  
 normalized_confusion
-# {'within-collection (between-task)': 0.064630681818181823, 'within-task': 0.038352272727272728, 'between-collection': 0.89701704545454541}
-
-confusion_labels = ["within-task","within-collection (between-task)","between-collection"]
-normalized_confusion = dict()
-for i in range(3):
-    normalized_value = value_counts[i]/numpy.sum(value_counts)
-    normalized_confusion[confusion_labels[i]] = normalized_value
-
-normalized confusion
-# {'within-collection (between-task)': 0.058777429467084641, 'within-task': 0.039446185997910138, 'between-collection': 0.90177638453500519}
+#{'within-collection (between-task)': 0.061833688699360338, 'within-task': 0.036958066808813077, 'between-collection': 0.90120824449182657}
 
 
 # COMPILE NULL ######################################################################
@@ -272,7 +268,7 @@ result_weighted["pval"] = pval_weighted
 # weighted not the appropriate null distribution, but tested anyway
 result_binary["tstat"] = tstat_binary
 result_binary["pval"] = pval_binary
-# (-940.15479080240027, 0.0)
+# (-946.65983687706296, 0.0)
 
 pickle.dump(result_binary,open("%s/classification_results_binary_4mm.pkl" %results,"wb"))
 pickle.dump(result_weighted,open("%s/classification_results_weighted_4mm.pkl" %results,"wb"))
@@ -291,21 +287,20 @@ for i in range(0,len(scores)):
     print "Parsing score %s of %s" %(i,len(scores))
     if not re.search(missing_expression,scores[i]):
         single_result = pickle.load(open(scores[i],"rb"))
-        total=total+2
-        correct=correct+single_result["number_correct"]
-        comparison_df = comparison_df.append(single_result["comparison_df"])
+        cdf = single_result["comparison_df"]
+        two_images = cdf["actual"].unique().tolist()
+        contrast_ids = images.cognitive_contrast_cogatlas_id[images.image_id.isin(two_images)].unique()
+        # Only include for images with different contrast
+        if len(contrast_ids) == 2:
+            total=total+2
+            correct=correct+single_result["number_correct"]
+            comparison_df = comparison_df.append(single_result["comparison_df"])
     else:
         print "Skipping %s" %(scores[i])
 
-# Use file names for index
-index_names = []
-for score in scores:
-    if not re.search(missing_expression,score):
-        fname = os.path.basename(score)
-        index_names = index_names + [fname,fname,fname,fname]
-
 comparison_df.index = index_names
 accuracy = correct/float(total)
+#0.81450980392156858
 result = dict()
 result["comparison_df"] = comparison_df
 result["total"] = total
