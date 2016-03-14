@@ -127,8 +127,6 @@ filey = open("%s/classification_confusion_binary_4mm.json" %results,'wb')
 filey.write(json.dumps(data, sort_keys=True,indent=4, separators=(',', ': ')))
 filey.close()
 
-# STOPPED HERE - need to finish redoing this work without images that are equivalent contrasts...
-
 # CONCEPT CONFUSION ####################################################################
 # generate a RIGHT/WRONG by concepts data frame, to see how often different concepts are associated with correct or incorrect prediction
 confusion = pandas.read_csv("%s/classification_confusion_binary_4mm.tsv" %results,sep="\t",index_col=0)
