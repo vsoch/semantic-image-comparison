@@ -321,6 +321,8 @@ for concept in concepts:
 # I have no apriori reason for this, just suggesting arbitrary small-ish numbers. It would make sense to visually examine the log odds for each cognitive process to see its typical range, then decide on tuning based on what you observe - instead of using my default suggestions.
 # You can set the best “c” values either by picking the best “c” on the training set, or picking the best “c” via cross-validation. Cross-validation is better, training set may be adequate.
 
+optimal_c.to_csv("%s/optimal_c_tuned.tsv" %results,sep="\t")
+
 # Now run again using our modified Cs!!
 predictions_tuned = pandas.DataFrame(index=Xmat.index,columns=Ymat.columns)
 for concept in concepts:
@@ -346,3 +348,28 @@ for concept in concepts:
 
 predictions_tuned.to_csv("%s/prediction_concept_matrix_tuned.tsv" %results,sep="\t")
 
+tuned_acc = get_concept_acc(predictions_tuned)
+
+# Just compare the two for now
+diff_acc = tuned_acc - base_acc
+
+# Add the concept names to each
+from cognitiveatlas.api import get_concept
+concept_names = []
+for concept in diff_acc.index:
+    concept_names.append(get_concept(id=concept).json[0]["name"])
+
+tuned_acc["name"] = concept_names
+diff_acc["name"] = concept_names
+
+# Add the number of images
+number_images = []
+for concept in diff_acc.index:
+    number_images.append(Ymat.loc[:,concept].sum())
+
+tuned_acc["number_images"] = number_images
+diff_acc["number_images"] = number_images
+
+diff_acc = diff_acc.sort(columns=["hit"],ascending=False)
+diff_acc.to_csv("%s/prediction_concept_accs_tuned_diff.tsv" %results,sep="\t")
+tuned_acc.to_csv("%s/prediction_concept_accs_tuned.tsv" %results,sep="\t")
