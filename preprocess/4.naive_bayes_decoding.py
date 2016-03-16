@@ -64,7 +64,6 @@ W = W.transpose()
 
 # For each example "n", the encoding model is given by X_{n,:} = Y{n,:} x W
 
-
 #####################################################################################
 # Model 1: Standard Naive Bayes decoder
 #####################################################################################
@@ -168,6 +167,7 @@ for concept in concepts:
 # The results of this modified model will serve as a second baseline for further modifications. Thus, I suggest you save the cross-validation test results from this model.
 
 predictions_forward.to_csv("%s/prediction_concept_matrix_forward.tsv" %results,sep="\t")
+#predictions_forward = pandas.read_csv("%s/prediction_concept_matrix_forward.tsv" %results,sep="\t",index_col=0)
 
 #####################################################################################
 # Compare Model 2 to Base
@@ -287,12 +287,12 @@ for concept in concepts:
     # Find the optimal C between 0.001 and 10, for 10 steps
     accuracies = dict()
     actual = Ymat[concept]
-    for cc in [0.001,1,2,3,4,5,6,7,8,9,10]:
+    for cc in numpy.logspace(-3, 1, 10):
         print "Testing C value of %s..." %(cc)
         prediction_cc = pandas.DataFrame(index=Xmat.index,columns=["prediction"])
         for heldout in Xmat.index.tolist():
             clf = GaussianNB()
-            Xtrain = X.loc[Xmat.index!=heldout,:]
+            Xtrain = Xmat.loc[Xmat.index!=heldout,:]
             Ytrain = Ymat.loc[Xtrain.index,concept].tolist()
             clf.fit(Xtrain, Ytrain)
             if len(clf.theta_)==2:
