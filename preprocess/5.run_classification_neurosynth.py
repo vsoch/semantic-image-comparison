@@ -51,7 +51,7 @@ for holdouts in image_groups:
         filey.writelines("#SBATCH --output=.out/%s.out\n" %(job_id))
         filey.writelines("#SBATCH --error=.out/%s.err\n" %(job_id))
         filey.writelines("#SBATCH --time=2-00:00\n")
-        filey.writelines("#SBATCH --mem=32000\n")
+        filey.writelines("#SBATCH --mem=64000\n")
         filey.writelines("python 5.classification_neurosynth.py %s %s %s %s %s" %(holdout_start, holdout_end, X_pickle, Y_pickle, output_file))
         filey.close()
         os.system("sbatch -p russpold " + ".job/class_%s.job" %(job_id))
