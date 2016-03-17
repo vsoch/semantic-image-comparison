@@ -168,7 +168,8 @@ for pmid in df.columns:
     empty_nii = nibabel.Nifti1Image(empty_nii,affine=dataset.masker.volume.get_affine())
     tmpnii = "%s/tmp.nii.gz" %(neurosynth_feature_maps)
     nibabel.save(empty_nii,tmpnii)
-    nii = resample_img(tmpnii,target_affine=brain_4mm.get_affine())
+    # ***Interpolation must be nearest as neurosynth data is binary!
+    nii = resample_img(tmpnii,target_affine=brain_4mm.get_affine(),interpolation="nearest")
     nibabel.save(nii,"%s/%s.nii.gz" %(neurosynth_feature_maps,pmid))
 
 # Load into image data frame
@@ -186,9 +187,13 @@ X.index = Xindex
 
 # neurosynth_map=load_data() # data from all voxels, size novels X npapers, binary encoding of activation presence/absence
 
-# Get rid of all zeros
+# Get rid of entry with all zeros (PMID does not have abstract)
 features=features.drop(9728909,axis=0)
 X=X.drop(9728909,axis=0)
+
+# Save data structures so we can run en masse
+pickle.dump(X,open("%s/neurosynth_X.pkl" %decode_folder,"wb"))
+pickle.dump(features,open("%s/neurosynth_Y.pkl" %decode_folder,"wb"))
 
 mapping = pandas.DataFrame(0,index=X.columns,columns=features.columns)
 
@@ -196,17 +201,30 @@ from sklearn import linear_model
 # for v in all_voxels:
 # y=neurosynth_map[v,:] # i.e. activation presence/absence in voxel v for all papers
 # mapping[v,:]=regularized_logistic_regression(y,X)
+
+# First build model with all data, to look at images
 for voxel in range(X.shape[1]):
     print "Parsing voxel %s of %s" %(voxel,X.shape[1])
-    y = X.loc[features.index,voxel].tolist()
-    # Use regularized logistic regression
-    #clf = linear_model.LogisticRegression()
-    clf = linear_model.LogisticRegression()
-    clf.fit(features,y)
-    mapping.loc[voxel,:] = clf.coef_[0]
+    # only build model with coefficients if there are nonzero voxels
+    if len(X.loc[features.index,voxel].unique())>1:
+        y = X.loc[features.index,voxel].tolist()
+        # Use regularized logistic regression
+        clf = linear_model.LogisticRegression()
+        #clf = linear_model.SGDClassifier(loss="log",penalty="elasticnet")
+        clf.fit(features,y)
+        mapping.loc[voxel,:] = clf.coef_[0]
 
-# STOPPED HERE - this is slow as... :)
+pickle.dump(mapping,open("%s/neurosynth_regression_params_df.pkl" %decode_folder,"wb"))
 
-# then you can do your leave-two-out trick as you did with the neurovault data.  let me know if that makes sense. once you have that model, we could also try to use it to predict on the neurovault data, assuming they are in the same space.
+# Generate maps for the regparams
+regparam_maps = "%s/regparam_maps" %neurosynth_data
+if not os.path.exists(regparam_maps):
+    os.mkdir(regparam_maps)
 
-
+for feat in mapping.columns:
+    feat_name = feat.replace(" ","_")
+    brain_map = mapping[feat].tolist()
+    empty_nii = numpy.zeros(brain_4mm.shape)
+    empty_nii[brain_4mm.get_data()!=0] = brain_map
+    empty_nii = nibabel.Nifti1Image(empty_nii,affine=brain_4mm.get_affine())
+    nibabel.save(empty_nii,"%s/%s_regparam.nii.gz" %(regparam_maps,feat_name))
