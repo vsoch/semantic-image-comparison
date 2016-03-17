@@ -37,9 +37,9 @@ while end < len(pmids)-1:
 #len(image_pairs)
 # 101
 
-for holdouts in image_pairs:
-    holdout_start = image_pairs[0]
-    holdout_end = image_pairs[1]
+for holdouts in image_groups:
+    holdout_start = holdouts[0]
+    holdout_end = hoildouts[1]
     print "Parsing holdout from %s to %s" %(holdout_start,holdout_end)
     output_file = "%s/%s_%s_predict.pkl" %(output_folder,holdout_start,holdout_end)
     if not os.path.exists(output_file):
