@@ -22,7 +22,7 @@ X = pickle.load(open(X_pickle,"rb"))
 
 # Generate a list of [start,stop] indices for holdout groups, each ~1% of total 
 image_groups = []
-group_size =  int(numpy.floor(0.01*11405))
+group_size =  int(numpy.floor(0.01*X.shape[0]))
 pmids = X.index.tolist()
 start = 0
 end = start + group_size

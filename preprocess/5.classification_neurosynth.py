@@ -142,6 +142,10 @@ result["y_singular_voxel_count"] = missed
 
 # generate the predicted images for those left out abstracts, then randomly pair them and test whether the similarity is higher between the true and predicted for each pair? this would only require 100 training rounds but you would still get to assess accuracy on all of the abstracts. 
 
+###################################################################################
+# PREDICTIONS
+###################################################################################
+
 print "Making predictions..."
 
 # Save a confusion data frame, comparison data frame, as we go
