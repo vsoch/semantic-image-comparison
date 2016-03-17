@@ -1,7 +1,7 @@
 #!/usr/bin/python
-from random import shuffle
 from glob import glob
 import sys
+import pickle
 import numpy
 import pandas
 import os
