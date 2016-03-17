@@ -20,23 +20,30 @@ if not os.path.exists(output_folder):
 # 28K images by 11K concepts
 X = pickle.load(open(X_pickle,"rb"))
 
-# Generate a list of all possible pairs to randomly sample from
-image_pairs = []
-for pmid1_holdout in X.index.tolist():
-    for pmid2_holdout in X.index.tolist():
-        if (pmid1_holdout != pmid2_holdout) and (pmid1_holdout < pmid2_holdout):
-            image_pairs.append([pmid1_holdout,pmid2_holdout])
+# Generate a list of [start,stop] indices for holdout groups, each ~1% of total 
+image_groups = []
+group_size =  int(numpy.floor(0.01*11405))
+pmids = X.index.tolist()
+start = 0
+end = start + group_size
+while end < len(pmids)-1:
+    if start + group_size <= len(pmids)-1:
+        end = start + group_size
+    else:
+        end = len(pmids)-1
+    image_groups.append([start,end])
+    start = end 
 
 #len(image_pairs)
-#
+# 101
 
 for holdouts in image_pairs:
-    pmid1_holdout = image_pairs[0]
-    pmid2_holdout = image_pairs[1]
-    print "Parsing %s and %s" %(pmid1_holdout,pmid2_holdout)
-    output_file = "%s/%s_%s_predict.pkl" %(output_folder,pmid1_holdout,pmid2_holdout)
+    holdout_start = image_pairs[0]
+    holdout_end = image_pairs[1]
+    print "Parsing holdout from %s to %s" %(holdout_start,holdout_end)
+    output_file = "%s/%s_%s_predict.pkl" %(output_folder,holdout_start,holdout_end)
     if not os.path.exists(output_file):
-        job_id = "%s_%s" %(pmid1_holdout,pmid2_holdout)
+        job_id = "%s_%s" %(holdout_start,holdout_end)
         filey = ".job/class_%s.job" %(job_id)
         filey = open(filey,"w")
         filey.writelines("#!/bin/bash\n")
@@ -45,6 +52,6 @@ for holdouts in image_pairs:
         filey.writelines("#SBATCH --error=.out/%s.err\n" %(job_id))
         filey.writelines("#SBATCH --time=2-00:00\n")
         filey.writelines("#SBATCH --mem=32000\n")
-        filey.writelines("python 5.classification_neurosynth.py %s %s %s %s %s" %(pmid1_holdout, pmid2_holdout, X_pickle, Y_pickle, output_file))
+        filey.writelines("python 5.classification_neurosynth.py %s %s %s %s %s" %(holdout_start, holdout_end, X_pickle, Y_pickle, output_file))
         filey.close()
         os.system("sbatch -p russpold " + ".job/class_%s.job" %(job_id))
