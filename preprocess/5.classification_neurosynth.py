@@ -159,7 +159,7 @@ for holdout1 in holdouts:
     for holdout2 in holdouts:
         if holdout1 != holdout2 and holdout1 < holdout2:
             print "Comparing %s and %s" %(holdout1,holdout2)
-            total_comparisons+=1
+            total_comparisons+=2
             # Generate predicted images
             predicted1 = generate_predicted_image(holdout1,Y,regression_params,standard_mask)
             predicted2 = generate_predicted_image(holdout2,Y,regression_params,standard_mask)   

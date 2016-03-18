@@ -17,7 +17,7 @@ Y_pickle = "%s/neurosynth_Y.pkl" %decode_folder
 if not os.path.exists(output_folder):
     os.mkdir(output_folder)
 
-# 28K images by 11K concepts
+# 28K voxels for 11K pmids
 X = pickle.load(open(X_pickle,"rb"))
 
 # Generate a list of [start,stop] indices for holdout groups, each ~1% of total 
@@ -39,7 +39,7 @@ while end < len(pmids)-1:
 
 for holdouts in image_groups:
     holdout_start = holdouts[0]
-    holdout_end = hoildouts[1]
+    holdout_end = holdouts[1]
     print "Parsing holdout from %s to %s" %(holdout_start,holdout_end)
     output_file = "%s/%s_%s_predict.pkl" %(output_folder,holdout_start,holdout_end)
     if not os.path.exists(output_file):
@@ -54,4 +54,4 @@ for holdouts in image_groups:
         filey.writelines("#SBATCH --mem=64000\n")
         filey.writelines("python 5.classification_neurosynth.py %s %s %s %s %s" %(holdout_start, holdout_end, X_pickle, Y_pickle, output_file))
         filey.close()
-        os.system("sbatch -p russpold " + ".job/class_%s.job" %(job_id))
+        os.system("sbatch -p russpold --qos=russpold " + ".job/class_%s.job" %(job_id))
