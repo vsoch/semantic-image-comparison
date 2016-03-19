@@ -1,6 +1,10 @@
-from Bio import Entrez
 from cognitiveatlas.api import get_concept
+from rdflib.serializer import Serializer
+from rdflib import Graph, plugin
+from Bio import Entrez
 import pickle
+import rdfxml
+import urllib2
 import json
 import time
 import os
@@ -48,6 +52,7 @@ def search_articles(email,term,retmax=100000):
     else:
         return [],0    
 
+
 # Save a list of just the Cognitive Atlas terms we will search for
 concepts = get_concepts().json
 concepts = concepts.pandas.drop(["concept_class",
@@ -64,7 +69,9 @@ email = "vsochat@stanford.edu"
 lookup = dict()
 counts = dict()
 
-for concept in concepts["name"]:
+for c in range(len(concepts["name"])):
+for c in range(745,len(concepts["name"])):
+    concept = concepts["name"][c]
     terms,number_matches = search_articles(email,concept,retmax=100000)    
     if len(terms) != number_matches:
         print "ERROR parsing term %s, indicated %s matches but list has %s" %(concept,number_matches,len(terms))
@@ -72,8 +79,11 @@ for concept in concepts["name"]:
     counts[concept] = number_matches
     time.sleep(0.5)
 
-# Save data structure, notes, documentation
-note = "Counts were derived from record['Count'] and should be equivalent to len() of each corresponding term list of pmid."
-code = 'https://github.com/vsoch/semantic-image-comparison/blob/master/preprocess/6.pubmed_cogat.py' #This is so meta!
-result = {"count":counts,"pmids":lookup,"code":code,"note":note} 
-pickle.dump(result,open("%s/cogat_pmid_dict.pkl" %pubmed_folder,"wb"))
+# Save data structures
+for term,pmids in lookup.iteritems():
+    output_file = "%s/cogat_%s.pkl" %(pubmed_folder,term.replace(" ","_"))
+    if not os.path.exists(output_file):
+        print "Saving %s" %(term)
+        pickle.dump(terms,open(output_file,"wb"))
+
+pickle.dump(counts,open("%s/cogat_COUNTS_dict.pkl" %pubmed_folder,"wb"))
