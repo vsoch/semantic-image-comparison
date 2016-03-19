@@ -66,27 +66,6 @@ concepts = concepts.pandas.drop(["concept_class",
 concepts.to_csv("%s/concepts_metadata_799.tsv" %pubmed_folder,sep="\t",encoding="utf-8")
 email = "vsochat@stanford.edu"
 
-# We will save a dictionary with pmids for each term, and counts
-lookup = dict()
-counts = dict()
-
-for c in range(len(concepts["name"])):
-    concept = concepts["name"][c]
-    terms,number_matches = search_articles(email,concept,retmax=100000)    
-    if len(terms) != number_matches:
-        print "ERROR parsing term %s, indicated %s matches but list has %s" %(concept,number_matches,len(terms))
-    lookup[concept] = terms
-    counts[concept] = number_matches
-    time.sleep(0.5)
-
-# Save data structures
-for term,pmids in lookup.iteritems():
-    output_file = "%s/cogat_%s.pkl" %(pubmed_folder,term.replace(" ","_"))
-    if not os.path.exists(output_file):
-        print "Saving %s" %(term)
-        pickle.dump(pmids,open(output_file,"wb"))
-
-pickle.dump(counts,open("%s/cogat_COUNTS_dict.pkl" %pubmed_folder,"wb"))
 
 #################################################################################################
 # Filter Based on Mesh Terms
@@ -171,14 +150,29 @@ def search_mesh(email,pmids,mesh_filter,retmax=100000):
     print "Found %s out of %s pmids" %(len(filtered_pmids),len(pmids))
     return filtered_pmids
 
+# Function to save output
+def save_output_pkl(output,output_file):
+    if not os.path.exists(output_file):
+        pickle.dump(output,open(output_file,"wb"))
+
 # Prepare list of mesh terms
 mesh_list = mesh_df["term_matches"].tolist()
+
+# Save counts
+counts = dict()
 
 # We will save each list to a file as we go
 for c in range(len(concepts["name"])):
     concept = concepts["name"][c]
     pmids,number_matches = search_articles(email,concept,retmax=100000)    
+    if len(pmids) != number_matches:
+        print "ERROR parsing term %s, indicated %s matches but list has %s" %(concept,number_matches,len(pmids))
+    counts[concept] = number_matches
+    output_file = "%s/cogat_%s.pkl" %(pubmed_folder,concept.replace(" ","_"))
+    save_output_pkl(pmids,output_file)
     mesh_pmids = search_mesh(email,pmids,mesh_list)
-    output_file = "%s/cogat_%s_filtered.pkl" %(pubmed_folder,cogat_term.replace(" ","_"))
-    if not os.path.exists(output_file):
-        pickle.dump(mesh_pmids,open(output_file,"wb"))
+    output_file = "%s/cogat_%s_filtered.pkl" %(pubmed_folder,concept.replace(" ","_"))
+    save_output_pkl(mesh_pmids,output_file)
+
+# Finally, save counts
+pickle.dump(counts,open("%s/cogat_COUNTS_dict.pkl" %pubmed_folder,"wb"))
