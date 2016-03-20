@@ -27,54 +27,35 @@ def search_pubmed(term,retstart=0,retmax=100000):
     handle.close()
     return record
 
-def do_query(query,retmax=100000):
-    '''do_query performs as many searches as are necessary to parse a complete query
-    :param query: the term and query to search for
-    :param retstart: where to start retrieving results, default is 0
-    :param retmax: the max number of results to return, default is 100K
-    '''
-    record = search_pubmed(query)
-    if "IdList" in record:
-        number_matches = int(record["Count"])
-        allrecords = record["IdList"]
-        start = retmax
-        while start <= number_matches:
-            record = search_pubmed(query,retstart=start)
-            allrecords = allrecords + record["IdList"]
-            start = start + retmax
-            time.sleep(0.5)
-        return allrecords,number_matches
-    else:
-        return [],0
-
-def search_articles(email,term,retmax=100000,mesh_filter=None,batch_size=100):
+def search_articles(email,term,retmax=100000,date_start=2010,date_end=3000):
     '''search_articles returns a list of articles associated with a term and count
     :param email: an email address to associated with the query for Entrez
     :param term: the search term for pubmed, "+" will replace spaces
     :param retmax: maximum number of results to return, default 100K. If more exist, will be obtained.
+    :param date_start: year of start (default 2010)
+    :param date_end: year of end (default is "present" aka 3000)
     '''
     Entrez.email = email
     # Replace spaces in term with +
     term = term.replace(" ","+")
-    if mesh_filter != None:
-        pmids = []
-        number_matches = 0
-        iters = int(numpy.ceil(len(mesh_filter)/batch_size))
-        for i in range(iters):
-            start = i*batch_size
-            if (start + batch_size) < len(mesh_filter):
-                end = start + batch_size
-            else:
-                end = len(mesh_filter)
-            batch = mesh_filter[start:end]
-            mesh_terms = "(%s))" %'[MeSH Terms] OR '.join(['"%s"' %x for x in batch])
-            query = "(%s AND %s" %(term,mesh_terms)
-            new_pmids,new_matches = do_query(query,retmax)
-            number_matches = number_matches + new_matches
-            pmids = pmids + new_pmids
+    query = '(%s) AND ("%s"[Date - Create] : "%s"[Date - Create])' %(term,date_start,date_end)
+    record = search_pubmed(term)
+    if "IdList" in record:
+        number_matches = int(record["Count"])
+        allrecords = record["IdList"]
+        start = 100000
+        # Tell the user this term is going to take longer
+        if number_matches >= 100000:
+            print "Term %s has %s associated pmids" %(term,number_matches)
+        while start <= number_matches:
+            record = search_pubmed(term,retstart=start)
+            allrecords = allrecords + record["IdList"]
+            start = start + 100000
+            time.sleep(0.5)
+        return allrecords,number_matches
     else:
-        pmids,number_matches = do_query(term,retmax)
-    return pmids,number_matches
+        return [],0    
+
 
 # Save a list of just the Cognitive Atlas terms we will search for
 concepts = get_concepts().json
@@ -131,8 +112,6 @@ mesh_df.to_csv("%s/cognitive_mesh_1119.tsv" %pubmed_folder,sep="\t")
 
 
 # Function to filter a pubmed xml by mesh term
-# Note: This function is not used, as it requires the article xml
-# It is faster? to do 11X searches...?
 def filter_mesh(article_xml,mesh_filter):
     filtered = []
     for article in article_xml:
@@ -148,7 +127,7 @@ def filter_mesh(article_xml,mesh_filter):
     return filtered
 
 
-# Function to fetch info on articles using efetch (not used)
+# Function to fetch info on articles using efetch
 def search_mesh(email,pmids,mesh_filter,retmax=100000):
     '''filter_mesh returns a list of articles associated with a term and count
     :param email: an email address to associated with the query for Entrez
@@ -182,11 +161,19 @@ def save_output_pkl(output,output_file):
 # Prepare list of mesh terms
 mesh_list = mesh_df["term_matches"].tolist()
 
+# Save counts
+counts = dict()
+
 # We will save each list to a file as we go
 for c in range(len(concepts["name"])):
     concept = concepts["name"][c]
-    print "Parsing term %s" %(concept)
-    pmids,number_matches = search_articles(email,concept,retmax=100000,mesh_filter=mesh_list)    
-    print "Found %s pmids" %(number_matches)
+    pmids,number_matches = search_articles(email,concept,retmax=100000)    
+    counts[concept] = number_matches
+    output_file = "%s/cogat_%s.pkl" %(pubmed_folder,concept.replace(" ","_"))
+    save_output_pkl(pmids,output_file)
+    mesh_pmids = search_mesh(email,pmids,mesh_list)
     output_file = "%s/cogat_%s_filtered.pkl" %(pubmed_folder,concept.replace(" ","_"))
     save_output_pkl(mesh_pmids,output_file)
+
+# Finally, save counts
+pickle.dump(counts,open("%s/cogat_COUNTS_dict.pkl" %pubmed_folder,"wb"))
