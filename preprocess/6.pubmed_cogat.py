@@ -166,9 +166,10 @@ mesh_list = mesh_df["term_matches"].tolist()
 counts = dict()
 
 # We will save each list to a file as we go
+russpold = "/scratch/PI/russpold/data/PUBMED/cognitive_atlas/terms"
 for c in range(len(concepts["name"])):
     concept = concepts["name"][c]
-    filtered_output_file = "%s/cogat_%s_filtered.pkl" %(pubmed_folder,concept.replace(" ","_"))
+    filtered_output_file = "%s/cogat_%s_filtered.pkl" %(russpold,concept.replace(" ","_"))
     # Only save filtered output, not enough disk space
     if not os.path.exists(filtered_output_file):
         pmids,number_matches = search_articles(email,concept,retmax=100000)    
