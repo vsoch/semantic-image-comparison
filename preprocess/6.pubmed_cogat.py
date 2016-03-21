@@ -67,6 +67,7 @@ concepts = concepts.pandas.drop(["concept_class",
                                  "id_concept_class",
                                  "id_user"],axis=1)
 concepts.to_csv("%s/concepts_metadata_799.tsv" %pubmed_folder,sep="\t",encoding="utf-8")
+#concepts = pandas.read_csv("%s/concepts_metadata_799.tsv" %pubmed_folder,sep="\t",encoding="utf-8")
 email = "vsochat@stanford.edu"
 
 
@@ -109,7 +110,7 @@ mesh_df["tree_matches"] = mesh_tree_matches
 mesh_df = mesh_df.drop_duplicates()
 # Save result to file
 mesh_df.to_csv("%s/cognitive_mesh_1119.tsv" %pubmed_folder,sep="\t")
-
+#mesh_df = pandas.read_csv("%s/cognitive_mesh_1119.tsv" %pubmed_folder,sep="\t",index_col=0)
 
 # Function to filter a pubmed xml by mesh term
 def filter_mesh(article_xml,mesh_filter):
@@ -167,13 +168,15 @@ counts = dict()
 # We will save each list to a file as we go
 for c in range(len(concepts["name"])):
     concept = concepts["name"][c]
-    pmids,number_matches = search_articles(email,concept,retmax=100000)    
-    counts[concept] = number_matches
-    output_file = "%s/cogat_%s.pkl" %(pubmed_folder,concept.replace(" ","_"))
-    save_output_pkl(pmids,output_file)
-    mesh_pmids = search_mesh(email,pmids,mesh_list)
-    output_file = "%s/cogat_%s_filtered.pkl" %(pubmed_folder,concept.replace(" ","_"))
-    save_output_pkl(mesh_pmids,output_file)
+    filtered_output_file = "%s/cogat_%s_filtered.pkl" %(pubmed_folder,concept.replace(" ","_"))
+    # Only save filtered output, not enough disk space
+    if not os.path.exists(filtered_output_file):
+        pmids,number_matches = search_articles(email,concept,retmax=100000)    
+        counts[concept] = number_matches
+        #output_file = "%s/cogat_%s.pkl" %(pubmed_folder,concept.replace(" ","_"))
+        #save_output_pkl(pmids,output_file)
+        mesh_pmids = search_mesh(email,pmids,mesh_list)
+        save_output_pkl(mesh_pmids,filtered_output_file)
 
 # Finally, save counts
 pickle.dump(counts,open("%s/cogat_COUNTS_dict.pkl" %pubmed_folder,"wb"))
