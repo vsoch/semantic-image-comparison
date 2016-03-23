@@ -128,7 +128,7 @@ for concept in concepts:
     print "Predicting images for %s" %concept
     for heldout in Xmat.index.tolist():
         clf = GaussianNB()
-        Xtrain = X.loc[Xmat.index!=heldout,:]
+        Xtrain = Xmat.loc[Xmat.index!=heldout,:]
         Ytrain = Ymat.loc[Xtrain.index,concept].tolist()
         clf.fit(Xtrain, Ytrain)
         # b = average [X_{n,:} - Y{n,:}W]
@@ -329,7 +329,7 @@ for concept in concepts:
     print "Predicting images for %s" %concept
     for heldout in Xmat.index.tolist():
         clf = GaussianNB()
-        Xtrain = X.loc[Xmat.index!=heldout,:]
+        Xtrain = Xmat.loc[Xmat.index!=heldout,:]
         Ytrain = Ymat.loc[Xtrain.index,concept].tolist()
         clf.fit(Xtrain, Ytrain)
         if len(clf.theta_)==2:
@@ -373,3 +373,34 @@ diff_acc["number_images"] = number_images
 diff_acc = diff_acc.sort(columns=["hit"],ascending=False)
 diff_acc.to_csv("%s/prediction_concept_accs_tuned_diff.tsv" %results,sep="\t")
 tuned_acc.to_csv("%s/prediction_concept_accs_tuned.tsv" %results,sep="\t")
+
+#####################################################################################
+# Model 4: Forward Model Decoder
+#####################################################################################
+
+
+# We are going to use invert the regression of the forward model in order to build a decoder.
+# Step 1 - Estimate label scores: Given X_{test} - a vector in R^{1 x d}, and a forward model W, we will estimate label scores as the solution of: 
+# X_{test,:} = Y{test,:} x W
+# OR equivalently: 
+# X_{test,:}^T = W^T x Y{test,:} ^T
+# (The notation M^T refers to the transpose of matrix M)
+
+# For linear regression - this is equivalent to treating W^T as the design matrix, and X^T as the target. This can be done independently for each example or solved jointly for several examples (It can be shown that the solution is the same).
+# The same idea works for logistic regression. Again, treat W^T as the design matrix, and X^T as the target.
+
+predictions_tuned = pandas.DataFrame(index=Xmat.index,columns=Xmat.columns)
+
+for heldout in Xmat.index.tolist():
+    Xtest = Xmat.loc[heldout,:]
+    predictions_tuned.loc[heldout,:] = Ymat.loc[heldout,:].dot(W).tolist()
+
+predictions_tuned.to_csv("%s/prediction_forward_model_decoder.tsv" %results,sep="\t")
+
+# Step 2 (optional): Construct a binary decision by thresholding Y{test,:} at 0.5.
+binary_decision = numpy.zeros(predictions_tuned.shape)
+binary_decision[predictions_tuned >=0.5]=1
+
+binary_decision = pandas.DataFrame(binary_decision)
+binary_decision.index = predictions_tuned.index
+binary_decision.to_csv("%s/prediction_forward_model_decoder_binary.tsv" %results,sep="\t")
