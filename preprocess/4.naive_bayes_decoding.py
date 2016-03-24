@@ -1,8 +1,10 @@
 #!/usr/bin/python
+from pybraincompare.compare.maths import calculate_correlation
 from pybraincompare.mr.datasets import get_standard_mask
 from pybraincompare.compare.mrutils import get_images_df
 from glob import glob
 import numpy
+import nibabel
 import pickle
 import pandas
 import json
@@ -404,3 +406,107 @@ binary_decision[predictions_tuned >=0.5]=1
 binary_decision = pandas.DataFrame(binary_decision)
 binary_decision.index = predictions_tuned.index
 binary_decision.to_csv("%s/prediction_forward_model_decoder_binary.tsv" %results,sep="\t")
+
+###################################################################################
+# FUNCTIONS
+###################################################################################
+
+# Write a function to generate a predicted image for a heldout image
+def generate_predicted_image(pmid,predictions_tuned,standard_mask):
+    predicted_nii =  predictions_tuned.loc[pmid]
+    nii = numpy.zeros(standard_mask.shape)
+    nii[standard_mask.get_data()!=0] = predicted_nii.tolist()
+    return nibabel.Nifti1Image(nii,affine=standard_mask.get_affine())
+
+# A function to reconstruct an actual image (from X matrix)
+def generate_actual_image(pmid,X,standard_mask):
+    actual = X.loc[pmid,:]
+    actual_nii = numpy.zeros(standard_mask.shape)
+    actual_nii[standard_mask.get_data()!=0] = actual.tolist()
+    return nibabel.Nifti1Image(actual_nii,affine=standard_mask.get_affine())
+
+# A function to test similarity between two images predicted and actuals
+def assess_similarity(pmid1,pmid2,predicted_nii1,predicted_nii2,actual_nii1,actual_nii2):
+    lookup = dict()
+    lookup[actual_nii1] = pmid1
+    lookup[actual_nii2] = pmid2
+    lookup[predicted_nii1] = pmid1
+    lookup[predicted_nii2] = pmid2
+    comparison_df = pandas.DataFrame(columns=["actual","predicted","cca_score"])
+    comparisons = [[actual_nii1,predicted_nii1],[actual_nii1,predicted_nii2],[actual_nii2,predicted_nii1],[actual_nii2,predicted_nii2]]
+    count=0
+    for comp in comparisons:
+        name1 = lookup[comp[0]]
+        name2 = lookup[comp[1]]
+        corr = calculate_correlation(comp,mask=standard_mask)
+        comparison_df.loc[count] = [name1,name2,corr] 
+        count+=1
+    #   actual  predicted  cca_score
+    #0    3186       3186   0.908997 
+    #1    3186        420   0.485644
+    #2     420       3186   0.044668
+    #3     420        420   0.657109
+    # Calculate accuracy
+    correct = 0
+    acc1 = comparison_df[comparison_df.actual==pmid1]
+    acc2 = comparison_df[comparison_df.actual==pmid2]
+    # Save list of [actual,predicted] to add to confusion
+    predictions = []
+    # Did we predict image1 to be image1?
+    if acc1.loc[acc1.predicted==pmid1,"cca_score"].tolist()[0] > acc1.loc[acc1.predicted==pmid2,"cca_score"].tolist()[0]:
+        correct+=1
+        predictions.append([pmid1,pmid1])
+    else:
+        predictions.append([pmid1,pmid2])
+    # Did we predict image2 to be image2?
+    if acc2.loc[acc2.predicted==pmid2,"cca_score"].tolist()[0] > acc2.loc[acc2.predicted==pmid1,"cca_score"].tolist()[0]:
+        correct+=1
+        predictions.append([pmid2,pmid2])
+    else:
+        predictions.append([pmid2,pmid1])
+    return comparison_df,predictions,correct
+
+# Do a "quasi" leave two out approach to determine if real cross validation is worth it
+# Save a confusion data frame, comparison data frame, as we go
+comparison_df = pandas.DataFrame(columns=["actual","predicted","cca_score"])
+confusions = pandas.DataFrame(0,index=Xmat.index,columns=Xmat.index)
+total_correct = 0
+total_comparisons = 0
+holdouts = Xmat.index.tolist()
+
+# Test each holdout against all other holdouts
+for holdout1 in holdouts:
+    for holdout2 in holdouts:
+        if holdout1 != holdout2 and holdout1 < holdout2:
+            print "Comparing %s and %s" %(holdout1,holdout2)
+            total_comparisons+=2
+            # Generate predicted images
+            predicted1 = generate_predicted_image(holdout1,predictions_tuned,standard_mask)
+            predicted2 = generate_predicted_image(holdout2,predictions_tuned,standard_mask)   
+            actual1 = generate_actual_image(holdout1,Xmat,standard_mask)
+            actual2 = generate_actual_image(holdout2,Xmat,standard_mask)
+            # Generate confusion_df, predictions, and correct count
+            comp_df,predictions,correct = assess_similarity(pmid1=holdout1,
+                                                            pmid2=holdout2,
+                                                            predicted_nii1=predicted1,
+                                                            predicted_nii2=predicted2,
+                                                            actual_nii1=actual1,
+                                                            actual_nii2=actual2)
+            # Add predictions to the confusion matrix
+            for prediction in predictions:
+                actual = prediction[0]
+                predicted = prediction[1]
+                confusions.loc[actual,predicted] = confusions.loc[actual,predicted] + 1
+            # Add comparison result to data frame
+            comparison_df = comparison_df.append(comp_df)
+            total_correct = total_correct + correct
+
+
+result = dict()
+output_file = "%s/predictions_forward_model.pkl" %(results)
+result["comparison_df"] = comparison_df
+result["confusions"] = confusions
+result["number_correct"] = total_correct
+result["total_comparisons"] = total_comparisons
+result["accuracy"] = float(total_correct)/total_comparisons
+pickle.dump(result,open(output_file,"wb"))
