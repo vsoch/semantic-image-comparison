@@ -380,133 +380,55 @@ tuned_acc.to_csv("%s/prediction_concept_accs_tuned.tsv" %results,sep="\t")
 # Model 4: Forward Model Decoder
 #####################################################################################
 
+# Ypred = Ytest x W
+# 1 x 132 = 1 x 28k by 28k x 132
+# Y{test,:} = numpy.linalg.lstsq(W.T, X_{test,:}.T)[0].T
 
-# We are going to use invert the regression of the forward model in order to build a decoder.
-# Step 1 - Estimate label scores: Given X_{test} - a vector in R^{1 x d}, and a forward model W, we will estimate label scores as the solution of: 
-# X_{test,:} = Y{test,:} x W
-# OR equivalently: 
-# X_{test,:}^T = W^T x Y{test,:} ^T
-# (The notation M^T refers to the transpose of matrix M)
-
-# For linear regression - this is equivalent to treating W^T as the design matrix, and X^T as the target. This can be done independently for each example or solved jointly for several examples (It can be shown that the solution is the same).
-# The same idea works for logistic regression. Again, treat W^T as the design matrix, and X^T as the target.
-
-predictions_tuned = pandas.DataFrame(index=Xmat.index,columns=Xmat.columns)
-
+predictions = pandas.DataFrame(index=Xmat.index,columns=Ymat.columns)
+W = pickle.load(open("%s/regression_params_dfs.pkl" %output_folder,"rb"))['regression_params'] # [28549 
 for heldout in Xmat.index.tolist():
-    Xtest = Xmat.loc[heldout,:]
-    predictions_tuned.loc[heldout,:] = Ymat.loc[heldout,:].dot(W).tolist()
+    heldout_X = Xmat.loc[heldout,:] #28K by 1
+    Xtest = numpy.linalg.lstsq(W,heldout_X)[0]
+    predictions.loc[heldout,:] = Xtest
 
-predictions_tuned.to_csv("%s/prediction_forward_model_decoder.tsv" %results,sep="\t")
+predictions.to_csv("%s/prediction_forward_model_decoder.tsv" %results,sep="\t")
 
 # Step 2 (optional): Construct a binary decision by thresholding Y{test,:} at 0.5.
-binary_decision = numpy.zeros(predictions_tuned.shape)
-binary_decision[predictions_tuned >=0.5]=1
+binary_decision = numpy.zeros(predictions.shape)
+binary_decision[predictions>= 0]=1
 
 binary_decision = pandas.DataFrame(binary_decision)
-binary_decision.index = predictions_tuned.index
+binary_decision.index = predictions.index
+binary_decision.columns = predictions.columns
 binary_decision.to_csv("%s/prediction_forward_model_decoder_binary.tsv" %results,sep="\t")
 
 ###################################################################################
-# FUNCTIONS
+# COMPARE TO BASE
 ###################################################################################
 
-# Write a function to generate a predicted image for a heldout image
-def generate_predicted_image(pmid,predictions_tuned,standard_mask):
-    predicted_nii =  predictions_tuned.loc[pmid]
-    nii = numpy.zeros(standard_mask.shape)
-    nii[standard_mask.get_data()!=0] = predicted_nii.tolist()
-    return nibabel.Nifti1Image(nii,affine=standard_mask.get_affine())
+predictions_base = pandas.read_csv("%s/prediction_concept_matrix_base.tsv" %results,sep="\t",index_col=0)
+base_acc = get_concept_acc(predictions_base)
+decoder_acc = get_concept_acc(binary_decision)
 
-# A function to reconstruct an actual image (from X matrix)
-def generate_actual_image(pmid,X,standard_mask):
-    actual = X.loc[pmid,:]
-    actual_nii = numpy.zeros(standard_mask.shape)
-    actual_nii[standard_mask.get_data()!=0] = actual.tolist()
-    return nibabel.Nifti1Image(actual_nii,affine=standard_mask.get_affine())
+diff_acc = decoder_acc - base_acc
 
-# A function to test similarity between two images predicted and actuals
-def assess_similarity(pmid1,pmid2,predicted_nii1,predicted_nii2,actual_nii1,actual_nii2):
-    lookup = dict()
-    lookup[actual_nii1] = pmid1
-    lookup[actual_nii2] = pmid2
-    lookup[predicted_nii1] = pmid1
-    lookup[predicted_nii2] = pmid2
-    comparison_df = pandas.DataFrame(columns=["actual","predicted","cca_score"])
-    comparisons = [[actual_nii1,predicted_nii1],[actual_nii1,predicted_nii2],[actual_nii2,predicted_nii1],[actual_nii2,predicted_nii2]]
-    count=0
-    for comp in comparisons:
-        name1 = lookup[comp[0]]
-        name2 = lookup[comp[1]]
-        corr = calculate_correlation(comp,mask=standard_mask)
-        comparison_df.loc[count] = [name1,name2,corr] 
-        count+=1
-    #   actual  predicted  cca_score
-    #0    3186       3186   0.908997 
-    #1    3186        420   0.485644
-    #2     420       3186   0.044668
-    #3     420        420   0.657109
-    # Calculate accuracy
-    correct = 0
-    acc1 = comparison_df[comparison_df.actual==pmid1]
-    acc2 = comparison_df[comparison_df.actual==pmid2]
-    # Save list of [actual,predicted] to add to confusion
-    predictions = []
-    # Did we predict image1 to be image1?
-    if acc1.loc[acc1.predicted==pmid1,"cca_score"].tolist()[0] > acc1.loc[acc1.predicted==pmid2,"cca_score"].tolist()[0]:
-        correct+=1
-        predictions.append([pmid1,pmid1])
-    else:
-        predictions.append([pmid1,pmid2])
-    # Did we predict image2 to be image2?
-    if acc2.loc[acc2.predicted==pmid2,"cca_score"].tolist()[0] > acc2.loc[acc2.predicted==pmid1,"cca_score"].tolist()[0]:
-        correct+=1
-        predictions.append([pmid2,pmid2])
-    else:
-        predictions.append([pmid2,pmid1])
-    return comparison_df,predictions,correct
+# Add the concept names to each
+from cognitiveatlas.api import get_concept
+concept_names = []
+for concept in diff_acc.index:
+    concept_names.append(get_concept(id=concept).json[0]["name"])
 
-# Do a "quasi" leave two out approach to determine if real cross validation is worth it
-# Save a confusion data frame, comparison data frame, as we go
-comparison_df = pandas.DataFrame(columns=["actual","predicted","cca_score"])
-confusions = pandas.DataFrame(0,index=Xmat.index,columns=Xmat.index)
-total_correct = 0
-total_comparisons = 0
-holdouts = Xmat.index.tolist()
+decoder_acc["name"] = concept_names
+diff_acc["name"] = concept_names
 
-# Test each holdout against all other holdouts
-for holdout1 in holdouts:
-    for holdout2 in holdouts:
-        if holdout1 != holdout2 and holdout1 < holdout2:
-            print "Comparing %s and %s" %(holdout1,holdout2)
-            total_comparisons+=2
-            # Generate predicted images
-            predicted1 = generate_predicted_image(holdout1,predictions_tuned,standard_mask)
-            predicted2 = generate_predicted_image(holdout2,predictions_tuned,standard_mask)   
-            actual1 = generate_actual_image(holdout1,Xmat,standard_mask)
-            actual2 = generate_actual_image(holdout2,Xmat,standard_mask)
-            # Generate confusion_df, predictions, and correct count
-            comp_df,predictions,correct = assess_similarity(pmid1=holdout1,
-                                                            pmid2=holdout2,
-                                                            predicted_nii1=predicted1,
-                                                            predicted_nii2=predicted2,
-                                                            actual_nii1=actual1,
-                                                            actual_nii2=actual2)
-            # Add predictions to the confusion matrix
-            for prediction in predictions:
-                actual = prediction[0]
-                predicted = prediction[1]
-                confusions.loc[actual,predicted] = confusions.loc[actual,predicted] + 1
-            # Add comparison result to data frame
-            comparison_df = comparison_df.append(comp_df)
-            total_correct = total_correct + correct
+# Add the number of images
+number_images = []
+for concept in diff_acc.index:
+    number_images.append(Ymat.loc[:,concept].sum())
 
+decoder_acc["number_images"] = number_images
+diff_acc["number_images"] = number_images
 
-result = dict()
-output_file = "%s/predictions_forward_model.pkl" %(results)
-result["comparison_df"] = comparison_df
-result["confusions"] = confusions
-result["number_correct"] = total_correct
-result["total_comparisons"] = total_comparisons
-result["accuracy"] = float(total_correct)/total_comparisons
-pickle.dump(result,open(output_file,"wb"))
+diff_acc = diff_acc.sort(columns=["hit"],ascending=False)
+diff_acc.to_csv("%s/prediction_concept_accs_decoder_diff.tsv" %results,sep="\t")
+decoder_acc.to_csv("%s/prediction_concept_accs_decoder.tsv" %results,sep="\t")
