@@ -432,3 +432,53 @@ diff_acc["number_images"] = number_images
 diff_acc = diff_acc.sort(columns=["hit"],ascending=False)
 diff_acc.to_csv("%s/prediction_concept_accs_decoder_diff.tsv" %results,sep="\t")
 decoder_acc.to_csv("%s/prediction_concept_accs_decoder.tsv" %results,sep="\t")
+
+###################################################################################
+# CALCULATE LABELS BASED ON DENSITY
+###################################################################################
+
+# The density is the number of labels that the actual images have, so we sum rows of Y
+density = Ymat.sum(axis=1)
+
+# @russpold seems that one simple approach would be to threshold the predicted concept vector to have the same density as the actual concept vector (e.g., if there are 5 concepts in the actual vector, then set the top 5 concepts in the predicted vector to 1 and the rest to zero).  then you could just ask what proportion overlap there is.
+
+# First approach - let's use this as a thresholding method, and calculate accuracy same as before (improvement over baseline)
+
+# Step 2 (optional): Construct a binary decision by thresholding Y{test,:} at 0.5.
+thresh_decision = pandas.DataFrame(numpy.zeros(predictions.shape))
+thresh_decision.index = predictions.index
+thresh_decision.columns = predictions.columns
+
+for image in thresh_decision.index.tolist():
+    print "Thresholding and predicting for image %s..." %(image)
+    prediction_vector = predictions.loc[image]
+    prediction_vector.sort_values(inplace=True,ascending=False)
+    image_density = density.loc[image]
+    concept_predictions = prediction_vector.index[0:image_density]
+    thresh_decision.loc[image,concept_predictions] = 1
+
+thresh_decision.to_csv("%s/prediction_forward_model_decoder_thresh_density.tsv" %results,sep="\t")
+
+thresh_acc = get_concept_acc(thresh_decision)
+diff_acc = thresh_acc - base_acc
+
+concept_names = []
+for concept in diff_acc.index:
+    concept_names.append(get_concept(id=concept).json[0]["name"])
+
+thresh_acc["name"] = concept_names
+diff_acc["name"] = concept_names
+
+# Add the number of images
+number_images = []
+for concept in diff_acc.index:
+    number_images.append(Ymat.loc[:,concept].sum())
+
+thresh_acc["number_images"] = number_images
+diff_acc["number_images"] = number_images
+
+diff_acc = diff_acc.sort(columns=["hit"],ascending=False)
+thresh_acc = thresh_acc.sort(columns=["hit"],ascending=False)
+
+diff_acc.to_csv("%s/prediction_concept_accs_thresh_density_diff.tsv" %results,sep="\t")
+thresh_acc.to_csv("%s/prediction_concept_accs_thresh_density.tsv" %results,sep="\t")
