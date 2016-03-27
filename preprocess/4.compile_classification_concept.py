@@ -204,6 +204,7 @@ confusion_result = dict()
 confusion_result["confusion_categories_df"] = confusion_categories
 confusion_result["confusion_categories"] = {0:"within-task",1:"within-collection (between-task)",2:"between-collection"}
 pickle.dump(confusion_result,open("%s/confusion_categories.pkl" %results,"wb"))
+confusion_result = pickle.load(open("%s/confusion_categories.pkl" %results,"rb"))
 
 # Now calculate final answers!
 value_counts = confusion_categories.apply(pandas.value_counts).fillna(0).sum(axis=1)
@@ -219,12 +220,17 @@ confusion.columns = [int(x) for x in confusion.columns.tolist()]
 confusion_labels = ["within-task","within-collection (between-task)","between-collection"]
 normalized_confusion = dict()
 for i in range(3):
-    normalized_value = float(numpy.sum(confusion.values[confusion_categories.values==i]))/confusion[confusion_categories.isin([0,1,2])].sum().sum()
+    confusions_for_i = float(numpy.sum(confusion.values[confusion_categories.values==i]))
+    print "%s confusions out of %s for the category" %(confusions_for_i,value_counts.loc[i])
+    normalized_value = confusions_for_i / value_counts.loc[i]
     normalized_confusion[confusion_labels[i]] = normalized_value
- 
-normalized_confusion
-#{'within-collection (between-task)': 0.061833688699360338, 'within-task': 0.036958066808813077, 'between-collection': 0.90120824449182657}
 
+# >>> normalized_confusion
+# {'within-collection (between-task)': 0.19333333333333333, 'within-task': 0.17218543046357615, 'between-collection': 0.18366164542294322}
+ 
+# 52.0 confusions out of 302.0 for the category
+# 87.0 confusions out of 450.0 for the category
+# 1268.0 confusions out of 6904.0 for the category
 
 # COMPILE NULL ######################################################################
 scores_folder = "%s/classification_null" %(base)
@@ -248,16 +254,30 @@ result = dict()
 result["comparison_null"] = comparison_null
 result["accuracy"] = accuracy
 pickle.dump(result,open("%s/classification_results_null_4mm.pkl" %results,"wb"))
-
+result = pickle.load(open("%s/classification_results_null_4mm.pkl" %results,"rb"))
 #>>> result["accuracy"]
 #0.46994355374921259
 
+
+# What percentile is the actual accuracy in the null distribuition?
+# se scipy.stats.percentileofscore to find the percentile in the null distribution for the observed value
 # Do two sample T test against actual vs null accuracies
 result_weighted = pickle.load(open("%s/classification_results_weighted_4mm.pkl" %results,"rb"))
 result_binary = pickle.load(open("%s/classification_results_binary_4mm.tsv" %results,"rb"))
-from scipy.stats import ttest_1samp
-tstat_weighted,pval_weighted = ttest_1samp(comparison_null,result_weighted["accuracy"])
-tstat_binary,pval_binary = ttest_1samp(comparison_null,result_binary["accuracy"])
+from scipy.stats import percentileofscore
+
+# Default kind="rank" - multiple matches, average the percentage rankings of all matching scores. percentileofscore(a, score, kind='rank')
+weighted_score = percentileofscore(comparison_null, result_weighted["accuracy"])
+binary_score = percentileofscore(comparison_null, result_binary["accuracy"])
+
+# the p value is 100 minus that percentile, divided by number of samples in null
+# p_cutoff=(100-percentile)/100 +1/<number of samples in null distribution>
+pval_weighted = ((100.0-weighted_score)/100.0) + 1.0/len(comparison_null)
+# 0.00099009900990099011
+pval_binary = ((100.0-binary_score)/100.0) + 1.0/len(comparison_null)
+# 0.00099009900990099011
+# Both p < 0.001
+# @russpold you want to add one because you want to say that the p is less than the most extreme value - thus, if you are 100 percent and there were 1000 samples in the null distribution, you want to say that p<0.001 rather than giving an exact p value of p=0.000 
 
 # Add to saved results
 result_weighted["tstat"] = tstat_weighted
