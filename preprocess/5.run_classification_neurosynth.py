@@ -55,3 +55,54 @@ for holdouts in image_groups:
         filey.writelines("python 5.classification_neurosynth.py %s %s %s %s %s" %(holdout_start, holdout_end, X_pickle, Y_pickle, output_file))
         filey.close()
         os.system("sbatch -p russpold --qos=russpold " + ".job/class_%s.job" %(job_id))
+
+
+# Here is to run with all images to produce a regression parameter data frame to make images from
+X = pickle.load(open(X_pickle,"rb"))
+Y = pickle.load(open(Y_pickle,"rb"))
+
+# Only include labels that have at least 10 occurences
+counts = Y.sum()
+grten = counts[counts>=10].index.tolist()
+Y = Y.loc[:,grten]
+
+# Get standard mask, 4mm
+standard_mask=get_standard_mask(4)
+
+###################################################################################
+# TRAINING
+###################################################################################
+
+regression_params = pandas.DataFrame(0,index=X.columns,columns=Y.columns)
+
+# Keep count of how many voxels we couldn't build a model for (labels of all one type)
+missed = 0
+
+print "Training voxels..."
+for voxel in X.columns:
+    if len(X.loc[:,voxel].unique())>0:
+        # We can only build a model for voxels with 0/1 data
+        if len(X.loc[:,voxel].unique()) > 1:
+            yy = X.loc[:,voxel].tolist() 
+            Xtrain = Y.loc[:,:]
+            clf = linear_model.LogisticRegression()
+            clf.fit(Xtrain,yy)
+            regression_params.loc[voxel,:] = clf.coef_[0]
+        else:
+            missed +=1
+
+regression_params.to_csv("%s/regression_params.tsv" %decode_folder,sep="\t")
+
+brainmap_folder = "%s/regparam_maps" %decode_folder
+if not os.path.exists(brainmap_folder):
+    os.mkdir(brainmap_folder)
+
+# Write a brain map for each
+import nibabel
+for concept in regression_params.columns.tolist():
+    brainmap = regression_params[concept]
+    nii_data = numpy.zeros(standard_mask.shape)
+    nii_data[standard_mask.get_data()!=0] = brainmap.tolist()
+    nii = nibabel.Nifti1Image(nii_data,affine=standard_mask.get_affine())
+    nibabel.save(nii,"%s/%s_regparams.nii.gz" %(brainmap_folder,concept))
+
