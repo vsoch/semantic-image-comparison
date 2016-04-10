@@ -106,3 +106,9 @@ for concept in regression_params.columns.tolist():
     nii = nibabel.Nifti1Image(nii_data,affine=standard_mask.get_affine())
     nibabel.save(nii,"%s/%s_regparams.nii.gz" %(brainmap_folder,concept))
 
+
+###################################################################################
+# CONFUSION
+###################################################################################
+
+# Load a result file
