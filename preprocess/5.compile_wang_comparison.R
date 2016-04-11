@@ -30,5 +30,5 @@ save(missing,file="missing.Rda")
 
 
 # We will copy this into the "analysis/wang" folder on our local system
-output_file = paste(output_folder,"/contrast_defined_images_wang.tsv",sep="")
+output_file = paste(output_folder,"/contrast_defined_images_wang_v2.tsv",sep="")
 write.csv(similarities,file=output_file)
