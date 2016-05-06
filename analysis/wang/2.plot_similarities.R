@@ -7,18 +7,18 @@ images = read.csv("data/contrast_defined_images_filtered.tsv",sep="\t",head=TRUE
 
 # These should be exactly the same, but we will separate to be extra careful
 spatial_contrasts = c()
-for (image_id in rownames(spatial)){
+for (image_id in rownames(graph1)){
   con = images$cognitive_contrast_cogatlas[images$image_id==image_id]
   spatial_contrasts=c(spatial_contrasts,con)
 }
-colnames(spatial) = spatial_contrasts
+colnames(graph1) = spatial_contrasts
 
 graph_contrasts = c()
-for (image_id in rownames(graph)){
+for (image_id in rownames(graph2)){
   con = images$cognitive_contrast_cogatlas[images$image_id==image_id]
   graph_contrasts=c(graph_contrasts,con)
 }
-colnames(graph) = graph_contrasts
+colnames(graph2) = graph_contrasts
 
 # Generate a scatterplot of scores
 
@@ -26,7 +26,7 @@ colnames(graph) = graph_contrasts
 library(ggplot2)
 library(plyr)
 library(reshape2)
-spatial = read.csv("data/contrast_defined_images_pearsonpd_similarity.tsv",sep="\t",head=TRUE,stringsAsFactors=FALSE,row.names=1)
+spatial = read.csv("data/contrast_defined_images_wang_v2.tsv",sep=",",head=TRUE,stringsAsFactors=FALSE,row.names=1)
 graph = read.csv("data/contrast_defined_images_wang.tsv",sep=",",head=TRUE,stringsAsFactors=FALSE,row.names=1)
 colnames(spatial) = gsub("X","",colnames(spatial))
 colnames(graph) = gsub("X","",colnames(graph))
@@ -55,34 +55,35 @@ color_vector[is.na(color_vector)] = "tasks not equal"
 
 # Calculate the correlation
 correlation = cor.test(both$spatial_score,both$graph_score,method=c("pearson"))
+# 0.9346445 
 
 both$color = color_vector
-png("img/scatter_spatial_semantic_bytask.png", width = 16, height = 12, units = 'in', res = 300)
+png("img/scatter_wang_bytask.png", width = 16, height = 12, units = 'in', res = 300)
 ggplot(both, aes(x=graph_score,y=spatial_score,color=color,group=color)) + 
   geom_point() +
-  xlab("Wang graph metric score") +
-  ylab("Spatial comparison score")
+  xlab("Wang Original Version") +
+  ylab("Wang Fixed Version")
 dev.off()  
 
-png("img/scatter_spatial_semantic.png", width = 16, height = 12, units = 'in', res = 300)
+png("img/scatter_wang.png", width = 16, height = 12, units = 'in', res = 300)
 ggplot(both, aes(x=graph_score,y=spatial_score)) + 
   geom_point() +
-  xlab("Wang graph metric score") +
-  ylab("Spatial comparison score")
+  xlab("Wang Original Version") +
+  ylab("Wang Fixed Version")
 dev.off()  
 
-png("img/scatter_spatial_semantic_image1_task.png", width = 16, height = 12, units = 'in', res = 300)
+png("img/scatter_wang_image1_task.png", width = 16, height = 12, units = 'in', res = 300)
 ggplot(both, aes(x=graph_score,y=spatial_score,color=image1_task)) + 
   geom_point() +
-  xlab("Wang graph metric score") +
-  ylab("Spatial comparison score")
+  xlab("Wang Original Version") +
+  ylab("Wang Fixed Version")
 dev.off()  
 
 png("img/scatter_spatial_semantic_image2_task.png", width = 16, height = 12, units = 'in', res = 300)
 ggplot(both, aes(x=graph_score,y=spatial_score,color=image2_task)) + 
   geom_point() +
-  xlab("Wang graph metric score") +
-  ylab("Spatial comparison score")
+  xlab("Wang Original Version") +
+  ylab("Wang Fixed Version")
 dev.off()  
 
 # Just plot as is
