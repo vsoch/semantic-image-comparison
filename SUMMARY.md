@@ -125,8 +125,6 @@ After this, it looks like a few weeks / month was taken to give feedback on the 
 ### 6) NeuroSynth Decoding Model
 Russ asked me to run the encoding model analysis on the neurosynth data (using mentions of cognitive atlas terms rather than hand-coded terms). We used a leave 1% of abstracts hold-out approach.  I generated a complete mapping (no parameter selection, no ontology weighting, and no holdout) for all 11K+ pmids and 614 features (Cognitive Atlas terms that I searched for in the abstracts). This meant that I generated a regression parameter map for each feature. The [maps can be seen here](http://neurovault.org/collections/1257/). They looked crappy to me. 
 
-We also looked at 
-
 [script](https://github.com/vsoch/semantic-image-comparison/blob/master/preprocess/5.encoding_with_neurosynth.py)
 
 ### 7) Filtered NeuroSynth Decoding Model
