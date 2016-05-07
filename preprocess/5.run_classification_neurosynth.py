@@ -106,9 +106,23 @@ for concept in regression_params.columns.tolist():
     nii = nibabel.Nifti1Image(nii_data,affine=standard_mask.get_affine())
     nibabel.save(nii,"%s/%s_regparams.nii.gz" %(brainmap_folder,concept))
 
+###################################################################################
+# COMPILE RESULTS
+###################################################################################
+
+files = glob("%s/*.pkl" %output_folder)
+len(files)
+#101
+total_correct = 0
+total_comparisons = 0
+for f in range(len(files)):
+    print "Parsing file %s of %s" %(f,len(files))
+    filey = files[f]
+    result = pickle.load(open(filey,'rb'))
+    total_correct = total_correct + result['number_correct']/2.0 # This was a bug - we counted twice
+    total_comparisons = total_comparisons + result['total_comparisons']
 
 ###################################################################################
 # CONFUSION
 ###################################################################################
 
-# Load a result file
