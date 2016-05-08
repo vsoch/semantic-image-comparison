@@ -122,7 +122,10 @@ for f in range(len(files)):
     total_correct = total_correct + result['number_correct']/2.0 # This was a bug - we counted twice
     total_comparisons = total_comparisons + result['total_comparisons']
 
-###################################################################################
-# CONFUSION
-###################################################################################
+total_correct
+# 438600
+total_comparisons
+# 644106
 
+total_correct / float(total_comparisons)
+# 0.68094381980605678

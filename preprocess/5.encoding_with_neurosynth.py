@@ -228,3 +228,69 @@ for feat in mapping.columns:
     empty_nii[brain_4mm.get_data()!=0] = brain_map
     empty_nii = nibabel.Nifti1Image(empty_nii,affine=brain_4mm.get_affine())
     nibabel.save(empty_nii,"%s/%s_regparam.nii.gz" %(regparam_maps,feat_name))
+
+
+###################################################################################
+# COMPARE REGRESSION PARAM MAPS FROM NEUROSYNTH WITH NEUROVAULT MAPS
+###################################################################################
+
+# @russpold it would be nice to have an analysis that compares the basis images from the encoding model for the terms that overlap between the neurovault and neurosynth analyses.  
+
+neurosynth_maps = glob("%s/decode/regparam_maps/*.nii.gz" %base)
+len(neurosynth_maps)
+# 399
+
+neurovault_maps = glob("%s/results/classification_final/*regparam_z.nii.gz" %base)
+len(neurovault_maps)
+#132
+
+from pybraincompare.compare.mrutils import make_binary_deletion_mask, apply_threshold
+from pybraincompare.compare.maths import calculate_correlation
+from pybraincompare.mr.datasets import get_standard_mask
+from pybraincompare.compare.mrutils import get_images_df
+from cognitiveatlas.api import get_concept
+
+standard_mask = get_standard_mask(4)
+decoding_comparison = pandas.DataFrame(columns=["concept_id","concept_name","pearson_brainmask",
+                                                "pearson_cca","nvoxels_cca","pearson_cca_thresh1",
+                                                "nvoxels_cca_thresh1"])
+
+def make_brainmap(vector,standard_mask):
+    zeros = numpy.zeros(standard_mask.shape)
+    zeros[standard_mask.get_data()!=0] = vector
+    return nibabel.Nifti1Image(zeros,affine=standard_mask.get_affine())
+   
+
+count=0
+for neurosynth_map in neurosynth_maps:
+    concept_name = os.path.basename(neurosynth_map).replace("_regparams.nii.gz","")
+    concept = get_concept(name=concept_name).json[0]
+    neurovault_map = "%s/results/classification_final/%s_regparam_z.nii.gz" %(base,concept["id"])
+    if neurovault_map in neurovault_maps:
+        print "Found match for %s" %(concept_name)
+        nsmap = nibabel.load(neurosynth_map)
+        nvmap = nibabel.load(neurovault_map)
+        score = calculate_correlation([nsmap,nvmap],mask=standard_mask)
+        # Let's also calculate just for overlapping voxels
+        cca_mask = make_binary_deletion_mask([nsmap,nvmap])
+        nvoxels = len(cca_mask[cca_mask!=0])
+        cca_mask = nibabel.Nifti1Image(cca_mask,affine=standard_mask.get_affine())
+        cca_score = calculate_correlation([nsmap,nvmap],mask=cca_mask)        
+        # And finally, since we see consistent size of cca mask (meaning not a lot of zeros) let's
+        # try thresholding at +/- 1. The nsmap needs to be converted to z score
+        image_df = get_images_df([nsmap,nvmap],mask=standard_mask)
+        image_df.loc[0] = (image_df.loc[0] - image_df.loc[0].mean()) / image_df.loc[0].std()
+        nsmap_thresh = make_brainmap(image_df.loc[0],standard_mask)
+        nsmap_thresh = apply_threshold(nsmap_thresh,1.0)
+        nvmap_thresh = make_brainmap(image_df.loc[1],standard_mask)
+        nvmap_thresh = apply_threshold(nvmap_thresh,1.0)
+        cca_mask_thresh = make_binary_deletion_mask([nsmap_thresh,nvmap_thresh])
+        nvoxels_thresh = len(cca_mask_thresh[cca_mask_thresh!=0])
+        cca_mask_thresh = nibabel.Nifti1Image(cca_mask_thresh,affine=standard_mask.get_affine())                
+        cca_score_thresh = calculate_correlation([nsmap_thresh,nvmap_thresh],mask=cca_mask_thresh)        
+        decoding_comparison.loc[count] = [concept["id"],concept_name,score,cca_score,nvoxels,cca_score_thresh,nvoxels_thresh]
+        count+=1
+
+# Sort by value
+decoding_comparison = decoding_comparison.sort_values(by=["pearson_cca_thresh"],ascending=False)
+decoding_comparison.to_csv("%s/decode/neurovault_vs_neurosynth_concept_decoding_comparison_df.tsv" %base,sep="\t")
