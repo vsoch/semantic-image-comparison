@@ -292,5 +292,5 @@ for neurosynth_map in neurosynth_maps:
         count+=1
 
 # Sort by value
-decoding_comparison = decoding_comparison.sort_values(by=["pearson_cca_thresh"],ascending=False)
+decoding_comparison = decoding_comparison.sort_values(by=["pearson_cca_thresh1"],ascending=False)
 decoding_comparison.to_csv("%s/decode/neurovault_vs_neurosynth_concept_decoding_comparison_df.tsv" %base,sep="\t")
