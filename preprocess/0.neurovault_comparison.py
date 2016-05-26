@@ -51,8 +51,14 @@ images.to_csv("%s/contrast_defined_images.tsv" %results,encoding="utf-8",sep="\t
 # Get rid of any not in MNI
 images = images[images.not_mni == False]
 
+images = images[images.analysis_level!='single-subject']
+
 # Get rid of thresholded images
 images = images[images.is_thresholded == False]
+
+# We can't use Rest or other/none
+images = images[images.cognitive_paradigm_cogatlas_id.isnull()==False]
+images = images[images.cognitive_paradigm_cogatlas.isin(["None / Other","rest eyes closed","rest eyes open"])==False]
 
 # Limit to Z and T maps (all are Z and T)
 z = images[images.map_type == "Z map"]
