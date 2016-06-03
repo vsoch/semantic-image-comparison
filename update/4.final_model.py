@@ -68,3 +68,21 @@ for voxel in mr.columns:
     regression_params.loc[voxel,:] = clf.coef_.tolist()
 
 regression_params.to_csv(output_file,sep="\t")
+
+# GENERATE BRAIN IMAGES FOR REGRESSION PARAMS
+image_folder = "%s/regression_param_images" %(update)
+if not os.path.exists(image_folder):
+    os.mkdir(image_folder)
+
+for concept in regression_params.columns.tolist():
+    data = regression_params[concept].tolist()
+    empty_nii = numpy.zeros(standard_mask.shape)
+    empty_nii[standard_mask.get_data()!=0] = data
+    nii = nibabel.Nifti1Image(empty_nii,affine=standard_mask.get_affine())
+    try:
+        name = get_concept(id=concept).json[0]["name"]
+        nii_file = "%s/%s_regparam.nii.gz" %(image_folder,name.replace(" ","_"))
+    except:
+        # There are a few ids with bugs (not returning from cognitive atlas)
+        nii_file = "%s/%s_regparam.nii.gz" %(image_folder,concept)
+    nibabel.save(nii,nii_file)
