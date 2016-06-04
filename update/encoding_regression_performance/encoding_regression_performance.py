@@ -15,7 +15,7 @@ from pybraincompare.compare.mrutils import get_images_df
 from pybraincompare.mr.datasets import get_standard_mask
 from sklearn.preprocessing import StandardScaler
 from pybraincompare.mr.transformation import *
-from skelarn.metrics import r2_score
+from sklearn.metrics import r2_score
 import matplotlib.pyplot as plt
 from sklearn import linear_model
 from glob import glob
