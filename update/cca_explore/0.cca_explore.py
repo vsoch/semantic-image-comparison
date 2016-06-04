@@ -52,40 +52,70 @@ output_folder = '%s/results/cca' %update
 if not os.path.exists(output_folder):
     os.mkdir(output_folder)
 
-print "Training voxels..."
-for voxel in mr.columns:
-    print "Training voxel %s of %s" %(voxel,len(mr.columns))
-    holdout = numpy.random.choice(mr.index.tolist(),5).tolist()
-    train = [x for x in X.index if x not in holdout and x in mr.index]
-    test = [image1_holdout,image2_holdout]
-    Ytrain = mr.loc[train,voxel].tolist()
-    Ytest = mr.loc[test,voxel].tolist()
-    Xtrain = numpy.array(X.loc[train,:]) 
-    Xtest = X.loc[test,:]
-    plsca = PLSCanonical(n_components=2)
-    plsca.fit(Xtrain, Ytrain)
-    X_train_r, Y_train_r = plsca.transform(Xtrain, Ytrain)
-    X_test_r, Y_test_r = plsca.transform(Xtest, Ytest)
+# Try for all data
+holdout = numpy.random.choice(mr.index.tolist(),5).tolist()
+train = [x for x in X.index if x not in holdout and x in mr.index]
+Ytrain = mr.loc[train,:]
+Ytest = mr.loc[holdout,:]
+Xtrain = numpy.array(X.loc[train,:]) 
+Xtest = X.loc[holdout,:]
+
+# Need a plotting funtion
+def do_plot(X_train_r,Y_train_r,X_test_r,Y_test_r,output_file):
     plt.figure(figsize=(12, 8))
     plt.subplot(221)
-    plt.plot(X_train_r[:, 0], Y_train_r[:], "ob", label="train")
-    plt.plot(X_test_r[:, 0], Y_test_r[:], "or", label="test")
+    plt.plot(X_train_r[:, 0], Y_train_r[:, 0], "ob", label="train")
+    plt.plot(X_test_r[:, 0], Y_test_r[:, 0], "or", label="test")
     plt.xlabel("x scores")
     plt.ylabel("y scores")
-    plt.title('PLSCA: Comp. 1: X vs Y (test corr = %.2f)' %numpy.corrcoef(X_test_r[:, 0], Y_test_r[:])[0, 1])
+    plt.title('Comp. 1: X vs Y (test corr = %.2f)' %numpy.corrcoef(X_test_r[:, 0], Y_test_r[:, 0])[0, 1])
     plt.xticks(())
     plt.yticks(())
     plt.legend(loc="best")
+    plt.subplot(224)
+    plt.plot(X_train_r[:, 1], Y_train_r[:, 1], "ob", label="train")
+    plt.plot(X_test_r[:, 1], Y_test_r[:, 1], "or", label="test")
+    plt.xlabel("x scores")
+    plt.ylabel("y scores")
+    plt.title('Comp. 2: X vs Y (test corr = %.2f)' % numpy.corrcoef(X_test_r[:, 1], Y_test_r[:, 1])[0, 1])
+    plt.xticks(())
+    plt.yticks(())
+    plt.legend(loc="best")
+    # 2) Off diagonal plot components 1 vs 2 for X and Y
     plt.subplot(222)
-    cca = CCA(n_components=2)
-    cca.fit(Xtrain, Ytrain)
-    plt.plot(X_train_r[:, 0], Y_train_r[:], "ob", label="train")
-    plt.plot(X_test_r[:, 0], Y_test_r[:], "or", label="test")
-    plt.xlabel("x scores")
-    plt.ylabel("y scores")
-    plt.title('CCA: Comp. 1: X vs Y (test corr = %.2f)' %numpy.corrcoef(X_test_r[:, 0], Y_test_r[:])[0, 1])
+    plt.plot(X_train_r[:, 0], X_train_r[:, 1], "*b", label="train")
+    plt.plot(X_test_r[:, 0], X_test_r[:, 1], "*r", label="test")
+    plt.xlabel("X comp. 1")
+    plt.ylabel("X comp. 2")
+    plt.title('X comp. 1 vs X comp. 2 (test corr = %.2f)'% numpy.corrcoef(X_test_r[:, 0], X_test_r[:, 1])[0, 1])
+    plt.legend(loc="best")
     plt.xticks(())
     plt.yticks(())
+    plt.subplot(223)
+    plt.plot(Y_train_r[:, 0], Y_train_r[:, 1], "*b", label="train")
+    plt.plot(Y_test_r[:, 0], Y_test_r[:, 1], "*r", label="test")
+    plt.xlabel("Y comp. 1")
+    plt.ylabel("Y comp. 2")
+    plt.title('Y comp. 1 vs Y comp. 2 , (test corr = %.2f)'% numpy.corrcoef(Y_test_r[:, 0], Y_test_r[:, 1])[0, 1])
     plt.legend(loc="best")
-    plt.savefig('%s/plsca_%s.pdf' %(output_folder,voxel))
+    plt.xticks(())
+    plt.yticks(())
+    plt.savefig(output_file)
     plt.close()
+
+# PLSCA
+plsca = PLSCanonical(n_components=2)
+plsca.fit(Xtrain, Ytrain)
+# PLSCanonical(algorithm='nipals', copy=True, max_iter=500, n_components=2,
+#       scale=True, tol=1e-06)
+X_train_r, Y_train_r = plsca.transform(Xtrain, Ytrain)
+X_test_r, Y_test_r = plsca.transform(Xtest, Ytest)
+do_plot(X_train_r,Y_train_r,X_test_r,Y_test_r,'%s/PLSCA_2comp.pdf' %output_folder)
+
+# CCA
+cca = CCA(n_components=2)
+cca.fit(Xtrain, Ytrain)
+# CCA(copy=True, max_iter=500, n_components=2, scale=True, tol=1e-06)
+X_train_r, Y_train_r = cca.transform(Xtrain, Ytrain)
+X_test_r, Y_test_r = cca.transform(Xtest, Ytest)
+do_plot(X_train_r,Y_train_r,X_test_r,Y_test_r,'%s/CCA_2comp.pdf' %output_folder)
