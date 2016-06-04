@@ -1,5 +1,4 @@
 #!/usr/bin/python
-from glob import glob
 import sys
 import pandas
 import os
@@ -41,7 +40,7 @@ for image1_holdout in images.index.tolist():
                 filey.writelines("#SBATCH --output=.out/%s.out\n" %(job_id))
                 filey.writelines("#SBATCH --error=.out/%s.err\n" %(job_id))
                 filey.writelines("#SBATCH --time=2-00:00\n")
-                filey.writelines("#SBATCH --mem=64000\n")
+                filey.writelines("#SBATCH --mem=32000\n")
                 filey.writelines("python encoding_regression_performance.py %s %s %s %s %s" %(image1_holdout, image2_holdout, output_file, labels_tsv, image_lookup))
                 filey.close()
                 os.system("sbatch -p russpold --qos russpold " + ".job/class_%s.job" %(job_id))
