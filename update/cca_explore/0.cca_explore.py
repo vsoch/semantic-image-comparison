@@ -113,6 +113,11 @@ X_test_r, Y_test_r = plsca.transform(Xtest, Ytest)
 do_plot(X_train_r,Y_train_r,X_test_r,Y_test_r,'%s/PLSCA_2comp.pdf' %output_folder)
 
 # CCA
+# probably not necessary, but just in case the data was modified in some way
+Ytrain = mr.loc[train,:]
+Ytest = mr.loc[holdout,:]
+Xtrain = numpy.array(X.loc[train,:]) 
+Xtest = X.loc[holdout,:]
 cca = CCA(n_components=2)
 cca.fit(Xtrain, Ytrain)
 # CCA(copy=True, max_iter=500, n_components=2, scale=True, tol=1e-06)
