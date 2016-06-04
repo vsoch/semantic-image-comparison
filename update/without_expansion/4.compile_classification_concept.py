@@ -10,6 +10,7 @@ import os
 base = sys.argv[1]
 update = "%s/update" %(base)
 results = "%s/results" %(update)
+results_old = "%s/results" %(base)
 scores_folder = "%s/classification" %(update)
 scores = glob("%s/*.pkl" %scores_folder)
 
@@ -17,14 +18,17 @@ scores = glob("%s/*.pkl" %scores_folder)
 comparison_df = pandas.DataFrame(columns=["actual","predicted","cca_score"])
 
 # If images are the same contrast, don't include in accuracy calculation
-images_tsv = "%s/contrast_defined_images_filtered.tsv" %results
+images_tsv = "%s/contrast_defined_images_filtered.tsv" %results_old
 images = pandas.read_csv(images_tsv,sep="\t")
 
 total = 0
 correct = 0
+# Use file names for index
+index_names = []
 for i in range(0,len(scores)):
     print "Parsing score %s of %s" %(i,len(scores))
     single_result = pickle.load(open(scores[i],"rb"))
+    fname = os.path.basename(scores[i])
     cdf = single_result["comparison_df"]
     two_images = cdf["actual"].unique().tolist()
     contrast_ids = images.cognitive_contrast_cogatlas_id[images.image_id.isin(two_images)].unique()
@@ -33,12 +37,7 @@ for i in range(0,len(scores)):
         total=total+2
         correct=correct+single_result["number_correct"]
         comparison_df = comparison_df.append(single_result["comparison_df"])
-
-# Use file names for index
-index_names = []
-for score in scores:
-    fname = os.path.basename(score)
-    index_names = index_names + [fname,fname,fname,fname]
+        index_names = index_names + [fname,fname,fname,fname]
 
 comparison_df.index = index_names
 accuracy = correct/float(total)
