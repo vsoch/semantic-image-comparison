@@ -88,7 +88,12 @@ You may also want to adjust other cluster specific variables in the job files be
 ## 4. Compile Classification Results
 The output of the above is over 10K files, each containing python (pickled) scores for an image against a particular concept node. We will want to compile these scores into nice (single) data frames, and move into the analysis directory, and that is what this script [4.compile_classification_concept.py](4.compile_classification_concept.py) accomplishes, for each of the null, weighted, and standard procedures detailed above. Finally, since the script generates a final statistical test and a Z score map that represents each concept (from the regression parameter matrix) we will want to move these maps as well.
 
+### Prediction
+We also use a naive bayes framework to assess the predictive ability of the model in [4.naive_bayes_prediction.py](4.naive_bayes_prediction.py)
+
 ### Outputs from this step moved into analysis folder:
+ - [$base/results/prediction_concepts_accs.tsv](../analysis/prediction/prediction_concepts_accs.tsv)
+ - [$base/results/prediction_images_accs.tsv](../analysis/prediction/prediction_images_accs.tsv)
  - [$base/results/classification_results_binary_4mm.tsv](../analysis/classification/data/classification_results_binary_4mm.tsv)
  - [$base/results/classification_results_weighted_4mm.tsv](../analysis/classification/data/classification_results_weighted_4mm.tsv)
  - [$base/results/classification_results_null_4mm.tsv](../analysis/classification/data/classification_results_null_4mm.tsv)
