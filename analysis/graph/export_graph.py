@@ -42,11 +42,11 @@ concept_kindof = concept_kindof.fillna(0)
 concept_partof = concept_partof.fillna(0)
 concept_kindof.to_csv('data/concept_kindof_df.tsv',sep="\t")
 concept_partof.to_csv('data/concept_partof_df.tsv',sep="\t")
+concept_both = concept_kindof + concept_partof
+concept_both = concept_both.fillna(0)
+concept_both.to_csv('data/concept_both_df.tsv',sep="\t")
 
 # Now, create a graph for each.
-
-Gpartof = make_graph(concept_partof)
-Gkindof = make_graph(concept_kindof)
 
 def make_graph(df):
     G = nx.Graph()
@@ -57,5 +57,9 @@ def make_graph(df):
             G.add_edge(node,edge)
     return G
 
-graphs = {"partof":Gpartof,"kindof":Gkindof}
+Gpartof = make_graph(concept_partof)
+Gkindof = make_graph(concept_kindof)
+Gboth = make_graph(concept_both)
+
+graphs = {"partof":Gpartof,"kindof":Gkindof,"both":Gboth}
 pickle.dump(graphs,open('data/graphs_networkx.pkl','wb'))
