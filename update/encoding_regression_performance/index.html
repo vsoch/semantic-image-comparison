@@ -1,0 +1,179 @@
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css" type="text/css" rel="stylesheet"/>
+    <link href='https://fonts.googleapis.com/css?family=Slabo+27px' rel='stylesheet' type='text/css'>
+    <style>
+      body {  
+          font-family: 'Slabo 27px', serif;
+      }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Encoding Model Performance</h2>
+            <p>This histogram shows the out of sample R^2 for each of 93 images across all ~8K classifications. This is a measure of encoding regression performance to supplement classification.</p>
+        
+        <select id="image_chooser">
+            <option value=136>Probabilistic classification task: feedback</option>
+            <option value=3186>working memory fMRI task paradigm: 0-back Face</option>
+            <option value=420>functional localizer fMRI tasks: left audio click</option>
+            <option value=165>single-task weather prediction : single task classification learning trials</option>
+            <option value=3154>motor fMRI task paradigm: Cue</option>
+            <option value=116>balloon analogue risk task (BART): pumps average real reaction time</option>
+            <option value=2866>emotional regulation task: reappraise negative stimulus minus attend negative stimulus</option>
+            <option value=159>tone counting: tone counting trials</option>
+            <option value=135>deterministic classification: deterministic classification trials</option>
+            <option value=172>Probabilistic classification task: negative feedback</option>
+            <option value=4>mixed gambles task: parametric gain</option>
+            <option value=154>conditional stop signal task: failed stop-noncritical </option>
+            <option value=8718>mixed gambles task: difference from indifference</option>
+            <option value=3192>working memory fMRI task paradigm: 2-back Face</option>
+            <option value=8727>emotional regulation task: attend negative minus attend neutral stimulus</option>
+            <option value=3160>motor fMRI task paradigm: Right Foot</option>
+            <option value=138>deterministic classification: feedback</option>
+            <option value=3175>relational processing fMRI task paradigm: Relational Processing</option>
+            <option value=143>stop signal task: go trial</option>
+            <option value=3040>conditional stop signal task: unsuccessful stop minus successful stop</option>
+            <option value=119>balloon analogue risk task (BART): explode average</option>
+            <option value=146>stop signal task: failed stop</option>
+            <option value=122>balloon analogue risk task (BART): pumps parametric</option>
+            <option value=2718>oddball task: visual standard stimulus presentation</option>
+            <option value=173>Probabilistic classification task: positive feedback</option>
+            <option value=166>dual-task weather prediction: dual task classification learning trials</option>
+            <option value=3185>working memory fMRI task paradigm: 0-back Body</option>
+            <option value=2863>emotional regulation task: attend neutral stimulus</option>
+            <option value=1586>why/how task: [why face minus how nonsocial] minus [why nonsocial minus how face]</option>
+            <option value=419>functional localizer fMRI tasks: video sentences</option>
+            <option value=1750>emotional regulation task: reappraise negative rating</option>
+            <option value=2731>oddball task: visual targets minus standards</option>
+            <option value=2826>stop signal task with pseudo word naming: go trial</option>
+            <option value=3041>conditional stop signal task: successful stop minus go</option>
+            <option value=10924>eating/drinking: food choice periods of high energy trials versus food choice periods of low energy trials</option>
+            <option value=2729>oddball task: auditory targets minus standards</option>
+            <option value=3142>language processing fMRI task paradigm: Story minus Math</option>
+            <option value=3039>conditional stop signal task: go-critical minus go-noncritical</option>
+            <option value=394>functional localizer fMRI tasks: right audio click</option>
+            <option value=188>word one-back task: objects</option>
+            <option value=142>conditional stop signal task: failed stop-critical </option>
+            <option value=3173>relational processing fMRI task paradigm: Matching</option>
+            <option value=3158>motor fMRI task paradigm: Left Hand</option>
+            <option value=1587>why/how task: [why hand minus how nonsocial] minus [why nonsocial minus how hand]</option>
+            <option value=3188>working memory fMRI task paradigm: 0-back Tool</option>
+            <option value=177>Eriksen flanker task: incorrect minus correct</option>
+            <option value=3193>working memory fMRI task paradigm: 2-back Place</option>
+            <option value=3180>social cognition (theory of mind) fMRI task paradigm: Mental Interaction minus Random Interaction</option>
+            <option value=118>balloon analogue risk task (BART): cash average</option>
+            <option value=3156>motor fMRI task paradigm: Left Foot</option>
+            <option value=1585>why/how task: why nonsocial minus how nonsocial</option>
+            <option value=3129>emotion processing fMRI task paradigm: Faces</option>
+            <option value=3131>emotion processing fMRI task paradigm: Shapes</option>
+            <option value=2824>stop signal task with letter naming: Go trial</option>
+            <option value=8719>mixed gambles task: parametric loss</option>
+            <option value=1584>why/how task: why hand minus how hand</option>
+            <option value=3187>working memory fMRI task paradigm: 0-back Place</option>
+            <option value=2723>oddball task: auditory standard</option>
+            <option value=140>classification probe without feedback: classification trials: probabilistic</option>
+            <option value=415>functional localizer fMRI tasks: audio computation</option>
+            <option value=144>conditional stop signal task: go-noncritical</option>
+            <option value=178>Eriksen flanker task: incongruent minus congruent correct</option>
+            <option value=141>Probabilistic classification task: probabilistic classification trials</option>
+            <option value=111>cue approach task: high-value go choice at probe</option>
+            <option value=3>mixed gambles task: task minus baseline</option>
+            <option value=157>dual-task weather prediction: dual-task tone counting probe</option>
+            <option value=3179>social cognition (theory of mind) fMRI task paradigm: Random Interaction</option>
+            <option value=2963>dot motion task: parametric context based action reward error</option>
+            <option value=183>Eriksen flanker task: congruent correct</option>
+            <option value=418>functional localizer fMRI tasks: video computation</option>
+            <option value=3162>motor fMRI task paradigm: Right Hand</option>
+            <option value=8625>object one-back task: target 1-back minus 0-back</option>
+            <option value=401>functional localizer fMRI tasks: left video click</option>
+            <option value=164>tone counting: tone counting probe</option>
+            <option value=190>word one-back task: consonant strings</option>
+            <option value=3191>working memory fMRI task paradigm: 2-back Body</option>
+            <option value=407>functional localizer fMRI tasks: right video click</option>
+            <option value=1583>why/how task: why face minus how face</option>
+            <option value=2883>false belief task: false belief question minus false picture question</option>
+            <option value=187>word one-back task: scrambled objects</option>
+            <option value=2714>object one-back task: all</option>
+            <option value=8730>emotional regulation task: reappraise negative rating</option>
+            <option value=149>conditional stop signal task: successful stop-critical</option>
+            <option value=8820>relational processing fMRI task paradigm: Relational Processing minus Matching</option>
+            <option value=120>balloon analogue risk task (BART): pumps average</option>
+            <option value=139>classification probe without feedback: classification trials: deterministic</option>
+            <option value=395>functional localizer fMRI tasks: checkerboard</option>
+            <option value=109>balloon analogue risk task (BART): pre-cash trials minus pre-pump trials matched for risk level</option>
+            <option value=412>functional localizer fMRI tasks: audio sentences</option>
+            <option value=3164>motor fMRI task paradigm: Tongue</option>
+            <option value=3194>working memory fMRI task paradigm: 2-back Tool</option>
+            <option value=186>word one-back task: words</option>
+            <option value=147>stop signal task: successful stop trial</option>
+        </select>
+       </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="noodles"></div>
+            <h3 id="title"></h3>
+        </div>
+    </div>
+</div>
+
+<script>
+
+// Read in performance data from json
+var performance = new Object();
+$.getJSON( "performance_r2s.json", function( data ) {
+  $.each( data, function( key, val ) {
+    performance[key] = val;
+  }); 
+});
+
+// Layout variable for plotly.js histogram
+var layout = {
+  xaxis: {title: 'R^2'},
+  yaxis: {title: 'Count'},
+  barmode: 'overlay',
+  bargap: 0.05
+};
+
+$(document).ready(function(){
+  $("#image_chooser").select2();
+
+  // Update the histogram when it changes
+  $("#image_chooser").change(function(){ 
+    var selected_image = $("#image_chooser").val()
+    var title = $("#image_chooser option:selected").text()
+    $("#title").text(title);
+    var data = [
+        {
+         x: performance[selected_image],
+         type: 'histogram'
+        }
+    ];
+    Plotly.newPlot('noodles', data, layout);
+  })
+
+  // Start page showing first image (136)
+  var selected_image = $("#image_chooser").val()
+  var title = $("#image_chooser option:selected").text()
+  $("#title").text(title);
+  var data = [
+  {
+    x: performance[selected_image],
+    type: 'histogram'
+  }
+];
+
+Plotly.newPlot('noodles', data, layout);
+
+});
+
+</script>
