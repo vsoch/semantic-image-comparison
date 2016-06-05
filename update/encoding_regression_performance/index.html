@@ -22,6 +22,7 @@
             <p>This histogram shows the out of sample R^2 for each of 93 images across all ~8K classifications. This is a measure of encoding regression performance to supplement classification.</p>
         
         <select id="image_chooser">
+            <option>--</option>
             <option value=136>Probabilistic classification task: feedback</option>
             <option value=3186>working memory fMRI task paradigm: 0-back Face</option>
             <option value=420>functional localizer fMRI tasks: left audio click</option>
@@ -160,20 +161,6 @@ $(document).ready(function(){
     ];
     Plotly.newPlot('noodles', data, layout);
   })
-
-  // Start page showing first image (136)
-  var selected_image = $("#image_chooser").val()
-  var title = $("#image_chooser option:selected").text()
-  $("#title").text(title);
-  var data = [
-  {
-    x: performance[selected_image],
-    type: 'histogram'
-  }
-];
-
-Plotly.newPlot('noodles', data, layout);
-
 });
 
 </script>
