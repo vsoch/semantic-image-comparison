@@ -1,15 +1,81 @@
 # Similarity metrics for networkx graphs
+# credit/thanks to networkx_addon package
 
+from collections import defaultdict
+import networkx as nx
+import scipy.linalg
 import itertools
 import pandas
 import numpy
 import copy
 
-#[1] ASCOS: an Asymmetric network Structure COntext Similarity measure.
-# Hung-Hsuan Chen and C. Lee Giles.  ASONAM 2013
+
+def rss2(G, remove_neighbors=False, disregard_weight=True):
+    """Return the rss2 similarity between nodes"""
+
+    weighted_deg = G.degree(weight='weight')
+    rss2 = pandas.DataFrame(0,index=G.nodes(),columns=G.nodes())
+    cur_iter = 0
+    total_iter = G.number_of_nodes()
+    for a in G.nodes():
+        for b in G.neighbors(a):
+            for c in G.neighbors(b):
+                if a == c:
+                    continue
+                if remove_neighbors and c in G.neighbors(a):
+                    continue
+                if disregard_weight:
+                    t1 = float(1)
+                    t2 = float(1)
+                    s1 = len(set(G.neighbors(a)))
+                    s2 = len(set(G.neighbors(b)))
+                else:
+                    t1 = float(G[a][b]['weight'])
+                    t2 = float(G[b][c]['weight'])
+                    s1 = weighted_deg[a]
+                    s2 = weighted_deg[b]
+                rss2.loc[a,c] = rss2.loc[a,c] + (t1/s1 * t2/s2)
+
+    return rss2
+
+
+def lhn(G, c=0.9, remove_neighbors=False, inv_method=0):
+
+    A = nx.adjacency_matrix(G, nodelist=G.nodes(), weight=None)
+    S = katz(G,c=c,remove_neighbors=remove_neighbors, inv_method=inv_method)
+    deg = numpy.array(sum(A.todense())).reshape(-1,)
+
+    for i in range(S.shape[0]):
+        row_idx = S.index[i]
+        for j in range(S.shape[1]):
+            col_idx = S.columns[j]
+            S.loc[row_idx,col_idx] = S.loc[row_idx,col_idx] / (deg[i]*deg[j])
+  
+    return S
+
+
+def katz(G, c=0.9, remove_neighbors=False, inv_method=0):
+
+    A = nx.adjacency_matrix(G, nodelist=G.nodes(), weight=None)
+    w, v = numpy.linalg.eigh(A.todense()) # should use numpy.linalg.matrix_rank
+    lambda1 = max([abs(x) for x in w])
+    I = numpy.eye(A.shape[0])
+    if inv_method == 1:
+        S = scipy.linalg.pinv(I - c/lambda1 * A)
+    elif inv_method == 2:
+        S = numpy.linalg.inv(I - c/lambda1 * A)
+    else:
+        S = numpy.linalg.pinv(I - c/lambda1 * A)
+    S = pandas.DataFrame(S)
+    S.index = G.nodes()
+    S.columns = G.nodes()
+    return S
+
 def ascos(G, c=0.9, max_iter=100, is_weighted=False, remove_neighbors=False, remove_self=False):
-    """Return the ASCOS similarity between nodes"""
- 
+    """Return the ASCOS similarity between nodes
+    #[1] ASCOS: an Asymmetric network Structure COntext Similarity measure.
+    # Hung-Hsuan Chen and C. Lee Giles.  ASONAM 2013
+    """
     node_ids = G.nodes()
     node_lookup = dict()
     for i, n in enumerate(node_ids):
@@ -69,33 +135,38 @@ def _is_converge(sim, sim_old, nrow, ncol, eps=1e-4):
         return False
   return True
 
-# http://stackoverflow.com/questions/9767773/calculating-simrank-using-networkx
-def simrank(G, r=0.8, max_iter=100, eps=1e-4):
 
-    nodes = G.nodes()
-    nodes_i = {k: v for(k, v) in [(nodes[i], i) for i in range(0, len(nodes))]}
+def cosine(G, remove_neighbors=False):
 
-    sim_prev = numpy.zeros(len(nodes))
-    sim = numpy.identity(len(nodes))
-
-    for i in range(max_iter):
-        if numpy.allclose(sim, sim_prev, atol=eps):
-            break
-        sim_prev = numpy.copy(sim)
-        for u, v in itertools.product(nodes, nodes):
-            if u is v:
-                continue
-            u_ns, v_ns = G.predecessors(u), G.predecessors(v)
-
-            # evaluating the similarity of current iteration nodes pair
-            if len(u_ns) == 0 or len(v_ns) == 0: 
-                # if a node has no predecessors then setting similarity to zero
-                sim[nodes_i[u]][nodes_i[v]] = 0
-            else:                    
-                s_uv = sum([sim_prev[nodes_i[u_n]][nodes_i[v_n]] for u_n, v_n in itertools.product(u_ns, v_ns)])
-                sim[nodes_i[u]][nodes_i[v]] = (r * s_uv) / (len(u_ns) * len(v_ns))
+    cos = pandas.DataFrame()
+    total_iter = G.number_of_nodes()
+    for i, a in enumerate(G.nodes()):
+        for b in G.neighbors(a):
+            for c in G.neighbors(b):
+                if a == c:
+                    continue
+                if remove_neighbors and c in G.neighbors(a):
+                    continue
+                s1 = set(G.neighbors(a))
+                s2 = set(G.neighbors(c))
+                cos.loc[a,c] = float(len(s1 & s2)) / (len(s1) + len(s2))
+    cos = cos.fillna(0)
+    return cos
 
 
-    return sim
 
-
+def jaccard(G, remove_neighbors=False, dump_process=False):
+    jac = pandas.DataFrame()
+    total_iter = G.number_of_nodes()
+    for i, a in enumerate(G.nodes(), 1):
+        for b in G.neighbors(a):
+            for c in G.neighbors(b):
+                if a == c:
+                    continue
+                if remove_neighbors and c in G.neighbors(a):
+                    continue
+                s1 = set(G.neighbors(a))
+                s2 = set(G.neighbors(c))
+                jac.loc[a,c] = float(len(s1 & s2)) / len(s1 | s2)
+    jac = jac.fillna(0)
+    return jac
