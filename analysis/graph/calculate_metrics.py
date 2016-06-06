@@ -21,3 +21,4 @@ for graph_type,G in graphs.iteritems():
     print "RSS2 -----------------------------"
     results[graph_type]["rss2"] = rss2(G)
 
+pickle.dump(results,open("data/sim_metrics.pkl","wb"))
