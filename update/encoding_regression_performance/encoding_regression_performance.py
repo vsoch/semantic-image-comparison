@@ -22,6 +22,7 @@ from glob import glob
 import pickle
 import pandas
 import nibabel
+import numpy
 import sys
 import os
 
@@ -30,9 +31,14 @@ image2_holdout = int(sys.argv[2])
 output_file = sys.argv[3]
 labels_tsv = sys.argv[4]
 image_lookup = sys.argv[5]
+contrast_file = sys.argv[6]
 
 # Images by Concept data frame, our X
 X = pandas.read_csv(labels_tsv,sep="\t",index_col=0)
+
+# Images data frame with contrast info, and importantly, number of subjects
+image_df = pandas.read_csv(contrast_file,sep="\t",index_col=0)
+image_df.index = image_df.image_id
 
 # We should standardize cognitive concepts before modeling
 # http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html
@@ -57,7 +63,19 @@ image_paths = lookup.values()
 mr = get_images_df(file_paths=image_paths,mask=standard_mask)
 image_ids = [int(os.path.basename(x).split(".")[0]) for x in image_paths]
 mr.index = image_ids
-   
+  
+norm = pandas.DataFrame(columns=mr.columns)
+
+# Normalize the image data by number of subjects
+#V* = V/sqrt(S) 
+for row in mr.iterrows():
+    subid = row[0]
+    number_of_subjects = image_df.loc[subid].number_of_subjects.tolist()
+    norm_vector = row[1]/numpy.sqrt(number_of_subjects)
+    norm.loc[subid] = norm_vector
+
+del mr
+
 # Get the labels for holdout images
 holdout1Y = X.loc[image1_holdout,:]
 holdout2Y = X.loc[image2_holdout,:]
