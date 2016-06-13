@@ -82,12 +82,12 @@ holdout2Y = X.loc[image2_holdout,:]
 
 # what we can do is generate a predicted image for a particular set of concepts (e.g, for a left out image) by simply multiplying the concept vector by the regression parameters at each voxel.  then you can do the mitchell trick of asking whether you can accurately classify two left-out images by matching them with the two predicted images. 
 
-regression_params = pandas.DataFrame(0,index=mr.columns,columns=concepts)
+regression_params = pandas.DataFrame(0,index=norm.columns,columns=concepts)
 
 print "Training voxels..."
-for voxel in mr.columns:
-    train = [x for x in X.index if x not in [image1_holdout,image2_holdout] and x in mr.index]
-    Y = mr.loc[train,voxel].tolist()
+for voxel in norm.columns:
+    train = [x for x in X.index if x not in [image1_holdout,image2_holdout] and x in norm.index]
+    Y = norm.loc[train,voxel].tolist()
     Xtrain = X.loc[train,:] 
     # Use regularized regression
     clf = linear_model.ElasticNet(alpha=0.1)
@@ -111,8 +111,8 @@ nii1 = nibabel.Nifti1Image(nii1,affine=standard_mask.get_affine())
 nii2 = nibabel.Nifti1Image(nii2,affine=standard_mask.get_affine())
 
 # Turn the holdout image data back into nifti
-actual1 = mr.loc[image1_holdout,:]
-actual2 = mr.loc[image2_holdout,:]
+actual1 = norm.loc[image1_holdout,:]
+actual2 = norm.loc[image2_holdout,:]
 actual_nii1 = numpy.zeros(standard_mask.shape)
 actual_nii2 = numpy.zeros(standard_mask.shape)
 actual_nii1[standard_mask.get_data()!=0] = actual1.tolist()
