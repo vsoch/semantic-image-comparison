@@ -59,7 +59,7 @@ for i in range(0,len(scores)):
                 r2s[image_id] = [single_result[r2_field]]
 
 # Write r2s to json so we can make javascript for it
-save_json(r2s,"%s/performance_r2s.json" %results)
+save_json(r2s,"%s/performance_r2s_norm.json" %results)
 
 # Write text for html page select box
 for image in images.iterrows():
@@ -75,14 +75,22 @@ result["comparison_df"] = comparison_df
 result["total"] = total
 result["correct"] = correct
 result["accuracy"] = accuracy
-pickle.dump(result,open("%s/classification_results_binary_4mm_perform.tsv" %results,"wb"))
+pickle.dump(result,open("%s/classification_results_binary_4mm_perform_norm.tsv" %results,"wb"))
 
-#accuracy
+#accuracy without norm
 # 0.75578676642506426
 # correct
 # 6465
 # total
 # 8554
+
+#accuracy with norm
+# 0.76771101239186346
+# correct
+# 6567
+# total
+# 8554
+
 
 # Create a confusion matrix
 binary_df = result["comparison_df"]
@@ -221,12 +229,20 @@ for i in range(3):
     normalized_value = confusions_for_i / value_counts.loc[i]
     normalized_confusion[confusion_labels[i]] = normalized_value
 
-# >>> normalized_confusion
+# >>> normalized_confusion, not standard images
 # {'within-collection (between-task)': 0.26222222222222225, 'within-task': 0.25465838509316768, 'between-collection': 0.24036485097636176}
  
 # 82.0 confusions out of 322.0 for the category
 # 118.0 confusions out of 450.0 for the category
 # 1871.0 confusions out of 7784.0 for the category
+
+
+# >>> normalized_confusion, standard images
+# {'within-collection (between-task)': 0.20666666666666667, 'within-task': 0.2360248447204969, 'between-collection': 0.23098663926002055}
+ 
+# 76.0 confusions out of 322.0 for the category
+# 93.0 confusions out of 450.0 for the category
+# 1798.0 confusions out of 7784.0 for the category
 
 
 # COMPILE NULL ######################################################################
