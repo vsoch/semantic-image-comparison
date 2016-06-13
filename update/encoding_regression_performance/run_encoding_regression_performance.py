@@ -1,4 +1,5 @@
 #!/usr/bin/python
+from pyneurovault import api
 import sys
 import pandas
 import os
@@ -26,8 +27,8 @@ image_lookup = "%s/image_nii_lookup.pkl" %update
 
 # Image metadata with number of subjects included
 contrast_file = "%s/filtered_contrast_images.tsv" %results
-image_df = api.get_images(pks=images.index.tolist())
-image_df.to_csv(contrast_file,sep="\t")
+#image_df = api.get_images(pks=images.index.tolist())
+#image_df.to_csv(contrast_file,sep="\t")
 
 if not os.path.exists(output_folder):
     os.mkdir(output_folder)
