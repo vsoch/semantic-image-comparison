@@ -83,6 +83,7 @@ holdout2Y = X.loc[image2_holdout,:]
 # what we can do is generate a predicted image for a particular set of concepts (e.g, for a left out image) by simply multiplying the concept vector by the regression parameters at each voxel.  then you can do the mitchell trick of asking whether you can accurately classify two left-out images by matching them with the two predicted images. 
 
 regression_params = pandas.DataFrame(0,index=norm.columns,columns=concepts)
+intercept_params = pandas.DataFrame(0,index=norm.columns,columns=["intercept"])
 
 print "Training voxels..."
 for voxel in norm.columns:
@@ -93,14 +94,16 @@ for voxel in norm.columns:
     clf = linear_model.ElasticNet(alpha=0.1)
     clf.fit(Xtrain,Y)
     regression_params.loc[voxel,:] = clf.coef_.tolist()
-
+    intercept_params.loc[voxel,"intercept"] = clf.intercept_    
 
 print "Making predictions..."
 # Use regression parameters to generate predicted images
+# data * .coef_ + intercept_
 concept_vector1 =  pandas.DataFrame(holdout1Y)
 concept_vector2 =  pandas.DataFrame(holdout2Y)
-predicted_nii1 =  regression_params.dot(concept_vector1)
-predicted_nii2 =  regression_params.dot(concept_vector2)
+predicted_nii1 =  regression_params.dot(concept_vector1)[image1_holdout] + intercept_params["intercept"] 
+predicted_nii2 =  regression_params.dot(concept_vector2)[image2_holdout] + intercept_params["intercept"]
+
 
 # Turn into nifti images
 nii1 = numpy.zeros(standard_mask.shape)
