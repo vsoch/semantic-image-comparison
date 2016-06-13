@@ -27,9 +27,18 @@ images = images[images.is_thresholded == False]
 
 # Remove single subject maps (N=1724)
 images = images[images.analysis_level!='single-subject']
+images = images[images.number_of_subjects!=1]
 
-# How many collections left? (N=123)
+# Remove non fmri-BOLD (N=910)
+images = images[images.modality=='fMRI-BOLD']
+
+# How many collections left? (N=93)
 unique_collections = images.collection_id.unique().tolist()
+
+# Which are missing number of subjects?
+images[images.number_of_subjects.isnull()].collection_id.unique().tolist()
+
+#[1054, 866, 1037, 555, 418, 419, 1035, 830, 1325, 1055, 917, 648, 160, 422, 421, 110, 1072, 1126, 693, 1029, 1351, 507, 474, 445, 599, 1370, 1066]
 
 # How many collections have at least one non-single subject map with a contrast other than None/Other?
 keepers = []
@@ -44,3 +53,7 @@ len(keepers)
 #39
 
 # This will allow us to know how many papers are there that would potentially have to be read and interpreted.
+
+# Retrieve list of collections to find number_of_subjects
+collections = api.get_collections(images.collection_id.unique().tolist())
+

@@ -19,7 +19,7 @@
     <div class="row">
         <div class="col-md-12">
             <h2>Encoding Model Performance</h2>
-            <p>This histogram shows the out of sample R^2 for each of 93 images across all ~8K classifications. This is a measure of encoding regression performance to supplement classification. This model includes normalized images, as compared to <a href="indexv1.html">the first</a> which does not.</p>
+            <p>This histogram shows the out of sample R^2 for each of 93 images across all ~8K classifications. This is a measure of encoding regression performance to supplement classification.</p>
         
         <select id="image_chooser">
             <option>--</option>
@@ -131,7 +131,7 @@
 
 // Read in performance data from json
 var performance = new Object();
-$.getJSON( "performance_r2s_norm.json", function( data ) {
+$.getJSON( "performance_r2s.json", function( data ) {
   $.each( data, function( key, val ) {
     performance[key] = val;
   }); 

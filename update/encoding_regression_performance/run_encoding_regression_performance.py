@@ -1,4 +1,5 @@
 #!/usr/bin/python
+from pyneurovault import api
 import sys
 import pandas
 import os
@@ -16,12 +17,18 @@ import os
 base = sys.argv[1]
 update = "%s/update" %base
 output_folder = "%s/performance" %update  # any kind of tsv/result file
+results = "%s/results" %update  # any kind of tsv/result file
 old_results = "%s/results" %base  # any kind of tsv/result file
 
 # Images by Concepts data frame
 labels_tsv = "%s/images_contrasts_df.tsv" %old_results
 images = pandas.read_csv(labels_tsv,sep="\t",index_col=0)
 image_lookup = "%s/image_nii_lookup.pkl" %update
+
+# Image metadata with number of subjects included
+contrast_file = "%s/filtered_contrast_images.tsv" %results
+#image_df = api.get_images(pks=images.index.tolist())
+#image_df.to_csv(contrast_file,sep="\t")
 
 if not os.path.exists(output_folder):
     os.mkdir(output_folder)
@@ -41,6 +48,6 @@ for image1_holdout in images.index.tolist():
                 filey.writelines("#SBATCH --error=.out/%s.err\n" %(job_id))
                 filey.writelines("#SBATCH --time=2-00:00\n")
                 filey.writelines("#SBATCH --mem=32000\n")
-                filey.writelines("python encoding_regression_performance.py %s %s %s %s %s" %(image1_holdout, image2_holdout, output_file, labels_tsv, image_lookup))
+                filey.writelines("python encoding_regression_performance.py %s %s %s %s %s %s" %(image1_holdout, image2_holdout, output_file, labels_tsv, image_lookup, contrast_file))
                 filey.close()
                 os.system("sbatch -p russpold --qos russpold " + ".job/class_%s.job" %(job_id))
