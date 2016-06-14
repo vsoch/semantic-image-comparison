@@ -16,9 +16,7 @@ from pybraincompare.mr.datasets import get_standard_mask
 from sklearn.preprocessing import StandardScaler
 from pybraincompare.mr.transformation import *
 from sklearn.metrics import r2_score
-import matplotlib.pyplot as plt
 from sklearn import linear_model
-from glob import glob
 import pickle
 import pandas
 import nibabel
