@@ -28,7 +28,8 @@ import os
 image_pairs = sys.argv[1]
 output_file = sys.argv[2]
 labels_tsv = sys.argv[3]
-contrast_file = sys.argv[4]
+image_lookup = sys.argv[4]
+contrast_file = sys.argv[5]
 
 ##################################################################################
 # DATA PREPARATION ###############################################################

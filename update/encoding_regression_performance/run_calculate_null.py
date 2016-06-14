@@ -25,6 +25,7 @@ image_lookup = "%s/image_nii_lookup.pkl" %update
 
 # Image metadata with number of subjects included
 contrast_file = "%s/filtered_contrast_images.tsv" %results
+image_lookup = "%s/image_nii_lookup.pkl" %update
 
 if not os.path.exists(output_folder):
     os.mkdir(output_folder)
@@ -64,7 +65,7 @@ def run_job(group_list,iter_number,group_number):
         filey.writelines("#SBATCH --error=.out/%s.err\n" %(job_id))
         filey.writelines("#SBATCH --time=1-00:00\n")
         filey.writelines("#SBATCH --mem=12000\n")
-        filey.writelines('python calculate_null.py "%s" %s %s %s' %(group_list, output_file, labels_tsv, contrast_file))
+        filey.writelines('python calculate_null.py "%s" %s %s %s %s' %(group_list, output_file, labels_tsv, image_lookup, contrast_file))
         filey.close()
         os.system("sbatch -p russpold --qos russpold " + ".job/null_%s.job" %(job_id))
 
