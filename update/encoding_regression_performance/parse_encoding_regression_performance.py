@@ -84,12 +84,12 @@ pickle.dump(result,open("%s/classification_results_binary_4mm_perform_norm.tsv" 
 # total
 # 8554
 
-#accuracy with norm
-# 0.76771101239186346
-# correct
-# 6567
+# accuracy
+# 0.84276361935936406
 # total
 # 8554
+# correct
+# 7209
 
 
 # Create a confusion matrix
