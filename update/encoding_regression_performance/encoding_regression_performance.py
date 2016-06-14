@@ -108,8 +108,8 @@ predicted_nii2 =  regression_params.dot(concept_vector2)[image2_holdout] + inter
 # Turn into nifti images
 nii1 = numpy.zeros(standard_mask.shape)
 nii2 = numpy.zeros(standard_mask.shape)
-nii1[standard_mask.get_data()!=0] = predicted_nii1[image1_holdout].tolist()
-nii2[standard_mask.get_data()!=0] = predicted_nii2[image2_holdout].tolist()
+nii1[standard_mask.get_data()!=0] = predicted_nii1.tolist()
+nii2[standard_mask.get_data()!=0] = predicted_nii2.tolist()
 nii1 = nibabel.Nifti1Image(nii1,affine=standard_mask.get_affine())
 nii2 = nibabel.Nifti1Image(nii2,affine=standard_mask.get_affine())
 
