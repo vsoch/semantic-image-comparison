@@ -68,7 +68,8 @@ png("img/scatter_spatial_semantic.png", width = 16, height = 12, units = 'in', r
 ggplot(both, aes(x=graph_score,y=spatial_score)) + 
   geom_point() +
   xlab("Wang graph metric score") +
-  ylab("Spatial comparison score")
+  ylab("Spatial comparison score") +
+  theme(text = element_text(size=20))
 dev.off()  
 
 png("img/scatter_spatial_semantic_image1_task.png", width = 16, height = 12, units = 'in', res = 300)
