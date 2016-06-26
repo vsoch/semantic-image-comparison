@@ -70,7 +70,8 @@ def run_job(group_list,iter_number,group_number):
         os.system("sbatch -p russpold --qos russpold " + ".job/null_%s.job" %(job_id))
 
 # We want to start off with 250 iterations, meaning splitting ~4000 images into four groups, so we get 1000 jobs in queue at once, each job should take ~19 hours.
-for i in range(250):
+for i in range(254):
+for i in range(250,254):
     image_choices = image_pairs[:]
     shuffle(image_choices)
     # Split into four groups of images

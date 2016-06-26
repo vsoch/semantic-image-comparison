@@ -75,7 +75,7 @@ result["comparison_df"] = comparison_df
 result["total"] = total
 result["correct"] = correct
 result["accuracy"] = accuracy
-pickle.dump(result,open("%s/classification_results_binary_4mm_perform_norm.tsv" %results,"wb"))
+pickle.dump(result,open("%s/classification_results_binary_4mm_perform_norm.pkl" %results,"wb"))
 
 #accuracy without norm
 # 0.75578676642506426
@@ -246,97 +246,42 @@ for i in range(3):
 
 
 # COMPILE NULL ######################################################################
-scores_folder = "%s/classification_null" %(base)
+scores_folder = "%s/null" %(update)
 scores = glob("%s/*.pkl" %scores_folder)
 
+len(scores)
+#1000
 comparison_null = []
-
-# Missing images expression to search for
-missing_expression = "|".join([str(int(x)) for x in nanimages])
 
 for i in range(0,len(scores)):
     print "Parsing score %s of %s" %(i,len(scores))
-    if not re.search(missing_expression,scores[i]):
-        single_result = pickle.load(open(scores[i],"rb"))
-        comparison_null.append(single_result["accuracy"])
-    else:
-        print "Skipping %s" %(scores[i])
+    single_result = pickle.load(open(scores[i],"rb"))
+    comparison_null.append(single_result["accuracy"])
 
 accuracy = numpy.mean(comparison_null)
 result = dict()
 result["comparison_null"] = comparison_null
 result["accuracy"] = accuracy
 pickle.dump(result,open("%s/classification_results_null_4mm.pkl" %results,"wb"))
-result = pickle.load(open("%s/classification_results_null_4mm.pkl" %results,"rb"))
 #>>> result["accuracy"]
-#0.46994355374921259
-
+#0.49753903881477762
 
 # What percentile is the actual accuracy in the null distribuition?
 # se scipy.stats.percentileofscore to find the percentile in the null distribution for the observed value
 # Do two sample T test against actual vs null accuracies
-result_weighted = pickle.load(open("%s/classification_results_weighted_4mm.pkl" %results,"rb"))
-result_binary = pickle.load(open("%s/classification_results_binary_4mm.tsv" %results,"rb"))
+result_binary = pickle.load(open("%s/classification_results_binary_4mm_perform_norm.pkl" %results,"rb"))
 from scipy.stats import percentileofscore
 
 # Default kind="rank" - multiple matches, average the percentage rankings of all matching scores. percentileofscore(a, score, kind='rank')
-weighted_score = percentileofscore(comparison_null, result_weighted["accuracy"])
 binary_score = percentileofscore(comparison_null, result_binary["accuracy"])
 
 # the p value is 100 minus that percentile, divided by number of samples in null
 # p_cutoff=(100-percentile)/100 +1/<number of samples in null distribution>
-pval_weighted = ((100.0-weighted_score)/100.0) + 1.0/len(comparison_null)
-# 0.00099009900990099011
 pval_binary = ((100.0-binary_score)/100.0) + 1.0/len(comparison_null)
-# 0.00099009900990099011
-# Both p < 0.001
+# 0.001
 # @russpold you want to add one because you want to say that the p is less than the most extreme value - thus, if you are 100 percent and there were 1000 samples in the null distribution, you want to say that p<0.001 rather than giving an exact p value of p=0.000 
 
-# Add to saved results
-result_weighted["tstat"] = tstat_weighted
-#(-935.83608953817543, 0.0)
-result_weighted["pval"] = pval_weighted
 # weighted not the appropriate null distribution, but tested anyway
-result_binary["tstat"] = tstat_binary
 result_binary["pval"] = pval_binary
-# (-946.65983687706296, 0.0)
 
 pickle.dump(result_binary,open("%s/classification_results_binary_4mm.pkl" %results,"wb"))
-pickle.dump(result_weighted,open("%s/classification_results_weighted_4mm.pkl" %results,"wb"))
-
-
-# Redo the classification results with these images removed
-scores_folder = "%s/classification" %(base)
-scores = glob("%s/*.pkl" %scores_folder)
-
-# Let's save a big data frame of the prediction scores
-comparison_df = pandas.DataFrame(columns=["actual","predicted","cca_score"])
-
-total = 0
-correct = 0
-for i in range(0,len(scores)):
-    print "Parsing score %s of %s" %(i,len(scores))
-    if not re.search(missing_expression,scores[i]):
-        single_result = pickle.load(open(scores[i],"rb"))
-        cdf = single_result["comparison_df"]
-        two_images = cdf["actual"].unique().tolist()
-        contrast_ids = images.cognitive_contrast_cogatlas_id[images.image_id.isin(two_images)].unique()
-        # Only include for images with different contrast
-        if len(contrast_ids) == 2:
-            total=total+2
-            correct=correct+single_result["number_correct"]
-            comparison_df = comparison_df.append(single_result["comparison_df"])
-    else:
-        print "Skipping %s" %(scores[i])
-
-comparison_df.index = index_names
-accuracy = correct/float(total)
-#0.81450980392156858
-result = dict()
-result["comparison_df"] = comparison_df
-result["total"] = total
-result["correct"] = correct
-result["accuracy"] = accuracy
-pickle.dump(result,open("%s/classification_results_binary_4mm.tsv" %results,"wb"))
-#>>> accuracy
-#0.81429691583899633
