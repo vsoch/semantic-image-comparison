@@ -4,6 +4,7 @@ from sklearn.cross_decomposition import PLSCanonical, PLSRegression, CCA
 from pybraincompare.compare.maths import calculate_correlation
 from pybraincompare.compare.mrutils import get_images_df
 from pybraincompare.mr.datasets import get_standard_mask
+from sklearn.preprocessing import StandardScaler
 from pybraincompare.mr.transformation import *
 from sklearn import linear_model
 import matplotlib.pyplot as plt
@@ -11,16 +12,19 @@ from glob import glob
 import pickle
 import pandas
 import nibabel
+import numpy
 import sys
 import os
 
 base = '/scratch/users/vsochat/DATA/BRAINMETA/ontological_comparison'
 update = "%s/update" %base
-results = "%s/results" %base  # any kind of tsv/result file
+old_results = "%s/results" %base  # any kind of tsv/result file
+results = "%s/results" %update  # any kind of tsv/result file
 
 # Images by Concepts data frame (YES including all levels of ontology)
-labels_tsv = "%s/images_contrasts_df.tsv" %results
+labels_tsv = "%s/images_contrasts_df.tsv" %old_results
 image_lookup = "%s/image_nii_lookup.pkl" %update
+contrast_file = "%s/filtered_contrast_images.tsv" %results
 
 # Images by Concept data frame, our X
 X = pandas.read_csv(labels_tsv,sep="\t",index_col=0)
@@ -41,22 +45,48 @@ image_paths = lookup.values()
 mr = get_images_df(file_paths=image_paths,mask=standard_mask)
 image_ids = [int(os.path.basename(x).split(".")[0]) for x in image_paths]
 mr.index = image_ids
+
+## STANDARDIZATION #########################################################################
+
+# Images data frame with contrast info, and importantly, number of subjects
+image_df = pandas.read_csv(contrast_file,sep="\t",index_col=0)
+image_df.index = image_df.image_id
+
+# We should standardize cognitive concepts before modeling
+# http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html
+scaled = pandas.DataFrame(StandardScaler().fit_transform(X))
+scaled.columns = X.columns
+scaled.index = X.index
+X = scaled
+  
+norm = pandas.DataFrame(columns=mr.columns)
+
+# Normalize the image data by number of subjects
+#V* = V/sqrt(S) 
+for row in mr.iterrows():
+    subid = row[0]
+    number_of_subjects = image_df.loc[subid].number_of_subjects.tolist()
+    norm_vector = row[1]/numpy.sqrt(number_of_subjects)
+    norm.loc[subid] = norm_vector
+
+del mr
    
 ## CCA ANALYSIS ############################################################################
 # Dataset based latent variables model
 
+# DELETE
 # Let's choose a random voxel
-mr = mr.fillna(0)
+#norm = norm.fillna(0)
 
 output_folder = '%s/results/cca' %update
 if not os.path.exists(output_folder):
     os.mkdir(output_folder)
 
 # Try for all data
-holdout = numpy.random.choice(mr.index.tolist(),5).tolist()
-train = [x for x in X.index if x not in holdout and x in mr.index]
-Ytrain = mr.loc[train,:]
-Ytest = mr.loc[holdout,:]
+holdout = numpy.random.choice(norm.index.tolist(),5).tolist()
+train = [x for x in X.index if x not in holdout and x in norm.index]
+Ytrain = norm.loc[train,:]
+Ytest = norm.loc[holdout,:]
 Xtrain = numpy.array(X.loc[train,:]) 
 Xtest = X.loc[holdout,:]
 
@@ -110,12 +140,12 @@ plsca.fit(Xtrain, Ytrain)
 #       scale=True, tol=1e-06)
 X_train_r, Y_train_r = plsca.transform(Xtrain, Ytrain)
 X_test_r, Y_test_r = plsca.transform(Xtest, Ytest)
-do_plot(X_train_r,Y_train_r,X_test_r,Y_test_r,'%s/PLSCA_2comp.pdf' %output_folder)
+do_plot(X_train_r,Y_train_r,X_test_r,Y_test_r,'%s/PLSCA_2comp_norm.pdf' %output_folder)
 
 # CCA
 # probably not necessary, but just in case the data was modified in some way
-Ytrain = mr.loc[train,:]
-Ytest = mr.loc[holdout,:]
+Ytrain = norm.loc[train,:]
+Ytest = norm.loc[holdout,:]
 Xtrain = numpy.array(X.loc[train,:]) 
 Xtest = X.loc[holdout,:]
 cca = CCA(n_components=2)
@@ -123,4 +153,4 @@ cca.fit(Xtrain, Ytrain)
 # CCA(copy=True, max_iter=500, n_components=2, scale=True, tol=1e-06)
 X_train_r, Y_train_r = cca.transform(Xtrain, Ytrain)
 X_test_r, Y_test_r = cca.transform(Xtest, Ytest)
-do_plot(X_train_r,Y_train_r,X_test_r,Y_test_r,'%s/CCA_2comp.pdf' %output_folder)
+do_plot(X_train_r,Y_train_r,X_test_r,Y_test_r,'%s/CCA_2comp_norm.pdf' %output_folder)

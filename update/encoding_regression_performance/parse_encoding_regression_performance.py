@@ -240,9 +240,9 @@ for i in range(3):
 # >>> normalized_confusion, standard images
 # {'within-collection (between-task)': 0.20666666666666667, 'within-task': 0.2360248447204969, 'between-collection': 0.23098663926002055}
  
-# 76.0 confusions out of 322.0 for the category
-# 93.0 confusions out of 450.0 for the category
-# 1798.0 confusions out of 7784.0 for the category
+# 76.0 confusions out of 322.0 for the category within-task
+# 93.0 confusions out of 450.0 for the category  within-collection
+# 1798.0 confusions out of 7784.0 for the category between-collection
 
 
 # COMPILE NULL ######################################################################
