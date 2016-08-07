@@ -212,3 +212,61 @@ I made two visualizations for the decoding models:
 - [Cognitive Concepts Associated with a Region](http://vsoch.github.io/cogatvoxel/)
 
 Descriptions are provided with the links above.
+
+
+### 18) Without expansion
+June 1, 2016
+
+Russ wanted to try the entire procedure without expansion of the ontology:
+
+>> hey, it occurred to me that one useful analysis to have would be one that does the encoding/decoding just using the annotations, without expanding them using the ontology. this would help provide direct evidence that the ontology expansion is actually helping. would you mind running that? we would not need the permutation analysis for now, just the regular cross-validation.  would be useful to have this by early next week if possible
+
+The accuracy was less than previously, and so this was not further pursued. The scripts are located under [update/without_expansion](update/without_expansion)
+
+
+### 19) Exploration with CCA
+June 4,2016
+
+Sanmi wanted to look at some kind of latest space modeling, and suggested CCA:
+
+>> Latent space modeling: I like PLS/CCA for trying to examine if there is a low dimensional space that explains variation jointly over labels and images well enough (http://scikit-learn.org/stable/modules/cross_decomposition.html#cross-decomposition). We can also use the fit PLS model directly for encoding / decoding. Ideally, one could make the CCA a plug-in replacement to the current encoding model, and run all the same analyses we are running for the same encoding / decoding models - in order to investigate if the latent space modeling helps.
+
+The work under [update/cca_explore](update/cca_explore) was for this, but he never provided clear instructions for next steps.
+
+### 20) New Normalization for Forward Modeling
+I re-ran the classification, but with two changes:
+
+   - used standard scaling (scipy standard scaler)
+   - normalization of group maps (V* = V/sqrt(S))
+
+The overall accuracy was about ~1% higher, with less confusions for all categories, especially "within collection, between task." New results vs. old are shown below, and [r2 scores are avaiable](http://vsoch.github.io/semantic-image-comparison/update/encoding_regression_performance/):
+
+     #accuracy without norm
+     # 0.75578676642506426
+     # correct
+     # 6465
+     # total
+     # 8554
+
+     #accuracy with norm
+     # 0.76771101239186346
+     # correct
+     # 6567
+     # total
+     # 8554
+
+     # >>> without norm (normalized confusion)
+     # {'within-collection (between-task)': 0.26222222222222225, 'within-task': 0.25465838509316768, 'between-collection': 0.24036485097636176}
+ 
+     # 82.0 confusions out of 322.0 for the category within task 
+     # 118.0 confusions out of 450.0 for the category within collection (between task)
+     # 1871.0 confusions out of 7784.0 for the category between collection
+
+     # >>> normalized_confusion, standard images
+     # {'within-collection (between-task)': 0.20666666666666667, 'within-task': 0.2360248447204969, 'between-collection': 0.23098663926002055}
+ 
+     # 76.0 confusions out of 322.0 for the category within task
+     # 93.0 confusions out of 450.0 for the category within collection (between task)
+     # 1798.0 confusions out of 7784.0 for the category between collection
+
+This is the final result that was used for my thesis, available in [update/encoding_regression_performance](update/encoding_regression_performance)
