@@ -1,15 +1,5 @@
 #!/usr/bin/python
 
-# Classification framework
-# for image1 in all images:
-#    for image2 in allimages:
-#        if image1 != image2:
-#            hold out image 1 and image 2, generate regression parameter matrix using other images
-#            generate predicted image for image 1 [PR1]
-#            generate predicted image for image 2 [PR2]
-#            classify image 1 as fitting best to PR1 or PR2
-#            classify image 2 as fitting best to PR1 or PR2
-
 from pybraincompare.compare.maths import calculate_correlation
 from pybraincompare.compare.mrutils import get_images_df
 from pybraincompare.mr.datasets import get_standard_mask
