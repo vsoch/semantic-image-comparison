@@ -110,35 +110,44 @@ accuracy2 = numpy.sum([1 for x in range(len(holdout2X)) if holdout1X.tolist()[x]
 # 0.51515151515151514
 
 # Confusion Stuffs
-tp_count = 0
-tn_count = 0
-fp_count = 0
-fn_count = 0
-for x in range(len(holdout1X)):
-    x_pred = predicted_labels1[x]
-    x_act = holdout1X.tolist()[x]
-    # Map is labeled with concept
-    if x_act == 1:
-        # We got it right
-        if x_act == x_pred:
-            tp_count+=1
-        # We didn't
+def calculate_confusion(predicted,actual):
+    res = dict()
+    res["TP"] = 0
+    res["TN"] = 0
+    res["FP"] = 0
+    res["FN"] = 0
+    for x in range(len(actual)):
+        x_pred = predicted[x]
+        x_act = actual[x]
+        # Map is labeled with concept
+        if x_act == 1:
+            # We got it right
+            if x_act == x_pred:
+                res["TP"]+=1
+            # We didn't
+            else:
+                res["FN"]+=1
+        # Map isn't labeled
         else:
-            fn_count+=1
-    # Map isn't labeled
-    else:
-        # We got it right
-        if x_act == x_pred:
-            tn_count+=1
-        # We didn't
-        else:
-            fp_count+=1
+            # We got it right
+            if x_act == x_pred:
+                res["TN"]+=1
+            # We didn't
+            else:
+                res["FP"]+=1
+    return res
 
-# tp_count
-# 0
-# tn_count
-# 62
-# fp_count
-# 58
-# fn_count
-# 12
+conf1 = calculate_confusion(predicted_labels1,holdout1X.tolist())
+# {'TN': 62, 'FP': 58, 'FN': 12, 'TP': 0}
+
+conf2 = calculate_confusion(predicted_labels2,holdout2X.tolist())
+# {'TN': 62, 'FP': 56, 'FN': 0, 'TP': 14}
+
+# Accuracy as number correct / number labels
+number_labels1 = len(holdout1X[holdout1X==1])
+number_labels2 = len(holdout1X[holdout2X==1])
+
+accuracy1 = conf1["TP"]/float(number_labels1)
+accuracy2 = conf2["TP"]/float(number_labels2)
+
+# 0.0 and 1.0
