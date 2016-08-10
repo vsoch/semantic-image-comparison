@@ -30,6 +30,7 @@ output_file = sys.argv[3]
 labels_tsv = sys.argv[4]
 image_lookup = sys.argv[5]
 contrast_file = sys.argv[6]
+number_components = sys.argv[7]
 
 # Images by Concept data frame, our X
 X = pandas.read_csv(labels_tsv,sep="\t",index_col=0)
@@ -90,7 +91,7 @@ for voxel in norm.columns:
     Y = norm.loc[train,voxel].tolist()
     Xtrain = X.loc[train,:]
     # Use pls instead of regularized regression
-    clf = PLSRegression(n_components=5)
+    clf = PLSRegression(n_components=number_components)
     clf.fit(Xtrain, Y)    
     # Need to find where regression/intercept params are in this model
     regression_params.loc[voxel,:] = [x[0] for x in clf.coef_]
