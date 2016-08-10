@@ -89,7 +89,7 @@ train = [x for x in X.index if x not in [image1_holdout,image2_holdout] and x in
 Xtrain = norm.loc[train,:]
 Ytrain = numpy.array(X.loc[train,:]) 
 # Use pls instead of regularized regression
-clf = PLSRegression(n_components=5)
+clf = PLSRegression(n_components=number_components)
 clf.fit(Xtrain, Ytrain)    
 
 # Predict the labels
