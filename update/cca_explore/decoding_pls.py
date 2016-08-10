@@ -25,11 +25,18 @@ number_components = int(sys.argv[7])
 # Images by Concept data frame, our X
 X = pandas.read_csv(labels_tsv,sep="\t",index_col=0)
 
-# Save the values for later, but 0 must be represented as -1
+# Transform to be -1 and 1
+for col in X.columns:
+    holder = X[col]
+    holder[holder==0] = -1
+    X[col] = holder
+
+# Save the values for later
 holdout1X = X.loc[image1_holdout,:]
 holdout2X = X.loc[image2_holdout,:]
-holdout1X[holdout1X == 0] = -1
-holdout2X[holdout2X == 0] = -1
+# If we need to change 0 to be represented as -1
+#holdout1X[holdout1X == 0] = -1
+#holdout2X[holdout2X == 0] = -1
 
 # Images data frame with contrast info, and importantly, number of subjects
 image_df = pandas.read_csv(contrast_file,sep="\t",index_col=0)
@@ -90,7 +97,48 @@ predicted_labels2 = [numpy.sign(x) for x in clf.predict(holdout2X_norm.reshape(1
 accuracy1 = numpy.sum([1 for x in range(len(holdout1X)) if holdout1X.tolist()[x] == predicted_labels1[x]])/float(len(holdout1X))
 accuracy2 = numpy.sum([1 for x in range(len(holdout2X)) if holdout1X.tolist()[x] == predicted_labels2[x]])/float(len(holdout2X))
 
+# When normalized labels are derived from [0,1]
 # accuracy1
 # 0.43181818181818182
 # accuracy2
 # 0.32575757575757575
+
+# When normalized labels are derived from [-1,1]
+# accuracy1
+# 0.46969696969696972
+# accuracy2
+# 0.51515151515151514
+
+# Confusion Stuffs
+tp_count = 0
+tn_count = 0
+fp_count = 0
+fn_count = 0
+for x in range(len(holdout1X)):
+    x_pred = predicted_labels1[x]
+    x_act = holdout1X.tolist()[x]
+    # Map is labeled with concept
+    if x_act == 1:
+        # We got it right
+        if x_act == x_pred:
+            tp_count+=1
+        # We didn't
+        else:
+            fn_count+=1
+    # Map isn't labeled
+    else:
+        # We got it right
+        if x_act == x_pred:
+            tn_count+=1
+        # We didn't
+        else:
+            fp_count+=1
+
+# tp_count
+# 0
+# tn_count
+# 62
+# fp_count
+# 58
+# fn_count
+# 12
