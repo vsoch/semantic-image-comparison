@@ -270,3 +270,22 @@ The overall accuracy was about ~1% higher, with less confusions for all categori
      # 1798.0 confusions out of 7784.0 for the category between collection
 
 This is the final result that was used for my thesis, available in [update/encoding_regression_performance](update/encoding_regression_performance)
+
+### 21) Decoding using Forward Model
+I used the forward model to perform decoding, the scripts are located in [update/decoding](update/decoding). 
+
+using the forward model to predict the labels does very well for TP, but the FP rate is terribly high, making the overall accuracy quite dismal.
+
+      # Mean and SD for accuracy
+      numpy.mean(accuracy_overall)
+      # 0.10793595137914913
+      numpy.std(accuracy_overall)
+      # 0.061193010211389745
+
+      # Totals for confusion
+      result_df.sum()
+      # TP           63599
+      # TN             267
+      # FP         1045497
+      # FN           20029
+
