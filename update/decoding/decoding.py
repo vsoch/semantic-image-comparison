@@ -21,23 +21,13 @@ output_file = sys.argv[3]
 labels_tsv = sys.argv[4]
 image_lookup = sys.argv[5]
 contrast_file = sys.argv[6]
-number_components = int(sys.argv[7])
 
 # Images by Concept data frame, our X
 X = pandas.read_csv(labels_tsv,sep="\t",index_col=0)
 
-# Transform to be -1 and 1
-#for col in X.columns:
-#    holder = X[col]
-#    holder[holder==0] = -1
-#    X[col] = holder
-
 # Save the values for later
 holdout1X = X.loc[image1_holdout,:]
 holdout2X = X.loc[image2_holdout,:]
-# If we need to change 0 to be represented as -1
-#holdout1X[holdout1X == 0] = -1
-#holdout2X[holdout2X == 0] = -1
 
 # Images data frame with contrast info, and importantly, number of subjects
 image_df = pandas.read_csv(contrast_file,sep="\t",index_col=0)
@@ -96,81 +86,38 @@ for voxel in norm.columns:
     clf.fit(Xtrain,Y)
     regression_params.loc[voxel,:] = clf.coef_.tolist()
 
+##### W (# processes x # voxels): Forward model prediction matrix
+W = regression_params
 
-print "Training voxels and building predicted images..."
-for label in regression_params.columns:
-    train = [x for x in X.index if x not in [image1_holdout,image2_holdout] and x in norm.index]
-    Xtrain = norm.loc[train,:]
-    Ytrain = numpy.array(X.loc[train,:]) 
-    # Use pls instead of regularized regression
-    clf = PLSRegression(n_components=number_components)
-    # a. Use PLS to predict brains from labels instead of the elastic net i.e. the forward model pls.fit(Y_train, X_train). Note that X, and Y are flipped for the forward model.
-    clf.fit(Ytrain, Xtrain)
-    # b) Same as step b above. PLS returns a low rank weight matrix (pls.coef_), which you can use in place of W
-    regression_params.loc[voxel,:] = [x[0] for x in clf.coef_]
-    label_predictions1.loc[]
-        
+# Make predictions for images
+# Ypred = Ytest x W
+# 1 x 132 = 1 x 28k by 28k x 132
+# Y{test,:} = numpy.linalg.lstsq(W.T, X_{test,:}.T)[0].T
 
-predictions = pandas.DataFrame(index=Xmat.index,columns=Ymat.columns)
-W = pickle.load(open("%s/regression_params_dfs.pkl" %output_folder,"rb"))['regression_params'] # [28549 
-for heldout in Xmat.index.tolist():
-    heldout_X = Xmat.loc[heldout,:] #28K by 1
+holdouts = [image1_holdout,image2_holdout]
+predictions = pandas.DataFrame(0,index=holdouts, columns=X.columns)
+for heldout in holdouts:
+    heldout_X = norm.loc[heldout,:] #28K by 1
     Xtest = numpy.linalg.lstsq(W,heldout_X)[0]
     predictions.loc[heldout,:] = Xtest
 
-
-# b) Test: estimate label scores using the forward model. With some algebra, you can show that the label scores are given by solving the linear regression problem:
-# transpose(X_test - B) = transpose(W)*transpose(Y_predict)
-Ypredict1 = clf.predict(holdout1X.reshape(1,-1))
-
-.reshape(1,-1))[0][0]
-
-regression_params.transpose().dot()
-
-#c) You can either plug the label scores directly into something like AUC, or threshold the scores to get labels. I suggested sign, but you can use whatever thresholding makes the most sense given the way the data is setup. Let's discuss this more on a separate thread if it's causing issues.
- transpose(W)*transpose(Y_predict)
-
-
-# Need to find where regression/intercept params are in this model
-    predicted_nii1.loc[voxel,"nii"] = clf.predict(holdout1Y.reshape(1,-1))[0][0]
-    predicted_nii2.loc[voxel,"nii"] = clf.predict(holdout2Y.reshape(1,-1))[0][0]
-
-concept_vector1 =  pandas.DataFrame(holdout1Y)
-concept_vector2 =  pandas.DataFrame(holdout2Y)
-predicted_nii1 =  regression_params.dot(concept_vector1)[image1_holdout] + intercept_params["intercept"] 
-predicted_nii2 =  regression_params.dot(concept_vector2)[image2_holdout] + intercept_params["intercept"]
-
-
-c) Same as step c above using the PLS weights
-
-
-# OLD
-train = [x for x in X.index if x not in [image1_holdout,image2_holdout] and x in norm.index]
-Xtrain = norm.loc[train,:]
-Ytrain = numpy.array(X.loc[train,:]) 
-# Use pls instead of regularized regression
-clf = PLSRegression(n_components=number_components)
-clf.fit(Xtrain, Ytrain)    
+result = dict()
 
 # Predict the labels
-predicted_labels1 = [numpy.sign(x) for x in clf.predict(holdout1X_norm.reshape(1,-1))[0]]
-predicted_labels2 = [numpy.sign(x) for x in clf.predict(holdout2X_norm.reshape(1,-1))[0]]
+predicted_labels1 = [numpy.sign(x) for x in predictions.loc[image1_holdout]]
+predicted_labels2 = [numpy.sign(x) for x in predictions.loc[image2_holdout]]
     
-# Accuracy
+result["predictions_raw"] = predictions
+result["predictions_thresh"] = {image1_holdout:predicted_labels1,
+                                image2_holdout:predicted_labels2}
+
+# Accuracy metric one - accuracy as a % of all labels
 accuracy1 = numpy.sum([1 for x in range(len(holdout1X)) if holdout1X.tolist()[x] == predicted_labels1[x]])/float(len(holdout1X))
 accuracy2 = numpy.sum([1 for x in range(len(holdout2X)) if holdout1X.tolist()[x] == predicted_labels2[x]])/float(len(holdout2X))
 
-# When normalized labels are derived from [0,1]
-# accuracy1
-# 0.43181818181818182
-# accuracy2
-# 0.32575757575757575
+result["accuracy_overall"] = {image1_holdout:accuracy1,
+                              image2_holdout:accuracy2}
 
-# When normalized labels are derived from [-1,1]
-# accuracy1
-# 0.46969696969696972
-# accuracy2
-# 0.51515151515151514
 
 # Confusion Stuffs
 def calculate_confusion(predicted,actual):
@@ -201,10 +148,13 @@ def calculate_confusion(predicted,actual):
     return res
 
 conf1 = calculate_confusion(predicted_labels1,holdout1X.tolist())
-# {'TN': 62, 'FP': 58, 'FN': 12, 'TP': 0}
+# {'TN': 73, 'FP': 43, 'FN': 6, 'TP': 10}
 
 conf2 = calculate_confusion(predicted_labels2,holdout2X.tolist())
-# {'TN': 62, 'FP': 56, 'FN': 0, 'TP': 14}
+# {'TN': 73, 'FP': 56, 'FN': 3, 'TP': 0}
+
+result["confusions"] = {image1_holdout:conf1,
+                        image2_holdout:conf2}
 
 # Accuracy as number correct / number labels
 number_labels1 = len(holdout1X[holdout1X==1])
@@ -213,4 +163,7 @@ number_labels2 = len(holdout1X[holdout2X==1])
 accuracy1 = conf1["TP"]/float(number_labels1)
 accuracy2 = conf2["TP"]/float(number_labels2)
 
-# 0.0 and 1.0
+result["accuracy/number_labels"] = {image1_holdout:accuracy1,
+                                    image2_holdout:accuracy2}
+
+pickle.dump(result,open(output_file,'wb'))
