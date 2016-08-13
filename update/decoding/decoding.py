@@ -111,7 +111,7 @@ result["predictions_raw"] = predictions
 result["predictions_thresh"] = {image1_holdout:predicted_labels1,
                                 image2_holdout:predicted_labels2}
 
-# Accuracy metric one - accuracy as a % of all labels
+# Accuracy as a % of all labels
 accuracy1 = numpy.sum([1 for x in range(len(holdout1X)) if holdout1X.tolist()[x] == predicted_labels1[x]])/float(len(holdout1X))
 accuracy2 = numpy.sum([1 for x in range(len(holdout2X)) if holdout1X.tolist()[x] == predicted_labels2[x]])/float(len(holdout2X))
 
@@ -155,15 +155,5 @@ conf2 = calculate_confusion(predicted_labels2,holdout2X.tolist())
 
 result["confusions"] = {image1_holdout:conf1,
                         image2_holdout:conf2}
-
-# Accuracy as number correct / number labels
-number_labels1 = len(holdout1X[holdout1X==1])
-number_labels2 = len(holdout1X[holdout2X==1])
-
-accuracy1 = conf1["TP"]/float(number_labels1)
-accuracy2 = conf2["TP"]/float(number_labels2)
-
-result["accuracy/number_labels"] = {image1_holdout:accuracy1,
-                                    image2_holdout:accuracy2}
 
 pickle.dump(result,open(output_file,'wb'))
