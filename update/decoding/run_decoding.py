@@ -26,7 +26,7 @@ for image1_holdout in images.index.tolist():
         if (image1_holdout != image2_holdout) and (image1_holdout < image2_holdout):
             output_file = "%s/%s_%s_decoding.pkl" %(output_folder,image1_holdout,image2_holdout)
             if not os.path.exists(output_file):
-                job_id = "%s_%s_%s" %(image1_holdout,image2_holdout,output_folder_c)
+                job_id = "%s_%s" %(image1_holdout,image2_holdout)
                 filey = ".job/decoding_%s.job" %(job_id)
                 filey = open(filey,"w")
                 filey.writelines("#!/bin/bash\n")
