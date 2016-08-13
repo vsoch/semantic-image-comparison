@@ -30,13 +30,14 @@ for r in range(len(result_files)):
 
 # Mean and SD for accuracy
 numpy.mean(accuracy_overall)
-# 0.10
+# 0.10793595137914913
 numpy.std(accuracy_overall)
-# 0.067390565957290011
+# 0.061193010211389745
+
 
 # Totals for confusion
 result_df.sum()
-# TP          10612
-# TN             16
-# FP         174540
-# FN           3328
+# TP           63599
+# TN             267
+# FP         1045497
+# FN           20029
